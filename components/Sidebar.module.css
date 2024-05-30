@@ -1,0 +1,44 @@
+.container button:hover{
+  background-color: rgb(235, 52, 52);
+  border-radius: 10px;
+  color: black;
+}
+
+.container li:hover {
+  background-color: grey;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.active {
+    color: blue;
+    font-weight: 600;
+    font-size: large;
+}
+
+.button {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    width: 100%;
+    height: 40px;
+    border: 3px solid rgb(235, 52, 52);
+    border-radius: 10px;
+    background: none;
+    color: rgb(235, 52, 52);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: large;
+  }
+  
+  .listItem {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+    font-size: large;
+}
+
+  
