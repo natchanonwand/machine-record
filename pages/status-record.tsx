@@ -552,7 +552,7 @@ useEffect(() => {
         e.preventDefault();
         try {
             const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-            const response = await fetch('http://localhost:3002/api/recorder', {
+            const response = await fetch('https://jb-api-1.onrender.com/api/recorder', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ recorder_name: recorderName, record_date: formattedDate, record_time: recordTime }),
@@ -573,7 +573,7 @@ useEffect(() => {
         try {
             for (const ch of chStatuses) {
                 const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-                const response = await fetch('http://localhost:3002/api/chiller', {
+                const response = await fetch('https://jb-api-1.onrender.com/api/chiller', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ machine_name: ch.machine_name, record_date: formattedDate, record_time: recordTime, status: ch.status, note: ch.note }),
@@ -597,7 +597,7 @@ useEffect(() => {
       try {
           for (const chwp of chillerWaterPumpStatuses) {
               const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-              const response = await fetch('http://localhost:3002/api/Chiller_Water_Pump', {
+              const response = await fetch('https://jb-api-1.onrender.com/api/Chiller_Water_Pump', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ machine_name: chwp.machine_name, record_date: formattedDate, record_time: recordTime, status: chwp.status, A1: chwp.A1, A2: chwp.A2, A3: chwp.A3, T: chwp.T, note: chwp.note }),
@@ -621,7 +621,7 @@ useEffect(() => {
       try {
           for (const fan of fan6Statuses) {
               const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-              const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room6', {
+              const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room6', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ machine_name: fan.machine_name, record_date: formattedDate, record_time: recordTime, status: fan.status, A1: fan.A1, A2: fan.A2, A3: fan.A3, T: fan.T, note: fan.note }),
@@ -645,7 +645,7 @@ useEffect(() => {
       try {
           for (const biofilter of biofilterStatuses) {
               const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-              const response = await fetch('http://localhost:3002/api/biofilter', {
+              const response = await fetch('https://jb-api-1.onrender.com/api/biofilter', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ machine_name: biofilter.machine_name, record_date: formattedDate, record_time: recordTime, status: biofilter.status, note: biofilter.note }),
@@ -668,7 +668,7 @@ useEffect(() => {
     try {
         for (const gardenPump of gardenPumpStatuses) {
             const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-            const response = await fetch('http://localhost:3002/api/garden_pump', {
+            const response = await fetch('https://jb-api-1.onrender.com/api/garden_pump', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -701,7 +701,7 @@ const handleSubmitInletPumping = async () => {
   try {
       for (const inletPumping of inletPumpingStatuses) {
           const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-          const response = await fetch('http://localhost:3002/api/Inlet_Pumping', {
+          const response = await fetch('https://jb-api-1.onrender.com/api/Inlet_Pumping', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -738,7 +738,7 @@ const handleSubmitVentilationInletPumping = async () => {
   try {
       for (const ventilationInletPumping of ventilationInletPumpingStatuses) {
           const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-          const response = await fetch('http://localhost:3002/api/Ventilation_Inlet_Pumping_Station', {
+          const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Inlet_Pumping_Station', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -770,7 +770,7 @@ const handleSubmitInletGate = async () => {
   try {
       for (const inletGate of inletGateStatuses) {
           const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-          const response = await fetch('http://localhost:3002/api/inlet_gate', {
+          const response = await fetch('https://jb-api-1.onrender.com/api/inlet_gate', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ 
@@ -799,7 +799,7 @@ const handleSubmitCoarseScreen = async () => {
   try {
       for (const coarseScreen of coarseScreenStatuses) {
           const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-          const response = await fetch('http://localhost:3002/api/coarse_screen', {
+          const response = await fetch('https://jb-api-1.onrender.com/api/coarse_screen', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -829,7 +829,7 @@ const handleSubmitFan3 = async () => {
   try {
     for (const fan3 of fan3Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room3', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room3', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -861,7 +861,7 @@ const handleSubmitFan2 = async () => {
   try {
     for (const fan2 of fan2Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room2', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room2', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -893,7 +893,7 @@ const handleSubmitFan1 = async () => {
   try {
     for (const fan1 of fan1Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room1', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room1', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -925,7 +925,7 @@ const handleSubmitAutoSampler = async () => {
   try {
     for (const autoSampler of autoSamplerStatuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/auto_sampler', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/auto_sampler', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -954,7 +954,7 @@ const handleSubmitVortexGrit = async () => {
   try {
     for (const vortexGrit of vortexGritStatuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/vortex_grit', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/vortex_grit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -983,7 +983,7 @@ const handleSubmitFineScreen = async () => {
   try {
     for (const fineScreen of fineScreenStatuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/fine_screen', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/fine_screen', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1012,7 +1012,7 @@ const handleSubmitDrainagePump3 = async () => {
   try {
     for (const drainagePump3 of drainagePump3Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Drainage_Pump', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Drainage_Pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1044,7 +1044,7 @@ const handleSubmitFan4 = async () => {
   try {
     for (const fan4 of fan4Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room4', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room4', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1076,7 +1076,7 @@ const handleSubmitAnoxicMixer1 = async () => {
   try {
     for (const anoxicMixer1 of anoxicMixer1Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Anoxic_Mixer', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1108,7 +1108,7 @@ const handleSubmitAnoxicMixer2 = async () => {
   try {
     for (const anoxicMixer2 of anoxicMixer2Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Anoxic_Mixer', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1140,7 +1140,7 @@ const handleSubmitAnoxicMixer3 = async () => {
   try {
     for (const anoxicMixer3 of anoxicMixer3Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Anoxic_Mixer', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1172,7 +1172,7 @@ const handleSubmitAnoxicMixer4 = async () => {
   try {
     for (const anoxicMixer4 of anoxicMixer4Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Anoxic_Mixer', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1204,7 +1204,7 @@ const handleSubmitSingleAirBlower = async () => {
   try {
     for (const singleAirBlower of singleAirBlowerStatuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/air-blower', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/air-blower', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1236,7 +1236,7 @@ const handleSubmitPositiveAirBlower = async () => {
   try {
     for (const positiveAirBlower of positiveAirBlowerStatuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/air-blower', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/air-blower', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1268,7 +1268,7 @@ const handleSubmitClarifier = async () => {
   try {
     for (const clarifier of clarifier1Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/clarifier', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1303,7 +1303,7 @@ const handleSubmitClarifier2 = async () => {
   try {
     for (const clarifier2 of clarifier2Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/clarifier', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1338,7 +1338,7 @@ const handleSubmitClarifier3 = async () => {
   try {
     for (const clarifier3 of clarifier3Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/clarifier', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1373,7 +1373,7 @@ const handleSubmitClarifier4 = async () => {
   try {
     for (const clarifier4 of clarifier4Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/clarifier', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1408,7 +1408,7 @@ const handleSubmitAutoSampler2 = async () => {
   try {
     for (const autoSampler2 of autoSampler2Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/auto_sampler', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/auto_sampler', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1437,7 +1437,7 @@ const handleSubmitFan5 = async () => {
   try {
     for (const fan5 of fan5Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room5', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1465,7 +1465,7 @@ const handleSubmitFan5_2 = async () => {
   try {
     for (const fan5_2 of fan5_2Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room5', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1493,7 +1493,7 @@ const handleSubmitFan5_3 = async () => {
   try {
     for (const fan5_3 of fan5_3Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room5', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1521,7 +1521,7 @@ const handleSubmitFan5_4 = async () => {
   try {
     for (const fan5_4 of fan5_4Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room5', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1549,7 +1549,7 @@ const handleSubmitFan5_5 = async () => {
   try {
     for (const fan5_5 of fan5_5Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room5', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1577,7 +1577,7 @@ const handleSubmitFan5_6 = async () => {
   try {
     for (const fan5_6 of fan5_6Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room5', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1604,7 +1604,7 @@ const handleSubmitFan5_7 = async () => {
   try {
     for (const fan5_7 of fan5_7Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Ventilation_Fan_Room5', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1632,7 +1632,7 @@ const handleSubmitDrainagePump2 = async () => {
   try {
     for (const drainagePump2 of drainagePump2Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Drainage_Pump', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Drainage_Pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1664,7 +1664,7 @@ const handleSubmitScrumPump = async () => {
   try {
     for (const scrumPump of scrumPumpStatuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Scum_Pump_Fan_Room6', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Scum_Pump_Fan_Room6', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1696,7 +1696,7 @@ const handleSubmitHiLowWaterPump = async () => {
   try {
     for (const hiLowWaterPump of hiLowWaterPumpStatuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/water_pump', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/water_pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1724,7 +1724,7 @@ const handleSubmitCWRWWaterPump = async () => {
   try {
     for (const cWRWWaterPump of cWRWWaterPumpStatuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/water_pump', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/water_pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1752,7 +1752,7 @@ const handleSubmitDrainagePump1 = async () => {
   try {
     for (const drainagePump1 of drainagePump1Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Drainage_Pump', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Drainage_Pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1784,7 +1784,7 @@ const handleSubmitEffluentPump = async () => {
   try {
     for (const effluentPump of effluentPumpStatuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('http://localhost:3002/api/Effluent_Pump', {
+      const response = await fetch('https://jb-api-1.onrender.com/api/Effluent_Pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
