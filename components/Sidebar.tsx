@@ -62,7 +62,7 @@ const Sidebar = ({ logout }: SidebarProps) => {
             <CustomLink href="/history" isActive={activePage === '/history'}>History</CustomLink>
           </li>
         </ul>
-        <div style={{ position: 'absolute', bottom: '0px', width: '100%' }}>
+        <div style={{ position: 'absolute', bottom: '20px', width: '100%' }}>
           <button onClick={handleLogout} className={styles.button}>Logout</button> 
         </div>
       </div>
