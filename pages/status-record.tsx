@@ -1998,11 +1998,12 @@ const handleComplete = () => {
           <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="recordDate">วัน/เดือน/ปี</label>
               <div className={styles.datePickerWrapper}>
-                  <DatePicker
+                <DatePicker
                       selected={recordDate}
                       onChange={(date: Date) => setRecordDate(date)}
                       dateFormat="dd/MM/yyyy"
                       className={styles.datePicker}
+                      popperPlacement="right" // Set popperPlacement to "right"
                   />
                   <AiOutlineCalendar className={styles.calendarIcon} />
               </div>
