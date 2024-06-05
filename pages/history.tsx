@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MachineHistoryFormat from '../components/MHFormat';
+import FormFormat from '../components/FormFormat';
 
 const styles = {
   container: {
     padding: '20px',
     margin: '20px auto',
-    maxWidth: '600px',
+    Width: '100%',
   },
   buttonContainer: {
     display: 'flex',
@@ -21,13 +22,22 @@ const styles = {
     height: '80px',
     cursor: 'pointer',
     marginBottom: '5px',
+    fontWeight: 'bold',
+    color: 'black',
   },
   toggleButton: {
-    // Style your toggle button here (optional)
+    border:'none',
+    borderRadius: '10px',
+    height:'25px',
+    background: '#e6e6e6',
+    boxShadow:  '4px 4px 9px #c4c4c4,-4px -4px 9px #ffffff',
+    padding: '5px',
+    marginBottom: '10px',
   },
 };
 
 const History = () => {
+  const [showFormHistory, setShowFormHistory] = useState(false);
   const [showMachineHistory, setShowMachineHistory] = useState(false);
   const [showHistoryOption, setShowHistoryOption] = useState(true);
 
@@ -35,9 +45,19 @@ const History = () => {
     setShowHistoryOption(!showHistoryOption); // Toggle state on click
   };
 
+  const handleFomHistoryClick = () => {
+    setShowFormHistory(true); // Update state on button click
+    setShowHistoryOption(false)
+  };
+
   const handleMachineHistoryClick = () => {
     setShowMachineHistory(true); // Update state on button click
     setShowHistoryOption(false)
+  };
+
+  const handleFormHistoryClose = () => {
+    setShowFormHistory(false); // Update state on button click
+    setShowHistoryOption(true)
   };
 
   const handleMachineHistoryClose = () => {
@@ -47,17 +67,16 @@ const History = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style = {{fontSize: '30px'}}>History of Status Record</h1>
+      <h1 style = {{fontSize: '30px', marginBottom: '10px'}}>History of Status Record</h1>
 
       <button style={styles.toggleButton} onClick={handleHistoryOptionClick}>
-        {showHistoryOption ? 'Hide Options' : 'Show Options'}
+        {showHistoryOption ? 'Hide Options ▲' : 'Show Options ▼'}
       </button>
 
       {showHistoryOption && ( // Conditionally render the button section
         <div>
-          <div style={styles.buttonContainer}>
-            <button style={styles.button} >   
-            {/* <button style={styles.button} onClick={handleMachineHistoryClick}> */}
+          <div style={styles.buttonContainer}>  
+            <button style={styles.button} onClick={handleFomHistoryClick}>
               Daily Check Sheet Format
             </button>
             <p>Shows history data in current format with .pdf exportation</p>
@@ -79,6 +98,15 @@ const History = () => {
         </div>
         
       )} {/* Conditionally render MachineHistoryFormat */}
+      {showFormHistory && (
+        <div>
+          <button style={styles.toggleButton} onClick={handleFormHistoryClose}>
+            close
+          </button>
+          <FormFormat />
+        </div>
+      )}
+
     </div>
   );
 };

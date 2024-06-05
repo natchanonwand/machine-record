@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import TablesDisplay from './MachineTable';
+import styles from './Font.module.css';
 
 const MachineHistoryFormat = () => {
     const [selectedTable, setSelectedTable] = useState<string | null>(null); 
@@ -46,7 +47,7 @@ const MachineHistoryFormat = () => {
 
     return (
         <div>
-            <h1 style={{ fontSize: '30px', color: 'blue'}}>Machine History Format</h1>
+            <h1 className={styles.responsiveH1} style={{color: 'blue', marginBottom: '10px'}}>Machine History Format</h1>
             {selectedTable ? (
                 <TablesDisplay tableName={selectedTable} goBack={goBackToList} />
             ) : (

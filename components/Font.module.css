@@ -1,0 +1,12 @@
+/* Font.module.css */
+.responsiveH1 {
+    font-size: 3vw; /* Base size for larger screens */
+    color: blue;
+  }
+  
+  @media (max-width: 768px) {
+    .responsiveH1 {
+      font-size: 7vw; /* Larger size for phone screens */
+    }
+  }
+  
