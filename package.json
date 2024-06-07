@@ -27,6 +27,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.9.7",
     "next": "14.2.3",
+    "pdf-lib": "^1.17.1",
     "react": "^18",
     "react-datepicker": "^6.9.0",
     "react-dom": "^18",
@@ -34,15 +35,16 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@types/next": "^9.0.0",
     "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/react": "^18.3.3",
     "@types/react-datepicker": "^6.2.0",
-    "@types/react-dom": "^18",
+    "@types/react-dom": "^18.3.0",
     "concurrently": "^8.2.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "mini-css-extract-plugin": "^2.9.0",
     "nodemon": "^3.1.0",
-    "typescript": "^5"
+    "typescript": "^5.4.5"
   }
 }

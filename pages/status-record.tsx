@@ -52,8 +52,8 @@ const StatusRecordForm = () => {
     { machine_name: 'P-PS-1203',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'P-PS-1204',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'P-PS-1205',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1206',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1207',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    // { machine_name: 'P-PS-1206',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    // { machine_name: 'P-PS-1207',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'P-PS-1208',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'P-PS-1209',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'P-PS-1210',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
@@ -82,11 +82,13 @@ const StatusRecordForm = () => {
   const [fan3Statuses, setFan3Statuses] = useState([
     { machine_name: 'SF-BRR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'SF-BRR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-STR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SMEF-STR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan3DataSent, setIsVentilationFan3DataSent] = useState(false);
   const [fan2Statuses, setFan2Statuses] = useState([
     { machine_name: 'EF-VFD-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-VFD-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BRR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan2DataSent, setIsVentilationFan2DataSent] = useState(false);
   const [fan1Statuses, setFan1Statuses] = useState([
@@ -108,6 +110,13 @@ const StatusRecordForm = () => {
     { machine_name: 'P-G-2104',record_date: '', record_time: '', status: '', T:'', note: '' },
   ])
   const [isVortexGridDataSent, setIsVortexGridDataSent] = useState(false);
+  const [airFlowStatuses, setAirFlowStatuses] = useState([
+    { machine_name: 'FIT-3611',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
+    { machine_name: 'FIT-3612',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
+    { machine_name: 'FIT-3613',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
+    { machine_name: 'FIT-3614',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
+  ])
+  const [isAirFlowDataSent, setIsAirFlowDataSent] = useState(false);
   const [fineScreenStatuses, setFineScreenStatuses] = useState([
     { machine_name: 'SC-FS-2505',record_date: '', record_time: '', status: '', A1:'', note: '' },
     { machine_name: 'SC-FS-2504',record_date: '', record_time: '', status: '', A1:'', note: '' },
@@ -196,10 +205,10 @@ const StatusRecordForm = () => {
     { machine_name: 'SCP-CL-4101',record_date: '', record_time: '', status: '', A_motor1: '',	A_motor2: '',	A_scum: '',	A_pump: '',	T_motor: '',	T_scum: '',	T_pump: '',	note: ''},
   ])
   const [isClarifier4DataSent, setIsClarifier4DataSent] = useState(false);
-  const [autoSampler2Statuses, setAutoSampler2Statuses] = useState([
-    { machine_name: 'SP-G-2201',record_date: '', record_time: '', status: '', T:'', note: '' },
+  const [autoSampler_2Statuses, setAutoSampler_2Statuses] = useState([
+    { machine_name: 'SP-EF-5201',record_date: '', record_time: '', status: '', T:'', note: '' },
   ])
-  const [isAutoSampler2DataSent, setIsAutoSampler2DataSent] = useState(false);
+  const [isAutoSampler_2DataSent, setIsAutoSampler_2DataSent] = useState(false);
   const [fan5Statuses, setFan5Statuses] = useState([
     { machine_name: 'EF-BR-01',record_date: '', record_time: '', status: '', note: '' },
     { machine_name: 'EF-BR-02',record_date: '', record_time: '', status: '', note: '' },
@@ -213,10 +222,10 @@ const StatusRecordForm = () => {
   ])
   const [isVentilationFan5_2DataSent, setIsVentilationFan5_2DataSent] = useState(false);
   const [fan5_3Statuses, setFan5_3Statuses] = useState([
-    { machine_name: 'EF-CL-01',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-02',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-03',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-04',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-04 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
     { machine_name: 'SF-CL-01',record_date: '', record_time: '', status: '', note: '' },
     { machine_name: 'SF-CL-02',record_date: '', record_time: '', status: '', note: '' },
     { machine_name: 'SF-CL-03',record_date: '', record_time: '', status: '', note: '' },
@@ -240,10 +249,10 @@ const StatusRecordForm = () => {
   ])
   const [isVentilationFan5_6DataSent, setIsVentilationFan5_6DataSent] = useState(false);
   const [fan5_7Statuses, setFan5_7Statuses] = useState([                                
-    { machine_name: 'EF-BSM-01',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BSM-02',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BSM-03',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BSM-04',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-01 (ตู้ไฟ)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-02 (ตู้ไฟ)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-03 (ตู้ไฟ)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-04 (ตู้ไฟ)',record_date: '', record_time: '', status: '', note: '' },
     { machine_name: 'SF-CL-01',record_date: '', record_time: '', status: '', note: '' },
     { machine_name: 'SF-CL-02',record_date: '', record_time: '', status: '', note: '' },
     { machine_name: 'SF-CL-03',record_date: '', record_time: '', status: '', note: '' },
@@ -313,6 +322,7 @@ const StatusRecordForm = () => {
       const savedFan1Statuses = localStorage.getItem('fan1Statuses')
       const savedAutoSamplerStatuses = localStorage.getItem('autoSamplerStatuses')
       const savedVortexGridStatuses = localStorage.getItem('vortexGridStatuses')
+      const savedAirFlowStatuses = localStorage.getItem('airFlowStatuses')
       const savedFineScreenStatuses = localStorage.getItem('fineScreenStatuses')
       const savedDrainagePump3Statuses = localStorage.getItem('drainagePump3Statuses')
       const savedFan4Statuses = localStorage.getItem('fan4Statuses')
@@ -326,7 +336,7 @@ const StatusRecordForm = () => {
       const savedClarifier2Statuses = localStorage.getItem('clarifier2Statuses')
       const savedClarifier3Statuses = localStorage.getItem('clarifier3Statuses')
       const savedClarifier4Statuses = localStorage.getItem('clarifier4Statuses')
-      const savedAutoSampler2Statuses = localStorage.getItem('autoSampler2Statuses')
+      const savedAutoSampler_2Statuses = localStorage.getItem('autoSampler_2Statuses')
       const savedfan5Statuses = localStorage.getItem('savedfan5Statuses')
       const savedfan5_2Statuses = localStorage.getItem('savedfan5_2Statuses')
       const savedfan5_3Statuses = localStorage.getItem('savedfan5_3Statuses')
@@ -354,6 +364,7 @@ const StatusRecordForm = () => {
       if (savedFan1Statuses) setFan1Statuses(JSON.parse(savedFan1Statuses));
       if (savedAutoSamplerStatuses) setAutoSamplerStatuses(JSON.parse(savedAutoSamplerStatuses));
       if (savedVortexGridStatuses) setVortexGridStatuses(JSON.parse(savedVortexGridStatuses));
+      if (savedAirFlowStatuses) setAirFlowStatuses(JSON.parse(savedAirFlowStatuses))
       if (savedFineScreenStatuses) {setFineScreenStatuses(JSON.parse(savedFineScreenStatuses));}
       if (savedDrainagePump3Statuses) { setDrainagePump3Statuses(JSON.parse(savedDrainagePump3Statuses));}
       if (savedFan4Statuses) {setFan4Statuses(JSON.parse(savedFan4Statuses));}
@@ -367,7 +378,7 @@ const StatusRecordForm = () => {
       if (savedClarifier2Statuses) {setClarifier2Statuses(JSON.parse(savedClarifier2Statuses));}
       if (savedClarifier3Statuses) {setClarifier3Statuses(JSON.parse(savedClarifier3Statuses));}
       if (savedClarifier4Statuses) {setClarifier4Statuses(JSON.parse(savedClarifier4Statuses));}
-      if (savedAutoSampler2Statuses) {setAutoSampler2Statuses(JSON.parse(savedAutoSampler2Statuses));}
+      if (savedAutoSampler_2Statuses) {setAutoSampler_2Statuses(JSON.parse(savedAutoSampler_2Statuses));}
       if (savedfan5Statuses) setFan5Statuses(JSON.parse(savedfan5Statuses));
       if (savedfan5_2Statuses) setFan5_2Statuses(JSON.parse(savedfan5_2Statuses));
       if (savedfan5_3Statuses) setFan5_3Statuses(JSON.parse(savedfan5_3Statuses));
@@ -440,6 +451,10 @@ useEffect(() => {
 }, [vortexGritStatuses]);
 
 useEffect(() => {
+  localStorage.setItem('airFlowStatuses', JSON.stringify(airFlowStatuses));
+}, [airFlowStatuses]);
+
+useEffect(() => {
   localStorage.setItem('fineScreenStatuses', JSON.stringify(fineScreenStatuses));
 }, [fineScreenStatuses]);
 
@@ -492,8 +507,8 @@ useEffect(() => {
 }, [clarifier4Statuses]);
 
 useEffect(() => {
-  localStorage.setItem('autoSampler2Statuses', JSON.stringify(autoSampler2Statuses));
-}, [autoSampler2Statuses]);
+  localStorage.setItem('autoSampler_2Statuses', JSON.stringify(autoSampler_2Statuses));
+}, [autoSampler_2Statuses]);
 
 useEffect(() => {
   localStorage.setItem('fan5Statuses', JSON.stringify(fan5Statuses));
@@ -979,6 +994,36 @@ const handleSubmitVortexGrit = async () => {
   }
 };
 
+const handleSubmitAirFlow = async () => {
+  try {
+    for (const airFlow of airFlowStatuses) {
+      // Formatting date and time
+      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      const response = await fetch('https://jb-api-1.onrender.com/api/air_flow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          machine_name: airFlow.machine_name,
+          record_date: formattedDate,
+          record_time: recordTime,
+          Flow: airFlow.Flow,
+          valve_percentage: airFlow.valve_percentage,
+          note: airFlow.note,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to add Air Flow record');
+        return;
+      }
+    }
+    console.log('All Air Flow records added successfully');
+    setIsAirFlowDataSent(true);
+  } catch (error) {
+    console.error('Error adding Air Flow records:', error);
+  }
+};
+
 const handleSubmitFineScreen = async () => {
   try {
     for (const fineScreen of fineScreenStatuses) {
@@ -1404,32 +1449,32 @@ const handleSubmitClarifier4 = async () => {
   }
 };
   
-const handleSubmitAutoSampler2 = async () => {
+const handleSubmitAutoSampler_2 = async () => {
   try {
-    for (const autoSampler2 of autoSampler2Statuses) {
+    for (const autoSampler_2 of autoSampler_2Statuses) {
       const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
       const response = await fetch('https://jb-api-1.onrender.com/api/auto_sampler', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          machine_name: autoSampler2.machine_name,
+          machine_name: autoSampler_2.machine_name,
           record_date: formattedDate,
           record_time: recordTime,
-          status: autoSampler2.status,
-          T: autoSampler2.T,
-          note: autoSampler2.note,
+          status: autoSampler_2.status,
+          T: autoSampler_2.T,
+          note: autoSampler_2.note,
         }),
       });
 
       if (!response.ok) {
-        console.error('Failed to add AutoSampler2 record');
+        console.error('Failed to add AutoSampler_2 record');
         return;
       }
     }
-    console.log('All AutoSampler2 records added successfully');
-    setIsAutoSampler2DataSent(true);
+    console.log('All AutoSampler_2 records added successfully');
+    setIsAutoSampler_2DataSent(true);
   } catch (error) {
-    console.error('Error adding AutoSampler2 records:', error);
+    console.error('Error adding AutoSampler_2 records:', error);
   }
 };
 
@@ -1862,6 +1907,9 @@ const handleComplete = () => {
   setVortexGridStatuses(vortexGritStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', T: '', note: '' })));
   setIsVortexGridDataSent(false);
 
+  setAirFlowStatuses(airFlowStatuses.map(status => ({ ...status, record_date: '', record_time: '', Flow: '', valve_percentage: '', note: ''})));
+  setIsAirFlowDataSent(false);
+
   setFineScreenStatuses(fineScreenStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', A1: '', note: '' })));
   setIsFineScreenDataSent(false);
 
@@ -1901,8 +1949,8 @@ const handleComplete = () => {
   setClarifier4Statuses(clarifier4Statuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', A_motor1: '', A_motor2: '', A_scum: '', A_pump: '', T_motor: '', T_scum: '', T_pump: '', note: '' })));
   setIsClarifier4DataSent(false);
 
-  setAutoSampler2Statuses(autoSampler2Statuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', T: '', note: '' })));
-  setIsAutoSampler2DataSent(false);
+  setAutoSampler_2Statuses(autoSampler_2Statuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', T: '', note: '' })));
+  setIsAutoSampler_2DataSent(false);
 
   setFan5Statuses(fan5Statuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', note: '' })));
   setIsVentilationFan5DataSent(false);
@@ -1978,6 +2026,28 @@ const handleComplete = () => {
     setShowSections7(!showSections7)
   };
 
+const allSection_1Sent = () => {
+  return isChillerDataSent && isChillerWaterPumpDataSent && isVentilationFan6DataSent && isBiofilterDataSent;
+};
+const allSection_2Sent = () => {
+  return isGardenPumpDataSent && isInletPumpingDataSent && isVentilationInletPumpingDataSent && isInletGateDataSent && isCoarseScreenDataSent;
+};
+const allSection_3Sent = () => {
+  return isVentilationFan3DataSent && isVentilationFan2DataSent && isVentilationFan1DataSent && isAutoSamplerDataSent && isVortexGridDataSent && isAirFlowDataSent;
+};
+const allSection_4Sent = () => {
+  return isFineScreenDataSent && isDrainagePump3DataSent && isVentilationFan4DataSent && isAnoxicMixer1DataSent && isAnoxicMixer2DataSent && isAnoxicMixer3DataSent && isAnoxicMixer4DataSent && isSingleAirBlowerDataSent && isPositiveAirBlowerDataSent;
+};
+const allSection_5Sent = () => {
+  return isClarifier1DataSent && isClarifier2DataSent && isClarifier3DataSent && isAutoSampler_2DataSent;
+};
+const allSection_6Sent = () => {
+  return isVentilationFan5DataSent && isVentilationFan5_2DataSent && isVentilationFan5_3DataSent && isVentilationFan5_4DataSent && isVentilationFan5_5DataSent && isVentilationFan5_6DataSent && isVentilationFan5_7DataSent && isDrainagePump2DataSent && isScrumPumpDataSent;
+};
+const allSection_7Sent = () => {
+  return isHiLowWaterPumpDataSent && isCWRWWaterPumpDataSent && isDrainagePump1DataSent && isEffluentPumpDataSent;
+};
+
 
   return (
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -2023,12 +2093,14 @@ const handleComplete = () => {
           <button type="submit" className={styles.button} disabled={isDataSent}>Submit</button>
           {isDataSent && <div className={styles.alert}>Recorder data sent successfully</div>}
 
-
+{/* Show/Hide Section 1 Button */}
+{!allSection_1Sent() && (
+  <>
           {showSections1 && (
           <>
 
           {/* Chiller field */}
-          <h3>Chiller Table</h3>
+          <h3>Chiller </h3>
           {chStatuses.map((ch, index) => (
               <div key={index} className={styles.fieldGroup}>
                   <label className={styles.label} htmlFor={`status-${ch.machine_name}`}>{ch.machine_name}</label>
@@ -2066,7 +2138,7 @@ const handleComplete = () => {
           {isChillerDataSent && <div className={styles.alert}>Chiller data sent successfully</div>}
 
           {/* Chiller Water Pump field */}
-          <h3>Chiller Water Pump Table</h3>
+          <h3>Chiller Water Pump </h3>
           {chillerWaterPumpStatuses.map((chwp, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <p className={styles.machineText}>{chwp.machine_name}</p>
@@ -2150,7 +2222,7 @@ const handleComplete = () => {
           {isChillerWaterPumpDataSent && <div className={styles.alert}>Chiller Water Pump data sent successfully</div>}
 
           {/* Ventilation Fan Room 6 field */}
-          <h3>Ventilation Fan Room 6 Table</h3>
+          <h3>Ventilation Fan Room 6 </h3>
           {fan6Statuses.map((fan, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <p className={styles.machineText}>{fan.machine_name}</p>
@@ -2234,7 +2306,7 @@ const handleComplete = () => {
           {isVentilationFan6DataSent && <div className={styles.alert}>Ventilation Fan data sent successfully</div>}
 
           {/* Biofilter field */}
-          <h3>Biofilter Table</h3>
+          <h3>Biofilter </h3>
           {biofilterStatuses.map((biofilter, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <p className={styles.machineText}>{biofilter.machine_name}</p>
@@ -2275,15 +2347,21 @@ const handleComplete = () => {
 
           </>
           )}
-
-          <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection1}>
-                {showSections1 ? 'Hide Section 1' : 'Show Section 1'}
-          </button>
           
+          
+              <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection1}>
+                    {showSections1 ? 'Hide Section 1' : 'Show Section 1'}
+              </button>
+        </>
+      )}         
+          
+{/* Show/Hide Section 2 Button */}
+{!allSection_2Sent() && (
+  <>
           {showSections2 && (
             <>
               {/* Garden Pump field */}
-                <h3>Garden Pump Table</h3>
+                <h3>Garden Pump </h3>
                 {gardenPumpStatuses.map((gp, index) => (
                     <div key={index} className={styles.fieldGroup}>
                         <label className={styles.label} htmlFor={`status-${gp.machine_name}`}>{gp.machine_name}</label>
@@ -2321,7 +2399,7 @@ const handleComplete = () => {
                 <button type="button" className={styles.button} onClick={handleSubmitGardenPump} disabled={isGardenPumpDataSent}>Submit Garden Pump Data</button>
                 {isGardenPumpDataSent && <div className={styles.alert}>Garden Pump data sent successfully</div>}
               {/* Inlet Pumping field */}
-                <h3>Inlet Pumping Table</h3>
+                <h3>Inlet Pumping </h3>
                 {inletPumpingStatuses.map((ip, index) => (
                     <div key={index} className={styles.fieldGroup}>
                         <label className={styles.label} htmlFor={`status-${ip.machine_name}`}>{ip.machine_name}</label>
@@ -2402,7 +2480,7 @@ const handleComplete = () => {
                 <button type="button" className={styles.button} onClick={handleSubmitInletPumping} disabled={isInletPumpingDataSent}>Submit Inlet Pumping Data</button>
                 {isInletPumpingDataSent && <div className={styles.alert}>Inlet Pumping data sent successfully</div>}
               {/* Ventilation Inlet Pumping field */}
-                <h3>Ventilation Inlet Pumping Table</h3>
+                <h3>Ventilation Inlet Pumping </h3>
                 {ventilationInletPumpingStatuses.map((vip, index) => (
                     <div key={index} className={styles.fieldGroup}>
                         <label className={styles.label} htmlFor={`status-${vip.machine_name}`}>{vip.machine_name}</label>
@@ -2483,7 +2561,7 @@ const handleComplete = () => {
                 <button type="button" className={styles.button} onClick={handleSubmitVentilationInletPumping} disabled={isVentilationInletPumpingDataSent}>Submit Ventilation Inlet Pumping Data</button>
                 {isVentilationInletPumpingDataSent && <div className={styles.alert}>Ventilation Inlet Pumping data sent successfully</div>}
               {/* Inlet Gate field */}
-                <h3>Inlet Gate Table</h3>
+                <h3>Inlet Gate </h3>
                 {inletGateStatuses.map((ig, index) => (
                     <div key={index} className={styles.fieldGroup}>
                         <label className={styles.label} htmlFor={`status-${ig.machine_name}`}>{ig.machine_name}</label>
@@ -2531,7 +2609,7 @@ const handleComplete = () => {
                 <button type="button" className={styles.button} onClick={handleSubmitInletGate} disabled={isInletGateDataSent}>Submit Inlet Gate Data</button>
                 {isInletGateDataSent && <div className={styles.alert}>Inlet Gate data sent successfully</div>}
               {/* Coarse Screen field */}
-                <h3>Coarse Screen Table</h3>
+                <h3>Coarse Screen </h3>
                 {coarseScreenStatuses.map((cs, index) => (
                     <div key={index} className={styles.fieldGroup}>
                         <label className={styles.label} htmlFor={`status-${cs.machine_name}`}>{cs.machine_name}</label>
@@ -2595,11 +2673,16 @@ const handleComplete = () => {
           <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection2}>
                 {showSections2 ? 'Hide Section 2' : 'Show Section 2'}
           </button>
+          </>
+      )} 
+{/* Show/Hide Section 3 Button */}
+{!allSection_3Sent() && (
+  <> 
 
           {showSections3 && (
             <>
             {/* fan 3 field */}
-            <h3>Ventilation Fan 3 Table</h3>
+            <h3>Ventilation Fan 3 </h3>
             {fan3Statuses.map((fan3, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fan3.machine_name}`}>{fan3.machine_name}</label>
@@ -2681,7 +2764,7 @@ const handleComplete = () => {
             {isVentilationFan3DataSent && <div className={styles.alert}>Fan 3 data sent successfully</div>}
 
             {/* fan 2 field */}
-            <h3>Ventilation Fan 2 Table</h3>
+            <h3>Ventilation Fan 2 </h3>
             {fan2Statuses.map((fan2, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fan2.machine_name}`}>{fan2.machine_name}</label>
@@ -2763,7 +2846,7 @@ const handleComplete = () => {
             {isVentilationFan2DataSent && <div className={styles.alert}>Fan 2 data sent successfully</div>}
 
             {/* fan 1 field */}
-            <h3>Ventilation Fan 1 Table</h3>
+            <h3>Ventilation Fan 1 </h3>
             {fan1Statuses.map((fan1, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fan1.machine_name}`}>{fan1.machine_name}</label>
@@ -2845,7 +2928,7 @@ const handleComplete = () => {
             {isVentilationFan1DataSent && <div className={styles.alert}>Fan 1 data sent successfully</div>}
 
             {/* Auto Sampler field */}
-            <h3>Auto Sampler Table</h3>
+            <h3>Auto Sampler </h3>
             {autoSamplerStatuses.map((autoSampler, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${autoSampler.machine_name}`}>{autoSampler.machine_name}</label>
@@ -2894,7 +2977,7 @@ const handleComplete = () => {
             {isAutoSamplerDataSent && <div className={styles.alert}>Auto Sampler data sent successfully</div>}
 
             {/* Vortex Grit field */}
-            <h3>Vortex Grit Table</h3>
+            <h3>Vortex Grit </h3>
             {vortexGritStatuses.map((vortexGrit, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${vortexGrit.machine_name}`}>{vortexGrit.machine_name}</label>
@@ -2942,15 +3025,71 @@ const handleComplete = () => {
             <button type="button" className={styles.button} onClick={handleSubmitVortexGrit} disabled={isVortexGridDataSent}>Submit Vortex Grit Data</button>
             {isVortexGridDataSent && <div className={styles.alert}>Vortex Grit data sent successfully</div>}
 
+            {/* Air Flow field */}
+            <h3>Air Flow </h3>
+            {airFlowStatuses.map((airFlow, index) => (
+              <div key={index} className={styles.fieldGroup}>
+                <label className={styles.label} htmlFor={`flow-${airFlow.machine_name}`}>{airFlow.machine_name}</label>
+                <input
+                  type="text"
+                  id={`flow-${airFlow.machine_name}`}
+                  className={styles.input}
+                  value={airFlow.Flow}
+                  onChange={(e) => {
+                    const newStatuses = [...airFlowStatuses];
+                    newStatuses[index] = { ...airFlow, Flow: e.target.value };
+                    setAirFlowStatuses(newStatuses);
+                  }}
+                  placeholder="Flow"
+                  disabled={isAirFlowDataSent}
+                />
+                <input
+                  type="text"
+                  value={airFlow.valve_percentage}
+                  onChange={(e) => {
+                    const newStatuses = [...airFlowStatuses];
+                    newStatuses[index].valve_percentage = e.target.value;
+                    setAirFlowStatuses(newStatuses);
+                  }}
+                  className={styles.input}
+                  placeholder="Valve Percentage"
+                  disabled={isAirFlowDataSent}
+                />
+                <input
+                  type="text"
+                  value={airFlow.note}
+                  onChange={(e) => {
+                    const newStatuses = [...airFlowStatuses];
+                    newStatuses[index].note = e.target.value;
+                    setAirFlowStatuses(newStatuses);
+                  }}
+                  className={styles.input}
+                  placeholder="Note"
+                  disabled={isAirFlowDataSent}
+                />
+              </div>
+            ))}
+            <button type="button" className={styles.button} onClick={handleSubmitAirFlow} disabled={isAirFlowDataSent}>Submit Air Flow Data</button>
+            {isAirFlowDataSent && <div className={styles.alert}>Air Flow data sent successfully</div>}
+        
+
             </>
           )} 
           <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection3}>
                 {showSections3 ? 'Hide Section 3' : 'Show Section 3'}
           </button>
+
+          </>
+      )}  
+
+{/* Show/Hide Section 4 Button */}
+{!allSection_4Sent() && (
+  <>
+
           {showSections4 && (
             <>
             {/* Fine Screen field */}
-            <h3>Fine Screen Table</h3>
+            <h3>Fine Screen </h3>
             {fineScreenStatuses.map((fineScreen, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fineScreen.machine_name}`}>{fineScreen.machine_name}</label>
@@ -2999,7 +3138,7 @@ const handleComplete = () => {
             {isFineScreenDataSent && <div className={styles.alert}>Fine Screen data sent successfully</div>}
             
             {/* Drainage Pump 3 field */}
-            <h3>Drainage Pump 3 Table</h3>
+            <h3>Drainage Pump 3 </h3>
             {drainagePump3Statuses.map((drainagePump3, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${drainagePump3.machine_name}`}>{drainagePump3.machine_name}</label>
@@ -3081,7 +3220,7 @@ const handleComplete = () => {
             {isDrainagePump3DataSent && <div className={styles.alert}>Drainage Pump 3 data sent successfully</div>}
             
             {/* Fan 4 field */}
-            <h3>Fan 4 Table</h3>
+            <h3>Fan 4 </h3>
             {fan4Statuses.map((fan4, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fan4.machine_name}`}>{fan4.machine_name}</label>
@@ -3163,7 +3302,7 @@ const handleComplete = () => {
             {isVentilationFan4DataSent && <div className={styles.alert}>Fan 4 data sent successfully</div>}
 
             {/* Anoxic Mixer 1 field */}
-            <h3>Anoxic Mixer 1 Table</h3>
+            <h3>Anoxic Mixer 1 </h3>
             {anoxicMixer1Statuses.map((anoxicMixer1, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${anoxicMixer1.machine_name}`}>{anoxicMixer1.machine_name}</label>
@@ -3244,7 +3383,7 @@ const handleComplete = () => {
               {isAnoxicMixer1DataSent && <div className={styles.alert}>Anoxic Mixer 1 data sent successfully</div>}
               
               {/* Anoxic Mixer 2 field */}
-              <h3>Anoxic Mixer 2 Table</h3>
+              <h3>Anoxic Mixer 2 </h3>
               {anoxicMixer2Statuses.map((anoxicMixer2, index) => (
                 <div key={index} className={styles.fieldGroup}>
                   <label className={styles.label} htmlFor={`status-${anoxicMixer2.machine_name}`}>{anoxicMixer2.machine_name}</label>
@@ -3326,7 +3465,7 @@ const handleComplete = () => {
               {isAnoxicMixer2DataSent && <div className={styles.alert}>Anoxic Mixer 2 data sent successfully</div>}
 
               {/* Anoxic Mixer 3 field */}
-              <h3>Anoxic Mixer 3 Table</h3>
+              <h3>Anoxic Mixer 3 </h3>
               {anoxicMixer3Statuses.map((anoxicMixer3, index) => (
                 <div key={index} className={styles.fieldGroup}>
                   <label className={styles.label} htmlFor={`status-${anoxicMixer3.machine_name}`}>{anoxicMixer3.machine_name}</label>
@@ -3408,7 +3547,7 @@ const handleComplete = () => {
               {isAnoxicMixer3DataSent && <div className={styles.alert}>Anoxic Mixer 3 data sent successfully</div>}
 
               {/* Anoxic Mixer 4 field */}
-              <h3>Anoxic Mixer 4 Table</h3>
+              <h3>Anoxic Mixer 4 </h3>
               {anoxicMixer4Statuses.map((anoxicMixer4, index) => (
                 <div key={index} className={styles.fieldGroup}>
                   <label className={styles.label} htmlFor={`status-${anoxicMixer4.machine_name}`}>{anoxicMixer4.machine_name}</label>
@@ -3490,7 +3629,7 @@ const handleComplete = () => {
               {isAnoxicMixer4DataSent && <div className={styles.alert}>Anoxic Mixer 4 data sent successfully</div>}
 
               {/* Single Air Blower field */}
-              <h3>Single Air Blower Table</h3>
+              <h3>Single Air Blower </h3>
               {singleAirBlowerStatuses.map((singleAirBlower, index) => (
                 <div key={index} className={styles.fieldGroup}>
                   <label className={styles.label} htmlFor={`status-${singleAirBlower.machine_name}`}>{singleAirBlower.machine_name}</label>
@@ -3572,7 +3711,7 @@ const handleComplete = () => {
               {isSingleAirBlowerDataSent && <div className={styles.alert}>Single Air Blower data sent successfully</div>}
 
               {/* Positive Air Blower field */}
-              <h3>Positive Air Blower Table</h3>
+              <h3>Positive Air Blower </h3>
               {positiveAirBlowerStatuses.map((positiveAirBlower, index) => (
                 <div key={index} className={styles.fieldGroup}>
                   <label className={styles.label} htmlFor={`status-${positiveAirBlower.machine_name}`}>{positiveAirBlower.machine_name}</label>
@@ -3660,12 +3799,17 @@ const handleComplete = () => {
                 {showSections4 ? 'Hide Section 4' : 'Show Section 4'}
           </button>
 
+        </>
+      )}  
+{/* Show/Hide Section 5 Button */}
+{!allSection_5Sent() && (
+  <>
 
           {showSections5 && (
             <>
 
             {/* Clarifier field */}
-            <h3>Clarifier Table</h3>
+            <h3>Clarifier </h3>
             {clarifier1Statuses.map((clarifier1, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${clarifier1.machine_name}`}>{clarifier1.machine_name}</label>
@@ -3780,7 +3924,7 @@ const handleComplete = () => {
             {isClarifier1DataSent && <div className={styles.alert}>Clarifier data sent successfully</div>}
             
             {/* Clarifier2 field */}
-            <h3>Clarifier2 Table</h3>
+            <h3>Clarifier2 </h3>
             {clarifier2Statuses.map((clarifier2, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${clarifier2.machine_name}`}>{clarifier2.machine_name}</label>
@@ -3894,123 +4038,10 @@ const handleComplete = () => {
             <button type="button" className={styles.button} onClick={handleSubmitClarifier2} disabled={isClarifier2DataSent}>Submit Clarifier2 Data</button>
             {isClarifier2DataSent && <div className={styles.alert}>Clarifier2 data sent successfully</div>}
 
-            {/* Clarifier2 field */}
-            <h3>Clarifier2 Table</h3>
-            {clarifier2Statuses.map((clarifier2, index) => (
-              <div key={index} className={styles.fieldGroup}>
-                <label className={styles.label} htmlFor={`status-${clarifier2.machine_name}`}>{clarifier2.machine_name}</label>
-                <select
-                  id={`status-${clarifier2.machine_name}`}
-                  className={styles.input}
-                  value={clarifier2.status}
-                  onChange={(e) => {
-                    const newStatuses = [...clarifier2Statuses];
-                    newStatuses[index] = { ...clarifier2, status: e.target.value };
-                    setClarifier2Statuses(newStatuses);
-                  }}
-                  disabled={isClarifier2DataSent}
-                >
-                  <option value="" disabled>Select Status</option>
-                  <option value="R">R</option>
-                  <option value="N">N</option>
-                  <option value="E">E</option>
-                  <option value="F">F</option>
-                </select>
-                <input
-                  type="text"
-                  value={clarifier2.A_motor1}
-                  onChange={(e) => {
-                    const newStatuses = [...clarifier2Statuses];
-                    newStatuses[index].A_motor1 = e.target.value;
-                    setClarifier2Statuses(newStatuses);
-                  }}
-                  className={styles.input}
-                  placeholder="A_motor1"
-                />
-                <input
-                  type="text"
-                  value={clarifier2.A_motor2}
-                  onChange={(e) => {
-                    const newStatuses = [...clarifier2Statuses];
-                    newStatuses[index].A_motor2 = e.target.value;
-                    setClarifier2Statuses(newStatuses);
-                  }}
-                  className={styles.input}
-                  placeholder="A_motor2"
-                />
-                <input
-                  type="text"
-                  value={clarifier2.A_scum}
-                  onChange={(e) => {
-                    const newStatuses = [...clarifier2Statuses];
-                    newStatuses[index].A_scum = e.target.value;
-                    setClarifier2Statuses(newStatuses);
-                  }}
-                  className={styles.input}
-                  placeholder="A_scum"
-                />
-                <input
-                  type="text"
-                  value={clarifier2.A_pump}
-                  onChange={(e) => {
-                    const newStatuses = [...clarifier2Statuses];
-                    newStatuses[index].A_pump = e.target.value;
-                    setClarifier2Statuses(newStatuses);
-                  }}
-                  className={styles.input}
-                  placeholder="A_pump"
-                />
-                <input
-                  type="text"
-                  value={clarifier2.T_motor}
-                  onChange={(e) => {
-                    const newStatuses = [...clarifier2Statuses];
-                    newStatuses[index].T_motor = e.target.value;
-                    setClarifier2Statuses(newStatuses);
-                  }}
-                  className={styles.input}
-                  placeholder="T_motor"
-                />
-                <input
-                  type="text"
-                  value={clarifier2.T_scum}
-                  onChange={(e) => {
-                    const newStatuses = [...clarifier2Statuses];
-                    newStatuses[index].T_scum = e.target.value;
-                    setClarifier2Statuses(newStatuses);
-                  }}
-                  className={styles.input}
-                  placeholder="T_scum"
-                />
-                <input
-                  type="text"
-                  value={clarifier2.T_pump}
-                  onChange={(e) => {
-                    const newStatuses = [...clarifier2Statuses];
-                    newStatuses[index].T_pump = e.target.value;
-                    setClarifier2Statuses(newStatuses);
-                  }}
-                  className={styles.input}
-                  placeholder="T_pump"
-                />
-                <input
-                  type="text"
-                  value={clarifier2.note}
-                  onChange={(e) => {
-                    const newStatuses = [...clarifier2Statuses];
-                    newStatuses[index].note = e.target.value;
-                    setClarifier2Statuses(newStatuses);
-                  }}
-                  className={styles.input}
-                  placeholder="Note"
-                />
-              </div>
-            ))}
-            <button type="button" className={styles.button} onClick={handleSubmitClarifier2} disabled={isClarifier2DataSent}>Submit Clarifier2 Data</button>
-            {isClarifier2DataSent && <div className={styles.alert}>Clarifier2 data sent successfully</div>}
+
 
             {/* Clarifier3 field */}
-            <h3>Clarifier3 Table</h3>
+            <h3>Clarifier3 </h3>
             {clarifier3Statuses.map((clarifier3, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${clarifier3.machine_name}`}>{clarifier3.machine_name}</label>
@@ -4125,7 +4156,7 @@ const handleComplete = () => {
             {isClarifier3DataSent && <div className={styles.alert}>Clarifier3 data sent successfully</div>}
             
             {/* Clarifier4 field */}
-            <h3>Clarifier4 Table</h3>
+            <h3>Clarifier4 </h3>
             {clarifier4Statuses.map((clarifier4, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${clarifier4.machine_name}`}>{clarifier4.machine_name}</label>
@@ -4239,21 +4270,21 @@ const handleComplete = () => {
             <button type="button" className={styles.button} onClick={handleSubmitClarifier4} disabled={isClarifier4DataSent}>Submit Clarifier4 Data</button>
             {isClarifier4DataSent && <div className={styles.alert}>Clarifier4 data sent successfully</div>}
 
-            {/* AutoSampler2 field */}
-            <h3>AutoSampler2 Table</h3>
-            {autoSampler2Statuses.map((autoSampler2, index) => (
+            {/* AutoSampler_2 field */}
+            <h3>AutoSampler_2 </h3>
+            {autoSampler_2Statuses.map((autoSampler_2, index) => (
               <div key={index} className={styles.fieldGroup}>
-                <label className={styles.label} htmlFor={`status-${autoSampler2.machine_name}`}>{autoSampler2.machine_name}</label>
+                <label className={styles.label} htmlFor={`status-${autoSampler_2.machine_name}`}>{autoSampler_2.machine_name}</label>
                 <select
-                  id={`status-${autoSampler2.machine_name}`}
+                  id={`status-${autoSampler_2.machine_name}`}
                   className={styles.input}
-                  value={autoSampler2.status}
+                  value={autoSampler_2.status}
                   onChange={(e) => {
-                    const newStatuses = [...autoSampler2Statuses];
-                    newStatuses[index] = { ...autoSampler2, status: e.target.value };
-                    setAutoSampler2Statuses(newStatuses);
+                    const newStatuses = [...autoSampler_2Statuses];
+                    newStatuses[index] = { ...autoSampler_2, status: e.target.value };
+                    setAutoSampler_2Statuses(newStatuses);
                   }}
-                  disabled={isAutoSampler2DataSent}
+                  disabled={isAutoSampler_2DataSent}
                 >
                   <option value="" disabled>Select Status</option>
                   <option value="R">R</option>
@@ -4263,30 +4294,30 @@ const handleComplete = () => {
                 </select>
                 <input
                   type="text"
-                  value={autoSampler2.T}
+                  value={autoSampler_2.T}
                   onChange={(e) => {
-                    const newStatuses = [...autoSampler2Statuses];
+                    const newStatuses = [...autoSampler_2Statuses];
                     newStatuses[index].T = e.target.value;
-                    setAutoSampler2Statuses(newStatuses);
+                    setAutoSampler_2Statuses(newStatuses);
                   }}
                   className={styles.input}
                   placeholder="T"
                 />
                 <input
                   type="text"
-                  value={autoSampler2.note}
+                  value={autoSampler_2.note}
                   onChange={(e) => {
-                    const newStatuses = [...autoSampler2Statuses];
+                    const newStatuses = [...autoSampler_2Statuses];
                     newStatuses[index].note = e.target.value;
-                    setAutoSampler2Statuses(newStatuses);
+                    setAutoSampler_2Statuses(newStatuses);
                   }}
                   className={styles.input}
                   placeholder="Note"
                 />
               </div>
             ))}
-            <button type="button" className={styles.button} onClick={handleSubmitAutoSampler2} disabled={isAutoSampler2DataSent}>Submit AutoSampler2 Data</button>
-            {isAutoSampler2DataSent && <div className={styles.alert}>AutoSampler2 data sent successfully</div>}
+            <button type="button" className={styles.button} onClick={handleSubmitAutoSampler_2} disabled={isAutoSampler_2DataSent}>Submit AutoSampler_2 Data</button>
+            {isAutoSampler_2DataSent && <div className={styles.alert}>AutoSampler_2 data sent successfully</div>}
 
 
             </>
@@ -4296,11 +4327,15 @@ const handleComplete = () => {
                 {showSections5 ? 'Hide Section 5' : 'Show Section 5'}
           </button>
 
-
+        </>
+      )}  
+{/* Show/Hide Section 6 Button */}
+{!allSection_6Sent() && (
+  <>
           {showSections6 && (
             <>
             {/* Fan5 field */}
-            <h3>Ventilation Fan Room 5 Table</h3>
+            <h3>Ventilation Fan Room 5 (เครื่องจักร)</h3>
             {fan5Statuses.map((fan5, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <label className={styles.label} htmlFor={`fan5${index + 1}Status`}>{fan5.machine_name}</label>
@@ -4315,7 +4350,7 @@ const handleComplete = () => {
                         }}
                         disabled={isVentilationFan5DataSent}
                     >
-                        <option value="" disabled>Select Status</option>
+                        <option value="" disabled>Select Status (เครื่องจักร)</option>
                         <option value="R">R</option>
                         <option value="N">N</option>
                         <option value="E">E</option>
@@ -4353,7 +4388,7 @@ const handleComplete = () => {
                         }}
                         disabled={isVentilationFan5_2DataSent}
                     >
-                        <option value="" disabled>Select Status</option>
+                        <option value="" disabled>Select Status (เครื่องจักร)</option>
                         <option value="R">R</option>
                         <option value="N">N</option>
                         <option value="E">E</option>
@@ -4391,7 +4426,7 @@ const handleComplete = () => {
                         }}
                         disabled={isVentilationFan5_3DataSent}
                     >
-                        <option value="" disabled>Select Status</option>
+                        <option value="" disabled>Select Status (เครื่องจักร)</option>
                         <option value="R">R</option>
                         <option value="N">N</option>
                         <option value="E">E</option>
@@ -4414,7 +4449,7 @@ const handleComplete = () => {
             {isVentilationFan5_3DataSent && <div className={styles.alert}>Ventilation Fan Room 5_3 data sent successfully</div>}
 
             {/* Fan5_4 field */}
-
+            <h3>Ventilation Fan Room 5 (ตู้ไฟ)</h3>
             {fan5_4Statuses.map((fan5_4, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <label className={styles.label} htmlFor={`fan5_4${index + 1}Status`}>{fan5_4.machine_name}</label>
@@ -4429,7 +4464,7 @@ const handleComplete = () => {
                         }}
                         disabled={isVentilationFan5_4DataSent}
                     >
-                        <option value="" disabled>Select Status</option>
+                        <option value="" disabled>Select Status (ตู้ไฟ)</option>
                         <option value="R">R</option>
                         <option value="N">N</option>
                         <option value="E">E</option>
@@ -4452,7 +4487,7 @@ const handleComplete = () => {
             {isVentilationFan5_4DataSent && <div className={styles.alert}>Ventilation Fan Room 5_4 data sent successfully</div>}
             
             {/* Fan5_5 field */}
-            <h3>Ventilation Fan Room 5_5 Table</h3>
+            <h3>Ventilation Fan Room 5_5 </h3>
             {fan5_5Statuses.map((fan5_5, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <label className={styles.label} htmlFor={`fan5_5${index + 1}Status`}>{fan5_5.machine_name}</label>
@@ -4467,7 +4502,7 @@ const handleComplete = () => {
                         }}
                         disabled={isVentilationFan5_5DataSent}
                     >
-                        <option value="" disabled>Select Status</option>
+                        <option value="" disabled>Select Status (ตู้ไฟ)</option>
                         <option value="R">R</option>
                         <option value="N">N</option>
                         <option value="E">E</option>
@@ -4504,7 +4539,7 @@ const handleComplete = () => {
                         }}
                         disabled={isVentilationFan5_6DataSent}
                     >
-                        <option value="" disabled>Select Status</option>
+                        <option value="" disabled>Select Status (ตู้ไฟ)</option>
                         <option value="R">R</option>
                         <option value="N">N</option>
                         <option value="E">E</option>
@@ -4541,7 +4576,7 @@ const handleComplete = () => {
                         }}
                         disabled={isVentilationFan5_7DataSent}
                     >
-                        <option value="" disabled>Select Status</option>
+                        <option value="" disabled>Select Status (ตู้ไฟ)</option>
                         <option value="R">R</option>
                         <option value="N">N</option>
                         <option value="E">E</option>
@@ -4564,7 +4599,7 @@ const handleComplete = () => {
             {isVentilationFan5_7DataSent && <div className={styles.alert}>Ventilation Fan Room 5_7 data sent successfully</div>}
 
             {/* DrainagePump2 field */}
-            <h3>Drainage Pump Table</h3>
+            <h3>Drainage Pump </h3>
             {drainagePump2Statuses.map((drainagePump2, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <p className={styles.machineText}>{drainagePump2.machine_name}</p>
@@ -4647,7 +4682,7 @@ const handleComplete = () => {
             {isDrainagePump2DataSent && <div className={styles.alert}>Drainage Pump data sent successfully</div>}
 
             {/* ScrumPump field */}
-            <h3>Scrum Pump Table</h3>
+            <h3>Scrum Pump </h3>
             {scrumPumpStatuses.map((scrumPump, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <p className={styles.machineText}>{scrumPump.machine_name}</p>
@@ -4736,10 +4771,17 @@ const handleComplete = () => {
               {showSections6 ? 'Hide Section 6' : 'Show Section 6'}
         </button>
 
+        </>
+      )}  
+      
+{/* Show/Hide Section 7 Button */}
+{!allSection_7Sent() && (
+  <>
+
         {showSections7 && (
           <>
           {/* HiLowWaterPump field */}
-          <h3>Hi-Low Water Pump Table</h3>
+          <h3>Hi-Low Water Pump </h3>
           {hiLowWaterPumpStatuses.map((hiLowWaterPump, index) => (
             <div key={index} className={styles.fieldGroup}>
               <p className={styles.machineText}>{hiLowWaterPump.machine_name}</p>
@@ -4778,7 +4820,7 @@ const handleComplete = () => {
           {isHiLowWaterPumpDataSent && <div className={styles.alert}>Hi-Low Water Pump data sent successfully</div>}
 
           {/* CWRW Water Pump field */}
-          <h3>CWRW Water Pump Table</h3>
+          <h3>CWRW Water Pump </h3>
           {cWRWWaterPumpStatuses.map((cWRWWaterPump, index) => (
             <div key={index} className={styles.fieldGroup}>
               <p className={styles.machineText}>{cWRWWaterPump.machine_name}</p>
@@ -4817,7 +4859,7 @@ const handleComplete = () => {
           {isCWRWWaterPumpDataSent && <div className={styles.alert}>CWRW Water Pump data sent successfully</div>}
 
           {/* Drainage Pump 1 field */}
-          <h3>Drainage Pump 1 Table</h3>
+          <h3>Drainage Pump 1 </h3>
           {drainagePump1Statuses.map((drainagePump1, index) => (
             <div key={index} className={styles.fieldGroup}>
               <p className={styles.machineText}>{drainagePump1.machine_name}</p>
@@ -4900,7 +4942,7 @@ const handleComplete = () => {
           {isDrainagePump1DataSent && <div className={styles.alert}>Drainage Pump 1 data sent successfully</div>}
 
           {/* EffluentPump field */}
-          <h3>Effluent Pump Table</h3>
+          <h3>Effluent Pump </h3>
           {effluentPumpStatuses.map((effluentPump, index) => (
               <div key={index} className={styles.fieldGroup}>
                   <p className={styles.machineText}>{effluentPump.machine_name}</p>
@@ -4988,6 +5030,9 @@ const handleComplete = () => {
         <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection7}>
               {showSections7 ? 'Hide Section 7' : 'Show Section 7'}
         </button>
+
+        </>
+      )}  
 
         <button type="button" className={styles.button} onClick={handleComplete}>Complete</button>
       </form>
