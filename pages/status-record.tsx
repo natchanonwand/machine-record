@@ -12,6 +12,47 @@ const StatusRecordForm = () => {
     const [showSections5, setShowSections5] = useState(false); 
     const [showSections6, setShowSections6] = useState(false);
     const [showSections7, setShowSections7] = useState(false);
+    const [validationError, setValidationError] = useState<string | null>(null);
+    const [validationError_2, setValidationError_2] = useState<string | null>(null);
+    const [validationError_3, setValidationError_3] = useState<string | null>(null);
+    const [validationError_4, setValidationError_4] = useState<string | null>(null);
+    const [validationError_5, setValidationError_5] = useState<string | null>(null);
+    const [validationError_6, setValidationError_6] = useState<string | null>(null);
+    const [validationError_7, setValidationError_7] = useState<string | null>(null);
+    const [validationError_8, setValidationError_8] = useState<string | null>(null);
+    const [validationError_9, setValidationError_9] = useState<string | null>(null);
+    const [validationError_10, setValidationError_10] = useState<string | null>(null);
+    const [validationError_11, setValidationError_11] = useState<string | null>(null);
+    const [validationError_12, setValidationError_12] = useState<string | null>(null);
+    const [validationError_13, setValidationError_13] = useState<string | null>(null);
+    const [validationError_14, setValidationError_14] = useState<string | null>(null);
+    const [validationError_15, setValidationError_15] = useState<string | null>(null);
+    const [validationError_16, setValidationError_16] = useState<string | null>(null);
+    const [validationError_17, setValidationError_17] = useState<string | null>(null);
+    const [validationError_18, setValidationError_18] = useState<string | null>(null);
+    const [validationError_19, setValidationError_19] = useState<string | null>(null);
+    const [validationError_20, setValidationError_20] = useState<string | null>(null);
+    const [validationError_21, setValidationError_21] = useState<string | null>(null);
+    const [validationError_22, setValidationError_22] = useState<string | null>(null);
+    const [validationError_23, setValidationError_23] = useState<string | null>(null);
+    const [validationError_24, setValidationError_24] = useState<string | null>(null);
+    const [validationError_25, setValidationError_25] = useState<string | null>(null);
+    const [validationError_26, setValidationError_26] = useState<string | null>(null);
+    const [validationError_27, setValidationError_27] = useState<string | null>(null);
+    const [validationError_28, setValidationError_28] = useState<string | null>(null);
+    const [validationError_29, setValidationError_29] = useState<string | null>(null);
+    const [validationError_30, setValidationError_30] = useState<string | null>(null);
+    const [validationError_31, setValidationError_31] = useState<string | null>(null);
+    const [validationError_32, setValidationError_32] = useState<string | null>(null);
+    const [validationError_33, setValidationError_33] = useState<string | null>(null);
+    const [validationError_34, setValidationError_34] = useState<string | null>(null);
+    const [validationError_35, setValidationError_35] = useState<string | null>(null);
+    const [validationError_36, setValidationError_36] = useState<string | null>(null);
+    const [validationError_37, setValidationError_37] = useState<string | null>(null);
+    const [validationError_38, setValidationError_38] = useState<string | null>(null);
+    const [validationError_39, setValidationError_39] = useState<string | null>(null);
+    const [validationError_40, setValidationError_40] = useState<string | null>(null);
+    const [validationError_41, setValidationError_41] = useState<string | null>(null);
     const [recorderName, setRecorderName] = useState('');
     const [recordDate, setRecordDate] = useState<Date | null>(null);
     const [recordTime, setRecordTime] = useState('');
@@ -585,134 +626,277 @@ useEffect(() => {
     };
 
     const handleSubmitChillerData = async () => {
-        try {
-            for (const ch of chStatuses) {
-                const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-                const response = await fetch('https://jb-api-1.onrender.com/api/chiller', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ machine_name: ch.machine_name, record_date: formattedDate, record_time: recordTime, status: ch.status, note: ch.note }),
-                });
+      console.log('Submitting chiller data...'); // Debugging
+      console.log('Chiller statuses:', chStatuses); // Debugging
+  
+      // Validation: Check if any status is 'E' without a note
+      for (const ch of chStatuses) {
+          console.log(`Checking machine ${ch.machine_name} with status ${ch.status} and note ${ch.note}`); // Debugging
+          if (ch.status === 'E' && (!ch.note || ch.note.trim() === '')) {
+              setValidationError(`*** Please enter a note for machine ${ch.machine_name} with status 'E'. ***`);
+              console.error('Validation failed'); // Debugging
+              return; // Prevent submission
+          }
+      }
+  
+      console.log('Validation passed'); // Debugging
+  
+      // If validation passes, proceed with the submission
+      try {
+          for (const ch of chStatuses) {
+              const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+              const response = await fetch('https://jb-api-1.onrender.com/api/chiller', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                      machine_name: ch.machine_name,
+                      record_date: formattedDate,
+                      record_time: recordTime,
+                      status: ch.status,
+                      note: ch.note,
+                  }),
+              });
+  
+              if (!response.ok) {
+                  console.error('Failed to add record for machine', ch.machine_name); // Debugging
+                  setValidationError(`Failed to add record for machine ${ch.machine_name}`);
+                  return;
+              }
+          }
+  
+          console.log('All records added successfully');
+          setChStatuses(chStatuses.map((ch) => ({ ...ch, status: '', note: '' })));
+          setIsChillerDataSent(true);
+          setValidationError(null); // Clear validation error if data is successfully sent
+      } catch (error) {
+          console.error('Error adding record:', error);
+          setValidationError('Error adding record.');
+      }
+  };
+  
 
-                if (!response.ok) {
-                    console.error('Failed to add record');
-                    return;
-                }
-            }
+  const handleSubmitChillerWaterPumpData = async () => {
+    console.log('Submitting chiller water pump data...'); // Debugging
+    console.log('Chiller Water Pump statuses:', chillerWaterPumpStatuses); // Debugging
 
-            console.log('All records added successfully');
-            setChStatuses(chStatuses.map((ch) => ({ ...ch, status: '', note: '' })));
-            setIsChillerDataSent(true);
-        } catch (error) {
-            console.error('Error adding record:', error);
+    // Validation: Check if any status is 'E' without a note
+    for (const chwp of chillerWaterPumpStatuses) {
+        console.log(`Checking machine ${chwp.machine_name} with status ${chwp.status} and note ${chwp.note}`); // Debugging
+        if (chwp.status === 'E' && (!chwp.note || chwp.note.trim() === '' || chwp.note.trim() === '-')) {
+            setValidationError_2(`*** Please enter a note for machine ${chwp.machine_name} with status 'E'. ***`);
+            console.error('Validation failed'); // Debugging
+            return; // Prevent submission
         }
-    };
+    }
 
-    const handleSubmitChillerWaterPumpData = async () => {
-      try {
-          for (const chwp of chillerWaterPumpStatuses) {
-              const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-              const response = await fetch('https://jb-api-1.onrender.com/api/Chiller_Water_Pump', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ machine_name: chwp.machine_name, record_date: formattedDate, record_time: recordTime, status: chwp.status, A1: chwp.A1, A2: chwp.A2, A3: chwp.A3, T: chwp.T, note: chwp.note }),
-              });
-  
-              if (!response.ok) {
-                  console.error('Failed to add record');
-                  return;
-              }
-          }
-  
-          console.log('All Chiller Water Pump records added successfully');
-          setChillerWaterPumpStatuses(chillerWaterPumpStatuses.map((chwp) => ({ ...chwp, status: '', A1: '', A2: '', A3: '', T: '', note: '' })));
-          setIsChillerWaterPumpDataSent(true);
-      } catch (error) {
-          console.error('Error adding Chiller Water Pump records:', error);
-      }
-  };
-  
-  const handleSubmitFan6Data = async () => {
-      try {
-          for (const fan of fan6Statuses) {
-              const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-              const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room6', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ machine_name: fan.machine_name, record_date: formattedDate, record_time: recordTime, status: fan.status, A1: fan.A1, A2: fan.A2, A3: fan.A3, T: fan.T, note: fan.note }),
-              });
-  
-              if (!response.ok) {
-                  console.error('Failed to add record');
-                  return;
-              }
-          }
-  
-          console.log('All Ventilation Fan Room 6 records added successfully');
-          setFan6Statuses(fan6Statuses.map((fan) => ({ ...fan, status: '', A1: '', A2: '', A3: '', T: '', note: '' })));
-          setIsVentilationFan6DataSent(true);
-      } catch (error) {
-          console.error('Error adding Ventilation Fan Room 6 records:', error);
-      }
-  };
-  
-  const handleSubmitBiofilterData = async () => {
-      try {
-          for (const biofilter of biofilterStatuses) {
-              const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-              const response = await fetch('https://jb-api-1.onrender.com/api/biofilter', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ machine_name: biofilter.machine_name, record_date: formattedDate, record_time: recordTime, status: biofilter.status, note: biofilter.note }),
-              });
-  
-              if (!response.ok) {
-                  console.error('Failed to add record');
-                  return;
-              }
-          }
-  
-          console.log('All Biofilter records added successfully');
-          setBiofilterStatuses(biofilterStatuses.map((biofilter) => ({ ...biofilter, status: '', note: '' })));
-          setIsBiofilterDataSent(true);
-      } catch (error) {
-          console.error('Error adding Biofilter records:', error);
-      }
-  };
-  const handleSubmitGardenPump = async () => {
+    console.log('Validation passed'); // Debugging
+
+    // If validation passes, proceed with the submission
     try {
-        for (const gardenPump of gardenPumpStatuses) {
+        for (const chwp of chillerWaterPumpStatuses) {
             const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-            const response = await fetch('https://jb-api-1.onrender.com/api/garden_pump', {
+            const response = await fetch('https://jb-api-1.onrender.com/api/Chiller_Water_Pump', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    machine_name: gardenPump.machine_name,
+                    machine_name: chwp.machine_name,
                     record_date: formattedDate,
                     record_time: recordTime,
-                    status: gardenPump.status,
-                    note: gardenPump.note,
+                    status: chwp.status,
+                    A1: chwp.A1,
+                    A2: chwp.A2,
+                    A3: chwp.A3,
+                    T: chwp.T,
+                    note: chwp.note,
                 }),
             });
 
             if (!response.ok) {
-                console.error('Failed to add record');
+                console.error('Failed to add record for machine', chwp.machine_name); // Debugging
+                setValidationError_2(`Failed to add record for machine ${chwp.machine_name}`);
                 return;
             }
         }
 
-        console.log('All GardenPump records added successfully');
-        setGardenPumpStatuses(gardenPumpStatuses.map((gardenPump) => ({
-            ...gardenPump,
-            status: '',
-            note: ''
-        })));
-        setIsGardenPumpDataSent(true);
+        console.log('All Chiller Water Pump records added successfully');
+        setChillerWaterPumpStatuses(chillerWaterPumpStatuses.map((chwp) => ({ ...chwp, status: '', A1: '', A2: '', A3: '', T: '', note: '' })));
+        setIsChillerWaterPumpDataSent(true);
+        setValidationError_2(null); // Clear validation error if data is successfully sent
     } catch (error) {
-        console.error('Error adding GardenPump records:', error);
+        console.error('Error adding Chiller Water Pump records:', error);
+        setValidationError_2('Error adding Chiller Water Pump records.');
     }
 };
+  
+const handleSubmitFan6Data = async () => {
+  console.log('Submitting fan 6 data...'); // Debugging
+  console.log('Fan 6 statuses:', fan6Statuses); // Debugging
+
+  // Validation: Check if any status is 'E' without a note
+  for (const fan of fan6Statuses) {
+      console.log(`Checking machine ${fan.machine_name} with status ${fan.status} and note ${fan.note}`); // Debugging
+      if (fan.status === 'E' && (!fan.note || fan.note.trim() === '' || fan.note.trim() === '-')) {
+          setValidationError_3(`*** Please enter a note for machine ${fan.machine_name} with status 'E'. ***`);
+          console.error('Validation failed'); // Debugging
+          return; // Prevent submission
+      }
+  }
+
+  console.log('Validation passed'); // Debugging
+
+  // If validation passes, proceed with the submission
+  try {
+      for (const fan of fan6Statuses) {
+          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room6', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  machine_name: fan.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: fan.status,
+                  A1: fan.A1,
+                  A2: fan.A2,
+                  A3: fan.A3,
+                  T: fan.T,
+                  note: fan.note,
+              }),
+          });
+
+          if (!response.ok) {
+              console.error('Failed to add record for machine', fan.machine_name); // Debugging
+              setValidationError_3(`Failed to add record for machine ${fan.machine_name}`);
+              return;
+          }
+      }
+
+      console.log('All Ventilation Fan Room 6 records added successfully');
+      setFan6Statuses(fan6Statuses.map((fan) => ({ ...fan, status: '', A1: '', A2: '', A3: '', T: '', note: '' })));
+      setIsVentilationFan6DataSent(true);
+      setValidationError_3(null); // Clear validation error if data is successfully sent
+  } catch (error) {
+      console.error('Error adding Ventilation Fan Room 6 records:', error);
+      setValidationError_3('Error adding Ventilation Fan Room 6 records.');
+  }
+};
+  
+const handleSubmitBiofilterData = async () => {
+  console.log('Submitting biofilter data...'); // Debugging
+  console.log('Biofilter statuses:', biofilterStatuses); // Debugging
+
+  // Validation: Check if any status is 'E' without a note
+  for (const biofilter of biofilterStatuses) {
+      console.log(`Checking machine ${biofilter.machine_name} with status ${biofilter.status} and note ${biofilter.note}`); // Debugging
+      if (biofilter.status === 'E' && (!biofilter.note || biofilter.note.trim() === '' || biofilter.note.trim() === '-')) {
+          setValidationError_4(`*** Please enter a note for machine ${biofilter.machine_name} with status 'E'. ***`);
+          console.error('Validation failed'); // Debugging
+          return; // Prevent submission
+      }
+  }
+
+  console.log('Validation passed'); // Debugging
+
+  // If validation passes, proceed with the submission
+  try {
+      for (const biofilter of biofilterStatuses) {
+          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          const response = await fetch('https://jb-api-1.onrender.com/api/biofilter', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  machine_name: biofilter.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: biofilter.status,
+                  note: biofilter.note,
+              }),
+          });
+
+          if (!response.ok) {
+              console.error('Failed to add record for machine', biofilter.machine_name); // Debugging
+              setValidationError_4(`Failed to add record for machine ${biofilter.machine_name}`);
+              return;
+          }
+      }
+
+      console.log('All Biofilter records added successfully');
+      setBiofilterStatuses(biofilterStatuses.map((biofilter) => ({ ...biofilter, status: '', note: '' })));
+      setIsBiofilterDataSent(true);
+      setValidationError_4(null); // Clear validation error if data is successfully sent
+  } catch (error) {
+      console.error('Error adding Biofilter records:', error);
+      setValidationError_4('Error adding Biofilter records.');
+  }
+};
+
+const handleSubmitGardenPump = async () => {
+  console.log('Submitting garden pump data...'); // Debugging
+  console.log('Garden Pump statuses:', gardenPumpStatuses); // Debugging
+
+  // Validation: Check if any status is 'E' without a note
+  for (const gardenPump of gardenPumpStatuses) {
+      console.log(`Checking machine ${gardenPump.machine_name} with status ${gardenPump.status} and note ${gardenPump.note}`); // Debugging
+      if (gardenPump.status === 'E' && (!gardenPump.note || gardenPump.note.trim() === '' || gardenPump.note.trim() === '-')) {
+          setValidationError_5(`*** Please enter a note for machine ${gardenPump.machine_name} with status 'E'. ***`);
+          console.error('Validation failed'); // Debugging
+          return; // Prevent submission
+      }
+  }
+
+  console.log('Validation passed'); // Debugging
+
+  // If validation passes, proceed with the submission
+  try {
+      for (const gardenPump of gardenPumpStatuses) {
+          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          const response = await fetch('https://jb-api-1.onrender.com/api/garden_pump', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  machine_name: gardenPump.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: gardenPump.status,
+                  note: gardenPump.note,
+              }),
+          });
+
+          if (!response.ok) {
+              console.error('Failed to add record for machine', gardenPump.machine_name); // Debugging
+              setValidationError_5(`Failed to add record for machine ${gardenPump.machine_name}`);
+              return;
+          }
+      }
+
+      console.log('All Garden Pump records added successfully');
+      setGardenPumpStatuses(gardenPumpStatuses.map((gardenPump) => ({ ...gardenPump, status: '', note: '' })));
+      setIsGardenPumpDataSent(true);
+      setValidationError_5(null); // Clear validation error if data is successfully sent
+  } catch (error) {
+      console.error('Error adding Garden Pump records:', error);
+      setValidationError_5('Error adding Garden Pump records.');
+  }
+};
+
+
 const handleSubmitInletPumping = async () => {
+  console.log('Submitting inlet pumping data...'); // Debugging
+  console.log('Inlet Pumping statuses:', inletPumpingStatuses); // Debugging
+
+  // Validation: Check if any status is 'E' without a note
+  for (const inletPumping of inletPumpingStatuses) {
+      console.log(`Checking machine ${inletPumping.machine_name} with status ${inletPumping.status} and note ${inletPumping.note}`); // Debugging
+      if (inletPumping.status === 'E' && (!inletPumping.note || inletPumping.note.trim() === '' || inletPumping.note.trim() === '-')) {
+          setValidationError_6(`*** Please enter a note for machine ${inletPumping.machine_name} with status 'E'. ***`);
+          console.error('Validation failed'); // Debugging
+          return; // Prevent submission
+      }
+  }
+
+  console.log('Validation passed'); // Debugging
+
+  // If validation passes, proceed with the submission
   try {
       for (const inletPumping of inletPumpingStatuses) {
           const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
@@ -720,36 +904,53 @@ const handleSubmitInletPumping = async () => {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                machine_name: inletPumping.machine_name,
-                record_date: formattedDate,
-                record_time: recordTime,
-                status: inletPumping.status,
-                A1: inletPumping.A1, 
-                A2: inletPumping.A2, 
-                A3: inletPumping.A3, 
-                T: inletPumping.T,
-                note: inletPumping.note, 
-                }),
+                  machine_name: inletPumping.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: inletPumping.status,
+                  A1: inletPumping.A1, 
+                  A2: inletPumping.A2, 
+                  A3: inletPumping.A3, 
+                  T: inletPumping.T,
+                  note: inletPumping.note,
+              }),
           });
 
           if (!response.ok) {
-              console.error('Failed to add Inlet Pumping record');
+              console.error('Failed to add record for machine', inletPumping.machine_name); // Debugging
+              setValidationError_6(`Failed to add record for machine ${inletPumping.machine_name}`);
               return;
           }
       }
+
       console.log('All Inlet Pumping records added successfully');
-      setInletPumpingStatuses(inletPumpingStatuses.map((inletPumping) => ({
-          ...inletPumping,
-          status: '',
-          note: ''
-      })));
+      setInletPumpingStatuses(inletPumpingStatuses.map((inletPumping) => ({ ...inletPumping, status: '', note: '' })));
       setIsInletPumpingDataSent(true);
+      setValidationError_6(null); // Clear validation error if data is successfully sent
   } catch (error) {
       console.error('Error adding Inlet Pumping records:', error);
+      setValidationError_6('Error adding Inlet Pumping records.');
   }
 };
 
+
 const handleSubmitVentilationInletPumping = async () => {
+  console.log('Submitting ventilation inlet pumping data...'); // Debugging
+  console.log('Ventilation Inlet Pumping statuses:', ventilationInletPumpingStatuses); // Debugging
+
+  // Validation: Check if any status is 'E' without a note
+  for (const ventilationInletPumping of ventilationInletPumpingStatuses) {
+      console.log(`Checking machine ${ventilationInletPumping.machine_name} with status ${ventilationInletPumping.status} and note ${ventilationInletPumping.note}`); // Debugging
+      if (ventilationInletPumping.status === 'E' && (!ventilationInletPumping.note || ventilationInletPumping.note.trim() === '' || ventilationInletPumping.note.trim() === '-')) {
+          setValidationError_7(`*** Please enter a note for machine ${ventilationInletPumping.machine_name} with status 'E'. ***`);
+          console.error('Validation failed'); // Debugging
+          return; // Prevent submission
+      }
+  }
+
+  console.log('Validation passed'); // Debugging
+
+  // If validation passes, proceed with the submission
   try {
       for (const ventilationInletPumping of ventilationInletPumpingStatuses) {
           const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
@@ -757,242 +958,316 @@ const handleSubmitVentilationInletPumping = async () => {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                machine_name: ventilationInletPumping.machine_name,
-                record_date: formattedDate,
-                record_time: recordTime,
-                status: ventilationInletPumping.status,
-                A1: ventilationInletPumping.A1, 
-                A2: ventilationInletPumping.A2, 
-                A3: ventilationInletPumping.A3, 
-                T: ventilationInletPumping.T,
-                note: ventilationInletPumping.note,  
-                }),
+                  machine_name: ventilationInletPumping.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: ventilationInletPumping.status,
+                  A1: ventilationInletPumping.A1, 
+                  A2: ventilationInletPumping.A2, 
+                  A3: ventilationInletPumping.A3, 
+                  T: ventilationInletPumping.T,
+                  note: ventilationInletPumping.note,
+              }),
           });
 
           if (!response.ok) {
-              console.error('Failed to add Ventilation Inlet Pumping record');
+              console.error('Failed to add record for machine', ventilationInletPumping.machine_name); // Debugging
+              setValidationError_7(`Failed to add record for machine ${ventilationInletPumping.machine_name}`);
               return;
           }
       }
+
       console.log('All Ventilation Inlet Pumping records added successfully');
       setIsVentilationInletPumpingDataSent(true);
+      setValidationError_7(null); // Clear validation error if data is successfully sent
   } catch (error) {
       console.error('Error adding Ventilation Inlet Pumping records:', error);
+      setValidationError_7('Error adding Ventilation Inlet Pumping records.');
   }
 };
 
+
 const handleSubmitInletGate = async () => {
+  console.log('Submitting inlet gate data...'); // Debugging
+  console.log('Inlet Gate statuses:', inletGateStatuses); // Debugging
+
+  // Validation: Check if any status is 'E' without a note
+  for (const inletGate of inletGateStatuses) {
+      console.log(`Checking machine ${inletGate.machine_name} with status ${inletGate.status} and note ${inletGate.note}`); // Debugging
+      if (inletGate.status === 'E' && (!inletGate.note || inletGate.note.trim() === '' || inletGate.note.trim() === '-')) {
+          setValidationError_8(`*** Please enter a note for machine ${inletGate.machine_name} with status 'E'. ***`);
+          console.error('Validation failed'); // Debugging
+          return; // Prevent submission
+      }
+  }
+
+  console.log('Validation passed'); // Debugging
+
+  // If validation passes, proceed with the submission
   try {
       for (const inletGate of inletGateStatuses) {
           const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
           const response = await fetch('https://jb-api-1.onrender.com/api/inlet_gate', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ 
-                machine_name: inletGate.machine_name,
-                record_date: formattedDate,
-                record_time: recordTime,
-                status: inletGate.status,
-                gate_percentage: inletGate.gate_percentage,
-                note: inletGate.note,   
+              body: JSON.stringify({
+                  machine_name: inletGate.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: inletGate.status,
+                  gate_percentage: inletGate.gate_percentage,
+                  note: inletGate.note,
               }),
           });
 
           if (!response.ok) {
-              console.error('Failed to add Inlet Gate record');
+              console.error('Failed to add record for machine', inletGate.machine_name); // Debugging
+              setValidationError_8(`Failed to add record for machine ${inletGate.machine_name}`);
               return;
           }
       }
+
       console.log('All Inlet Gate records added successfully');
       setIsInletGateDataSent(true);
+      setValidationError_8(null); // Clear validation error if data is successfully sent
   } catch (error) {
       console.error('Error adding Inlet Gate records:', error);
+      setValidationError_8('Error adding Inlet Gate records.');
   }
 };
+
 
 const handleSubmitCoarseScreen = async () => {
   try {
       for (const coarseScreen of coarseScreenStatuses) {
-          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          if (coarseScreen.status === 'E' && (!coarseScreen.note || coarseScreen.note.trim() === '' || coarseScreen.note.trim() === '-')) {
+              setValidationError_9(`*** Please enter a note for machine ${coarseScreen.machine_name} with status 'E'. ***`);
+              return; // Prevent submission
+          }
+      }
+
+      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      for (const coarseScreen of coarseScreenStatuses) {
           const response = await fetch('https://jb-api-1.onrender.com/api/coarse_screen', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                machine_name: coarseScreen.machine_name,
-                record_date: formattedDate,
-                record_time: recordTime,
-                status: coarseScreen.status,
-                T_1: coarseScreen.T_1,
-                T_2: coarseScreen.T_2,
-                note: coarseScreen.note,    
-                }),
+                  machine_name: coarseScreen.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: coarseScreen.status,
+                  T_1: coarseScreen.T_1,
+                  T_2: coarseScreen.T_2,
+                  note: coarseScreen.note,
+              }),
           });
 
           if (!response.ok) {
-              console.error('Failed to add Coarse Screen record');
+              setValidationError_9(`Failed to add record for machine ${coarseScreen.machine_name}`);
               return;
           }
       }
-      console.log('All Coarse Screen records added successfully');
       setIsCoarseScreenDataSent(true);
+      setValidationError_9(null); // Clear validation error if data is successfully sent
   } catch (error) {
-      console.error('Error adding Coarse Screen records:', error);
+      setValidationError_9('Error adding Coarse Screen records.');
   }
 };
+
 
 const handleSubmitFan3 = async () => {
   try {
-    for (const fan3 of fan3Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room3', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          machine_name: fan3.machine_name,
-          record_date: formattedDate,
-          record_time: recordTime,
-          status: fan3.status,
-          A1: fan3.A1,
-          A2: fan3.A2,
-          A3: fan3.A3,
-          T: fan3.T,
-          note: fan3.note,
-        }),
-      });
-
-      if (!response.ok) {
-        console.error('Failed to add Fan 3 record');
-        return;
+      for (const fan3 of fan3Statuses) {
+          if (fan3.status === 'E' && (!fan3.note || fan3.note.trim() === '' || fan3.note.trim() === '-')) {
+              setValidationError_10(`*** Please enter a note for machine ${fan3.machine_name} with status 'E'. ***`);
+              return; // Prevent submission
+          }
       }
-    }
-    console.log('All Fan 3 records added successfully');
-    setIsVentilationFan3DataSent(true);
+
+      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      for (const fan3 of fan3Statuses) {
+          const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room3', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  machine_name: fan3.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: fan3.status,
+                  A1: fan3.A1,
+                  A2: fan3.A2,
+                  A3: fan3.A3,
+                  T: fan3.T,
+                  note: fan3.note,
+              }),
+          });
+
+          if (!response.ok) {
+              setValidationError_10(`Failed to add record for machine ${fan3.machine_name}`);
+              return;
+          }
+      }
+      setIsVentilationFan3DataSent(true);
+      setValidationError_10(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding Fan 3 records:', error);
+      setValidationError_10('Error adding Fan 3 records.');
   }
 };
+
 
 const handleSubmitFan2 = async () => {
   try {
-    for (const fan2 of fan2Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room2', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          machine_name: fan2.machine_name,
-          record_date: formattedDate,
-          record_time: recordTime,
-          status: fan2.status,
-          A1: fan2.A1,
-          A2: fan2.A2,
-          A3: fan2.A3,
-          T: fan2.T,
-          note: fan2.note,
-        }),
-      });
-
-      if (!response.ok) {
-        console.error('Failed to add Fan 2 record');
-        return;
+      for (const fan2 of fan2Statuses) {
+          if (fan2.status === 'E' && (!fan2.note || fan2.note.trim() === '' || fan2.note.trim() === '-')) {
+              setValidationError_11(`*** Please enter a note for machine ${fan2.machine_name} with status 'E'. ***`);
+              return; // Prevent submission
+          }
       }
-    }
-    console.log('All Fan 2 records added successfully');
-    setIsVentilationFan2DataSent(true);
+
+      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      for (const fan2 of fan2Statuses) {
+          const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room2', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  machine_name: fan2.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: fan2.status,
+                  A1: fan2.A1,
+                  A2: fan2.A2,
+                  A3: fan2.A3,
+                  T: fan2.T,
+                  note: fan2.note,
+              }),
+          });
+
+          if (!response.ok) {
+              setValidationError_11(`Failed to add record for machine ${fan2.machine_name}`);
+              return;
+          }
+      }
+      setIsVentilationFan2DataSent(true);
+      setValidationError_11(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding Fan 2 records:', error);
+      setValidationError_11('Error adding Fan 2 records.');
   }
 };
+
 
 const handleSubmitFan1 = async () => {
   try {
-    for (const fan1 of fan1Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room1', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          machine_name: fan1.machine_name,
-          record_date: formattedDate,
-          record_time: recordTime,
-          status: fan1.status,
-          A1: fan1.A1,
-          A2: fan1.A2,
-          A3: fan1.A3,
-          T: fan1.T,
-          note: fan1.note,
-        }),
-      });
-
-      if (!response.ok) {
-        console.error('Failed to add Fan 1 record');
-        return;
+      for (const fan1 of fan1Statuses) {
+          if (fan1.status === 'E' && (!fan1.note || fan1.note.trim() === '' || fan1.note.trim() === '-')) {
+              setValidationError_12(`*** Please enter a note for machine ${fan1.machine_name} with status 'E'. ***`);
+              return; // Prevent submission
+          }
       }
-    }
-    console.log('All Fan 1 records added successfully');
-    setIsVentilationFan1DataSent(true);
+
+      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      for (const fan1 of fan1Statuses) {
+          const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room1', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  machine_name: fan1.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: fan1.status,
+                  A1: fan1.A1,
+                  A2: fan1.A2,
+                  A3: fan1.A3,
+                  T: fan1.T,
+                  note: fan1.note,
+              }),
+          });
+
+          if (!response.ok) {
+              setValidationError_12(`Failed to add record for machine ${fan1.machine_name}`);
+              return;
+          }
+      }
+      setIsVentilationFan1DataSent(true);
+      setValidationError_12(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding Fan 1 records:', error);
+      setValidationError_12('Error adding Fan 1 records.');
   }
 };
+
 
 const handleSubmitAutoSampler = async () => {
   try {
-    for (const autoSampler of autoSamplerStatuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('https://jb-api-1.onrender.com/api/auto_sampler', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          machine_name: autoSampler.machine_name,
-          record_date: formattedDate,
-          record_time: recordTime,
-          status: autoSampler.status,
-          T: autoSampler.T,
-          note: autoSampler.note,
-        }),
-      });
-
-      if (!response.ok) {
-        console.error('Failed to add Auto Sampler record');
-        return;
+      for (const autoSampler of autoSamplerStatuses) {
+          if (autoSampler.status === 'E' && (!autoSampler.note || autoSampler.note.trim() === '' || autoSampler.note.trim() === '-')) {
+              setValidationError_13(`*** Please enter a note for machine ${autoSampler.machine_name} with status 'E'. ***`);
+              return; // Prevent submission
+          }
       }
-    }
-    console.log('All Auto Sampler records added successfully');
-    setIsAutoSamplerDataSent(true);
+
+      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      for (const autoSampler of autoSamplerStatuses) {
+          const response = await fetch('https://jb-api-1.onrender.com/api/auto_sampler', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  machine_name: autoSampler.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: autoSampler.status,
+                  T: autoSampler.T,
+                  note: autoSampler.note,
+              }),
+          });
+
+          if (!response.ok) {
+              setValidationError_13(`Failed to add record for machine ${autoSampler.machine_name}`);
+              return;
+          }
+      }
+      setIsAutoSamplerDataSent(true);
+      setValidationError_13(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding Auto Sampler records:', error);
+      setValidationError_13('Error adding Auto Sampler records.');
   }
 };
+
 
 const handleSubmitVortexGrit = async () => {
   try {
-    for (const vortexGrit of vortexGritStatuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-      const response = await fetch('https://jb-api-1.onrender.com/api/vortex_grit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          machine_name: vortexGrit.machine_name,
-          record_date: formattedDate,
-          record_time: recordTime,
-          status: vortexGrit.status,
-          T: vortexGrit.T,
-          note: vortexGrit.note,
-        }),
-      });
-
-      if (!response.ok) {
-        console.error('Failed to add Vortex Grit record');
-        return;
+      for (const vortexGrit of vortexGritStatuses) {
+          if (vortexGrit.status === 'E' && (!vortexGrit.note || vortexGrit.note.trim() === '' || vortexGrit.note.trim() === '-')) {
+              setValidationError_14(`*** Please enter a note for machine ${vortexGrit.machine_name} with status 'E'. ***`);
+              return; // Prevent submission
+          }
       }
-    }
-    console.log('All Vortex Grit records added successfully');
-    setIsVortexGridDataSent(true);
+
+      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      for (const vortexGrit of vortexGritStatuses) {
+          const response = await fetch('https://jb-api-1.onrender.com/api/vortex_grit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  machine_name: vortexGrit.machine_name,
+                  record_date: formattedDate,
+                  record_time: recordTime,
+                  status: vortexGrit.status,
+                  T: vortexGrit.T,
+                  note: vortexGrit.note,
+              }),
+          });
+
+          if (!response.ok) {
+              setValidationError_14(`Failed to add record for machine ${vortexGrit.machine_name}`);
+              return;
+          }
+      }
+      setIsVortexGridDataSent(true);
+      setValidationError_14(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding Vortex Grit records:', error);
+      setValidationError_14('Error adding Vortex Grit records.');
   }
 };
+
 
 const handleSubmitAirFlow = async () => {
   try {
@@ -1027,7 +1302,14 @@ const handleSubmitAirFlow = async () => {
 const handleSubmitFineScreen = async () => {
   try {
     for (const fineScreen of fineScreenStatuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (fineScreen.status === 'E' && (!fineScreen.note || fineScreen.note.trim() === '' || fineScreen.note.trim() === '-')) {
+        setValidationError_15(`*** Please enter a note for machine ${fineScreen.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const fineScreen of fineScreenStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/fine_screen', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1042,21 +1324,29 @@ const handleSubmitFineScreen = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Fine Screen record');
+        setValidationError_15(`Failed to add record for machine ${fineScreen.machine_name}`);
         return;
       }
     }
-    console.log('All Fine Screen records added successfully');
     setIsFineScreenDataSent(true);
+    setValidationError_15(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding Fine Screen records:', error);
+    setValidationError_15('Error adding Fine Screen records.');
   }
 };
+
 
 const handleSubmitDrainagePump3 = async () => {
   try {
     for (const drainagePump3 of drainagePump3Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (drainagePump3.status === 'E' && (!drainagePump3.note || drainagePump3.note.trim() === '' || drainagePump3.note.trim() === '-')) {
+        setValidationError_16(`*** Please enter a note for machine ${drainagePump3.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const drainagePump3 of drainagePump3Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Drainage_Pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1074,21 +1364,29 @@ const handleSubmitDrainagePump3 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Drainage Pump 3 record');
+        setValidationError_16(`Failed to add record for machine ${drainagePump3.machine_name}`);
         return;
       }
     }
-    console.log('All Drainage Pump 3 records added successfully');
     setIsDrainagePump3DataSent(true);
+    setValidationError_16(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding Drainage Pump 3 records:', error);
+    setValidationError_16('Error adding Drainage Pump 3 records.');
   }
 };
+
 
 const handleSubmitFan4 = async () => {
   try {
     for (const fan4 of fan4Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (fan4.status === 'E' && (!fan4.note || fan4.note.trim() === '' || fan4.note.trim() === '-')) {
+        setValidationError_17(`*** Please enter a note for machine ${fan4.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const fan4 of fan4Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room4', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1106,21 +1404,29 @@ const handleSubmitFan4 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Fan 4 record');
+        setValidationError_17(`Failed to add record for machine ${fan4.machine_name}`);
         return;
       }
     }
-    console.log('All Fan 4 records added successfully');
     setIsVentilationFan4DataSent(true);
+    setValidationError_17(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding Fan 4 records:', error);
+    setValidationError_17('Error adding Fan 4 records.');
   }
 };
+
 
 const handleSubmitAnoxicMixer1 = async () => {
   try {
     for (const anoxicMixer1 of anoxicMixer1Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (anoxicMixer1.status === 'E' && (!anoxicMixer1.note || anoxicMixer1.note.trim() === '' || anoxicMixer1.note.trim() === '-')) {
+        setValidationError_18(`*** Please enter a note for machine ${anoxicMixer1.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const anoxicMixer1 of anoxicMixer1Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1138,21 +1444,29 @@ const handleSubmitAnoxicMixer1 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Anoxic Mixer 1 record');
+        setValidationError_18(`Failed to add record for machine ${anoxicMixer1.machine_name}`);
         return;
       }
     }
-    console.log('All Anoxic Mixer 1 records added successfully');
     setIsAnoxicMixer1DataSent(true);
+    setValidationError_18(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding Anoxic Mixer 1 records:', error);
+    setValidationError_18('Error adding Anoxic Mixer 1 records.');
   }
 };
+
 
 const handleSubmitAnoxicMixer2 = async () => {
   try {
     for (const anoxicMixer2 of anoxicMixer2Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (anoxicMixer2.status === 'E' && (!anoxicMixer2.note || anoxicMixer2.note.trim() === '' || anoxicMixer2.note.trim() === '-')) {
+        setValidationError_19(`*** Please enter a note for machine ${anoxicMixer2.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const anoxicMixer2 of anoxicMixer2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1170,21 +1484,31 @@ const handleSubmitAnoxicMixer2 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Anoxic Mixer 2 record');
+        setValidationError_19(`Failed to add record for machine ${anoxicMixer2.machine_name}`);
         return;
       }
     }
     console.log('All Anoxic Mixer 2 records added successfully');
     setIsAnoxicMixer2DataSent(true);
+    setValidationError_19(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Anoxic Mixer 2 records:', error);
+    setValidationError_19('Error adding Anoxic Mixer 2 records.');
   }
 };
+
 
 const handleSubmitAnoxicMixer3 = async () => {
   try {
     for (const anoxicMixer3 of anoxicMixer3Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (anoxicMixer3.status === 'E' && (!anoxicMixer3.note || anoxicMixer3.note.trim() === '' || anoxicMixer3.note.trim() === '-')) {
+        setValidationError_20(`*** Please enter a note for machine ${anoxicMixer3.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const anoxicMixer3 of anoxicMixer3Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1202,21 +1526,32 @@ const handleSubmitAnoxicMixer3 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Anoxic Mixer 3 record');
+        setValidationError_20(`Failed to add record for machine ${anoxicMixer3.machine_name}`);
         return;
       }
     }
     console.log('All Anoxic Mixer 3 records added successfully');
     setIsAnoxicMixer3DataSent(true);
+    setValidationError_20(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Anoxic Mixer 3 records:', error);
+    setValidationError_20('Error adding Anoxic Mixer 3 records.');
   }
 };
+
+
 
 const handleSubmitAnoxicMixer4 = async () => {
   try {
     for (const anoxicMixer4 of anoxicMixer4Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (anoxicMixer4.status === 'E' && (!anoxicMixer4.note || anoxicMixer4.note.trim() === '' || anoxicMixer4.note.trim() === '-')) {
+        setValidationError_21(`*** Please enter a note for machine ${anoxicMixer4.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const anoxicMixer4 of anoxicMixer4Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1234,21 +1569,31 @@ const handleSubmitAnoxicMixer4 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Anoxic Mixer 4 record');
+        setValidationError_21(`Failed to add record for machine ${anoxicMixer4.machine_name}`);
         return;
       }
     }
     console.log('All Anoxic Mixer 4 records added successfully');
     setIsAnoxicMixer4DataSent(true);
+    setValidationError_21(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Anoxic Mixer 4 records:', error);
+    setValidationError_21('Error adding Anoxic Mixer 4 records.');
   }
 };
+
 
 const handleSubmitSingleAirBlower = async () => {
   try {
     for (const singleAirBlower of singleAirBlowerStatuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (singleAirBlower.status === 'E' && (!singleAirBlower.note || singleAirBlower.note.trim() === '' || singleAirBlower.note.trim() === '-')) {
+        setValidationError_22(`*** Please enter a note for machine ${singleAirBlower.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const singleAirBlower of singleAirBlowerStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/air-blower', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1266,21 +1611,30 @@ const handleSubmitSingleAirBlower = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Single Air Blower record');
+        setValidationError_22(`Failed to add record for machine ${singleAirBlower.machine_name}`);
         return;
       }
     }
     console.log('All Single Air Blower records added successfully');
     setIsSingleAirBlowerDataSent(true);
+    setValidationError_22(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Single Air Blower records:', error);
+    setValidationError_22('Error adding Single Air Blower records.');
   }
 };
 
 const handleSubmitPositiveAirBlower = async () => {
   try {
     for (const positiveAirBlower of positiveAirBlowerStatuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (positiveAirBlower.status === 'E' && (!positiveAirBlower.note || positiveAirBlower.note.trim() === '' || positiveAirBlower.note.trim() === '-')) {
+        setValidationError_23(`*** Please enter a note for machine ${positiveAirBlower.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const positiveAirBlower of positiveAirBlowerStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/air-blower', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1298,21 +1652,31 @@ const handleSubmitPositiveAirBlower = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Positive Air Blower record');
+        setValidationError_23(`Failed to add record for machine ${positiveAirBlower.machine_name}`);
         return;
       }
     }
     console.log('All Positive Air Blower records added successfully');
     setIsPositiveAirBlowerDataSent(true);
+    setValidationError_23(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Positive Air Blower records:', error);
+    setValidationError_23('Error adding Positive Air Blower records.');
   }
 };
+
 
 const handleSubmitClarifier = async () => {
   try {
     for (const clarifier of clarifier1Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (clarifier.status === 'E' && (!clarifier.note || clarifier.note.trim() === '' || clarifier.note.trim() === '-')) {
+        setValidationError_24(`*** Please enter a note for machine ${clarifier.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const clarifier of clarifier1Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1333,21 +1697,31 @@ const handleSubmitClarifier = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Clarifier record');
+        setValidationError_24(`Failed to add record for machine ${clarifier.machine_name}`);
         return;
       }
     }
     console.log('All Clarifier records added successfully');
     setIsClarifier1DataSent(true);
+    setValidationError_24(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Clarifier records:', error);
+    setValidationError_24('Error adding Clarifier records.');
   }
 };
+
 
 const handleSubmitClarifier2 = async () => {
   try {
     for (const clarifier2 of clarifier2Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (clarifier2.status === 'E' && (!clarifier2.note || clarifier2.note.trim() === '' || clarifier2.note.trim() === '-')) {
+        setValidationError_25(`*** Please enter a note for machine ${clarifier2.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const clarifier2 of clarifier2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1368,21 +1742,31 @@ const handleSubmitClarifier2 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Clarifier record');
+        setValidationError_25(`Failed to add record for machine ${clarifier2.machine_name}`);
         return;
       }
     }
     console.log('All Clarifier2 records added successfully');
     setIsClarifier2DataSent(true);
+    setValidationError_25(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Clarifier records:', error);
+    setValidationError_25('Error adding Clarifier records.');
   }
 };
+
 
 const handleSubmitClarifier3 = async () => {
   try {
     for (const clarifier3 of clarifier3Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (clarifier3.status === 'E' && (!clarifier3.note || clarifier3.note.trim() === '' || clarifier3.note.trim() === '-')) {
+        setValidationError_26(`*** Please enter a note for machine ${clarifier3.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const clarifier3 of clarifier3Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1403,21 +1787,31 @@ const handleSubmitClarifier3 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Clarifier record');
+        setValidationError_26(`Failed to add record for machine ${clarifier3.machine_name}`);
         return;
       }
     }
     console.log('All Clarifier3 records added successfully');
     setIsClarifier3DataSent(true);
+    setValidationError_26(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Clarifier records:', error);
+    setValidationError_26('Error adding Clarifier records.');
   }
 };
+
 
 const handleSubmitClarifier4 = async () => {
   try {
     for (const clarifier4 of clarifier4Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (clarifier4.status === 'E' && (!clarifier4.note || clarifier4.note.trim() === '' || clarifier4.note.trim() === '-')) {
+        setValidationError_27(`*** Please enter a note for machine ${clarifier4.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const clarifier4 of clarifier4Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1438,21 +1832,31 @@ const handleSubmitClarifier4 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Clarifier record');
+        setValidationError_27(`Failed to add record for machine ${clarifier4.machine_name}`);
         return;
       }
     }
-    console.log('All Clarifier3 records added successfully');
+    console.log('All Clarifier4 records added successfully');
     setIsClarifier4DataSent(true);
+    setValidationError_27(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Clarifier records:', error);
+    setValidationError_27('Error adding Clarifier records.');
   }
 };
+
   
 const handleSubmitAutoSampler_2 = async () => {
   try {
     for (const autoSampler_2 of autoSampler_2Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (autoSampler_2.status === 'E' && (!autoSampler_2.note || autoSampler_2.note.trim() === '' || autoSampler_2.note.trim() === '-')) {
+        setValidationError_28(`*** Please enter a note for machine ${autoSampler_2.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const autoSampler_2 of autoSampler_2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/auto_sampler', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1467,21 +1871,31 @@ const handleSubmitAutoSampler_2 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add AutoSampler_2 record');
+        setValidationError_28(`Failed to add record for machine ${autoSampler_2.machine_name}`);
         return;
       }
     }
     console.log('All AutoSampler_2 records added successfully');
     setIsAutoSampler_2DataSent(true);
+    setValidationError_28(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding AutoSampler_2 records:', error);
+    setValidationError_28('Error adding AutoSampler_2 records.');
   }
 };
+
 
 const handleSubmitFan5 = async () => {
   try {
     for (const fan5 of fan5Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (fan5.status === 'E' && (!fan5.note || fan5.note.trim() === '' || fan5.note.trim() === '-')) {
+        setValidationError_29(`*** Please enter a note for machine ${fan5.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const fan5 of fan5Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1495,21 +1909,30 @@ const handleSubmitFan5 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Fan5 record');
+        setValidationError_29(`Failed to add record for machine ${fan5.machine_name}`);
         return;
       }
     }
     console.log('All Fan5 records added successfully');
     setIsVentilationFan5DataSent(true);
+    setValidationError_29(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Fan5 records:', error);
+    setValidationError_29('Error adding Fan5 records.');
   }
 };
 
 const handleSubmitFan5_2 = async () => {
   try {
     for (const fan5_2 of fan5_2Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (fan5_2.status === 'E' && (!fan5_2.note || fan5_2.note.trim() === '' || fan5_2.note.trim() === '-')) {
+        setValidationError_30(`*** Please enter a note for machine ${fan5_2.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const fan5_2 of fan5_2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1523,21 +1946,31 @@ const handleSubmitFan5_2 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Fan5_2 record');
+        setValidationError_30(`Failed to add record for machine ${fan5_2.machine_name}`);
         return;
       }
     }
     console.log('All Fan5_2 records added successfully');
     setIsVentilationFan5_2DataSent(true);
+    setValidationError_30(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Fan5_2 records:', error);
+    setValidationError_30('Error adding Fan5_2 records.');
   }
 };
+
 
 const handleSubmitFan5_3 = async () => {
   try {
     for (const fan5_3 of fan5_3Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (fan5_3.status === 'E' && (!fan5_3.note || fan5_3.note.trim() === '' || fan5_3.note.trim() === '-')) {
+        setValidationError_31(`*** Please enter a note for machine ${fan5_3.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const fan5_3 of fan5_3Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1551,21 +1984,31 @@ const handleSubmitFan5_3 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Fan5_3 record');
+        setValidationError_31(`Failed to add record for machine ${fan5_3.machine_name}`);
         return;
       }
     }
     console.log('All Fan5_3 records added successfully');
     setIsVentilationFan5_3DataSent(true);
+    setValidationError_31(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Fan5_3 records:', error);
+    setValidationError_31('Error adding Fan5_3 records.');
   }
 };
+
 
 const handleSubmitFan5_4 = async () => {
   try {
     for (const fan5_4 of fan5_4Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (fan5_4.status === 'E' && (!fan5_4.note || fan5_4.note.trim() === '' || fan5_4.note.trim() === '-')) {
+        setValidationError_32(`*** Please enter a note for machine ${fan5_4.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const fan5_4 of fan5_4Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1579,21 +2022,31 @@ const handleSubmitFan5_4 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Fan5_4 record');
+        setValidationError_32(`Failed to add record for machine ${fan5_4.machine_name}`);
         return;
       }
     }
     console.log('All Fan5_4 records added successfully');
     setIsVentilationFan5_4DataSent(true);
+    setValidationError_32(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Fan5_4 records:', error);
+    setValidationError_32('Error adding Fan5_4 records.');
   }
 };
+
 
 const handleSubmitFan5_5 = async () => {
   try {
     for (const fan5_5 of fan5_5Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (fan5_5.status === 'E' && (!fan5_5.note || fan5_5.note.trim() === '' || fan5_5.note.trim() === '-')) {
+        setValidationError_33(`*** Please enter a note for machine ${fan5_5.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const fan5_5 of fan5_5Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1607,21 +2060,31 @@ const handleSubmitFan5_5 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Fan5_5 record');
+        setValidationError_33(`Failed to add record for machine ${fan5_5.machine_name}`);
         return;
       }
     }
     console.log('All Fan5_5 records added successfully');
     setIsVentilationFan5_5DataSent(true);
+    setValidationError_33(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Fan5_5 records:', error);
+    setValidationError_33('Error adding Fan5_5 records.');
   }
 };
+
 
 const handleSubmitFan5_6 = async () => {
   try {
     for (const fan5_6 of fan5_6Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (fan5_6.status === 'E' && (!fan5_6.note || fan5_6.note.trim() === '' || fan5_6.note.trim() === '-')) {
+        setValidationError_34(`*** Please enter a note for machine ${fan5_6.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const fan5_6 of fan5_6Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1635,20 +2098,30 @@ const handleSubmitFan5_6 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Fan5_6 record');
+        setValidationError_34(`Failed to add record for machine ${fan5_6.machine_name}`);
         return;
       }
     }
     console.log('All Fan5_6 records added successfully');
     setIsVentilationFan5_6DataSent(true);
+    setValidationError_34(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Fan5_6 records:', error);
+    setValidationError_34('Error adding Fan5_6 records.');
   }
 };
+
 const handleSubmitFan5_7 = async () => {
   try {
     for (const fan5_7 of fan5_7Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (fan5_7.status === 'E' && (!fan5_7.note || fan5_7.note.trim() === '' || fan5_7.note.trim() === '-')) {
+        setValidationError_35(`*** Please enter a note for machine ${fan5_7.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const fan5_7 of fan5_7Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1662,21 +2135,31 @@ const handleSubmitFan5_7 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add Fan5_7 record');
+        setValidationError_35(`Failed to add record for machine ${fan5_7.machine_name}`);
         return;
       }
     }
     console.log('All Fan5_7 records added successfully');
     setIsVentilationFan5_7DataSent(true);
+    setValidationError_35(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding Fan5_7 records:', error);
+    setValidationError_35('Error adding Fan5_7 records.');
   }
 };
+
 
 const handleSubmitDrainagePump2 = async () => {
   try {
     for (const drainagePump2 of drainagePump2Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (drainagePump2.status === 'E' && (!drainagePump2.note || drainagePump2.note.trim() === '' || drainagePump2.note.trim() === '-')) {
+        setValidationError_36(`*** Please enter a note for machine ${drainagePump2.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const drainagePump2 of drainagePump2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Drainage_Pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1694,21 +2177,31 @@ const handleSubmitDrainagePump2 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add DrainagePump2 record');
+        setValidationError_36(`Failed to add record for machine ${drainagePump2.machine_name}`);
         return;
       }
     }
     console.log('All DrainagePump2 records added successfully');
     setIsDrainagePump2DataSent(true);
+    setValidationError_36(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding DrainagePump2 records:', error);
+    setValidationError_36('Error adding DrainagePump2 records.');
   }
 };
+
 
 const handleSubmitScrumPump = async () => {
   try {
     for (const scrumPump of scrumPumpStatuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (scrumPump.status === 'E' && (!scrumPump.note || scrumPump.note.trim() === '' || scrumPump.note.trim() === '-')) {
+        setValidationError_37(`*** Please enter a note for machine ${scrumPump.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const scrumPump of scrumPumpStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Scum_Pump_Fan_Room6', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1726,21 +2219,30 @@ const handleSubmitScrumPump = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add ScrumPump record');
+        setValidationError_37(`Failed to add record for machine ${scrumPump.machine_name}`);
         return;
       }
     }
     console.log('All ScrumPump records added successfully');
     setIsScrumPumpDataSent(true);
+    setValidationError_37(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding ScrumPump records:', error);
+    setValidationError_37('Error adding ScrumPump records.');
   }
 };
 
 const handleSubmitHiLowWaterPump = async () => {
   try {
     for (const hiLowWaterPump of hiLowWaterPumpStatuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (hiLowWaterPump.status === 'E' && (!hiLowWaterPump.note || hiLowWaterPump.note.trim() === '' || hiLowWaterPump.note.trim() === '-')) {
+        setValidationError_38(`*** Please enter a note for machine ${hiLowWaterPump.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const hiLowWaterPump of hiLowWaterPumpStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/water_pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1754,21 +2256,31 @@ const handleSubmitHiLowWaterPump = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add HiLowWaterPump record');
+        setValidationError_38(`Failed to add record for machine ${hiLowWaterPump.machine_name}`);
         return;
       }
     }
     console.log('All HiLowWaterPump records added successfully');
     setIsHiLowWaterPumpDataSent(true);
+    setValidationError_38(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding HiLowWaterPump records:', error);
+    setValidationError_38('Error adding HiLowWaterPump records.');
   }
 };
+
 
 const handleSubmitCWRWWaterPump = async () => {
   try {
     for (const cWRWWaterPump of cWRWWaterPumpStatuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (cWRWWaterPump.status === 'E' && (!cWRWWaterPump.note || cWRWWaterPump.note.trim() === '' || cWRWWaterPump.note.trim() === '-')) {
+        setValidationError_39(`*** Please enter a note for machine ${cWRWWaterPump.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const cWRWWaterPump of cWRWWaterPumpStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/water_pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1782,21 +2294,30 @@ const handleSubmitCWRWWaterPump = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add CWRWWaterPump record');
+        setValidationError_39(`Failed to add record for machine ${cWRWWaterPump.machine_name}`);
         return;
       }
     }
     console.log('All CWRWWaterPump records added successfully');
     setIsCWRWWaterPumpDataSent(true);
+    setValidationError_39(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding CWRWWaterPump records:', error);
+    setValidationError_39('Error adding CWRWWaterPump records.');
   }
 };
 
 const handleSubmitDrainagePump1 = async () => {
   try {
     for (const drainagePump1 of drainagePump1Statuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (drainagePump1.status === 'E' && (!drainagePump1.note || drainagePump1.note.trim() === '' || drainagePump1.note.trim() === '-')) {
+        setValidationError_40(`*** Please enter a note for machine ${drainagePump1.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const drainagePump1 of drainagePump1Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Drainage_Pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1814,21 +2335,30 @@ const handleSubmitDrainagePump1 = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add DrainagePump1 record');
+        setValidationError_40(`Failed to add record for machine ${drainagePump1.machine_name}`);
         return;
       }
     }
     console.log('All DrainagePump1 records added successfully');
     setIsDrainagePump1DataSent(true);
+    setValidationError_40(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding DrainagePump1 records:', error);
+    setValidationError_40('Error adding DrainagePump1 records.');
   }
 };
 
 const handleSubmitEffluentPump = async () => {
   try {
     for (const effluentPump of effluentPumpStatuses) {
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      if (effluentPump.status === 'E' && (!effluentPump.note || effluentPump.note.trim() === '' || effluentPump.note.trim() === '-')) {
+        setValidationError_41(`*** Please enter a note for machine ${effluentPump.machine_name} with status 'E'. ***`);
+        return; // Prevent submission
+      }
+    }
+
+    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    for (const effluentPump of effluentPumpStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Effluent_Pump', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1846,16 +2376,19 @@ const handleSubmitEffluentPump = async () => {
       });
 
       if (!response.ok) {
-        console.error('Failed to add EffluentPump record');
+        setValidationError_41(`Failed to add record for machine ${effluentPump.machine_name}`);
         return;
       }
     }
     console.log('All EffluentPump records added successfully');
     setIsEffluentPumpDataSent(true);
+    setValidationError_41(null); // Clear validation error if data is successfully sent
   } catch (error) {
     console.error('Error adding EffluentPump records:', error);
+    setValidationError_41('Error adding EffluentPump records.');
   }
 };
+
 
 
 
@@ -1991,6 +2524,15 @@ const handleComplete = () => {
   setEffluentPumpStatuses(effluentPumpStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' })));
   setIsEffluentPumpDataSent(false);
 
+  setValidationError(null)
+  setValidationError_2(null)
+  setValidationError_3(null)
+  setValidationError_4(null)
+  setValidationError_5(null)
+  setValidationError_6(null)
+  setValidationError_7(null)
+  setValidationError_8(null)
+
 
   // Clear localStorage
   localStorage.clear();
@@ -2095,12 +2637,11 @@ const allSection_7Sent = () => {
 
 {/* Show/Hide Section 1 Button */}
 {!allSection_1Sent() && (
-  <>
+  <>  
           {showSections1 && (
           <>
-
           {/* Chiller field */}
-          <h3>Chiller </h3>
+          <h3>Chiller</h3>
           {chStatuses.map((ch, index) => (
               <div key={index} className={styles.fieldGroup}>
                   <label className={styles.label} htmlFor={`status-${ch.machine_name}`}>{ch.machine_name}</label>
@@ -2113,7 +2654,7 @@ const allSection_7Sent = () => {
                           newStatuses[index] = { ...ch, status: e.target.value };
                           setChStatuses(newStatuses);
                       }}
-                      disabled={isDataSent}
+                      disabled={isChillerDataSent}
                   >
                       <option value="" disabled>Select Status</option>
                       <option value="R">R</option>
@@ -2135,7 +2676,8 @@ const allSection_7Sent = () => {
               </div>
           ))}
           <button type="button" className={styles.button} onClick={handleSubmitChillerData} disabled={isChillerDataSent}>Submit Chiller Data</button>
-          {isChillerDataSent && <div className={styles.alert}>Chiller data sent successfully</div>}
+          {isChillerDataSent && <div className="alert">Chiller data sent successfully</div>}
+          {validationError && <div className={styles.validationError}>{validationError}</div>}
 
           {/* Chiller Water Pump field */}
           <h3>Chiller Water Pump </h3>
@@ -2202,7 +2744,7 @@ const allSection_7Sent = () => {
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T"
+                        placeholder="T (°C)"
                     />
                     <input
                         type="text"
@@ -2220,6 +2762,7 @@ const allSection_7Sent = () => {
 
           <button type="button" className={styles.button} onClick={handleSubmitChillerWaterPumpData} disabled={isChillerWaterPumpDataSent}>Submit Chiller Water Pump Data</button>
           {isChillerWaterPumpDataSent && <div className={styles.alert}>Chiller Water Pump data sent successfully</div>}
+          {validationError_2 && <div className={styles.validationError}>{validationError_2}</div>}
 
           {/* Ventilation Fan Room 6 field */}
           <h3>Ventilation Fan Room 6 </h3>
@@ -2286,7 +2829,7 @@ const allSection_7Sent = () => {
                             setFan6Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T"
+                        placeholder="T (°C)"
                     />
                     <input
                         type="text"
@@ -2304,6 +2847,7 @@ const allSection_7Sent = () => {
 
           <button type="button" className={styles.button} onClick={handleSubmitFan6Data} disabled={isVentilationFan6DataSent}>Submit Ventilation Fan Room 6 Data</button>
           {isVentilationFan6DataSent && <div className={styles.alert}>Ventilation Fan data sent successfully</div>}
+          {validationError_3 && <div className={styles.validationError}>{validationError_3}</div>}
 
           {/* Biofilter field */}
           <h3>Biofilter </h3>
@@ -2344,6 +2888,7 @@ const allSection_7Sent = () => {
 
           <button type="button" className={styles.button} onClick={handleSubmitBiofilterData} disabled={isBiofilterDataSent}>Submit Biofilter Data</button>
           {isBiofilterDataSent && <div className={styles.alert}>Biofilter data sent successfully</div>}
+          {validationError_4 && <div className={styles.validationError}>{validationError_4}</div>}
 
           </>
           )}
@@ -2398,6 +2943,8 @@ const allSection_7Sent = () => {
                 ))}
                 <button type="button" className={styles.button} onClick={handleSubmitGardenPump} disabled={isGardenPumpDataSent}>Submit Garden Pump Data</button>
                 {isGardenPumpDataSent && <div className={styles.alert}>Garden Pump data sent successfully</div>}
+                {validationError_5 && <div className={styles.validationError}>{validationError_5}</div>}
+
               {/* Inlet Pumping field */}
                 <h3>Inlet Pumping </h3>
                 {inletPumpingStatuses.map((ip, index) => (
@@ -2462,7 +3009,7 @@ const allSection_7Sent = () => {
                                 setInletPumpingStatuses(newStatuses);
                             }}
                             className={styles.input}
-                            placeholder="T"
+                            placeholder="T (°C)"
                         />
                         <input
                             type="text"
@@ -2479,6 +3026,8 @@ const allSection_7Sent = () => {
                 ))}
                 <button type="button" className={styles.button} onClick={handleSubmitInletPumping} disabled={isInletPumpingDataSent}>Submit Inlet Pumping Data</button>
                 {isInletPumpingDataSent && <div className={styles.alert}>Inlet Pumping data sent successfully</div>}
+                {validationError_6 && <div className={styles.validationError}>{validationError_6}</div>}
+
               {/* Ventilation Inlet Pumping field */}
                 <h3>Ventilation Inlet Pumping </h3>
                 {ventilationInletPumpingStatuses.map((vip, index) => (
@@ -2543,7 +3092,7 @@ const allSection_7Sent = () => {
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
                             className={styles.input}
-                            placeholder="T"
+                            placeholder="T (°C)"
                         />
                         <input
                             type="text"
@@ -2560,6 +3109,8 @@ const allSection_7Sent = () => {
                 ))}
                 <button type="button" className={styles.button} onClick={handleSubmitVentilationInletPumping} disabled={isVentilationInletPumpingDataSent}>Submit Ventilation Inlet Pumping Data</button>
                 {isVentilationInletPumpingDataSent && <div className={styles.alert}>Ventilation Inlet Pumping data sent successfully</div>}
+                {validationError_7 && <div className={styles.validationError}>{validationError_7}</div>}
+
               {/* Inlet Gate field */}
                 <h3>Inlet Gate </h3>
                 {inletGateStatuses.map((ig, index) => (
@@ -2608,6 +3159,8 @@ const allSection_7Sent = () => {
                 ))}
                 <button type="button" className={styles.button} onClick={handleSubmitInletGate} disabled={isInletGateDataSent}>Submit Inlet Gate Data</button>
                 {isInletGateDataSent && <div className={styles.alert}>Inlet Gate data sent successfully</div>}
+                {validationError_8 && <div className={styles.validationError}>{validationError_8}</div>}
+
               {/* Coarse Screen field */}
                 <h3>Coarse Screen </h3>
                 {coarseScreenStatuses.map((cs, index) => (
@@ -2667,7 +3220,7 @@ const allSection_7Sent = () => {
                 ))}
                 <button type="button" className={styles.button} onClick={handleSubmitCoarseScreen} disabled={isCoarseScreenDataSent}>Submit Coarse Screen Data</button>
                 {isCoarseScreenDataSent && <div className={styles.alert}>Coarse Screen data sent successfully</div>}
-
+                {validationError_9 && <div className={styles.validationError}>{validationError_9}</div>}
             </>
           )}  
           <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection2}>
@@ -2745,7 +3298,7 @@ const allSection_7Sent = () => {
                     setFan3Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T"
+                  placeholder="T (°C)"
                 />
                 <input
                   type="text"
@@ -2762,6 +3315,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan3} disabled={isVentilationFan3DataSent}>Submit Fan 3 Data</button>
             {isVentilationFan3DataSent && <div className={styles.alert}>Fan 3 data sent successfully</div>}
+            {validationError_10 && <div className={styles.validationError}>{validationError_10}</div>}
 
             {/* fan 2 field */}
             <h3>Ventilation Fan 2 </h3>
@@ -2827,7 +3381,7 @@ const allSection_7Sent = () => {
                     setFan2Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T"
+                  placeholder="T (°C)"
                 />
                 <input
                   type="text"
@@ -2844,6 +3398,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan2} disabled={isVentilationFan2DataSent}>Submit Fan 2 Data</button>
             {isVentilationFan2DataSent && <div className={styles.alert}>Fan 2 data sent successfully</div>}
+            {validationError_11 && <div className={styles.validationError}>{validationError_11}</div>}
 
             {/* fan 1 field */}
             <h3>Ventilation Fan 1 </h3>
@@ -2909,7 +3464,7 @@ const allSection_7Sent = () => {
                     setFan1Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T"
+                  placeholder="T (°C)"
                 />
                 <input
                   type="text"
@@ -2926,6 +3481,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan1} disabled={isVentilationFan1DataSent}>Submit Fan 1 Data</button>
             {isVentilationFan1DataSent && <div className={styles.alert}>Fan 1 data sent successfully</div>}
+            {validationError_12 && <div className={styles.validationError}>{validationError_12}</div>}
 
             {/* Auto Sampler field */}
             <h3>Auto Sampler </h3>
@@ -2958,7 +3514,7 @@ const allSection_7Sent = () => {
                     setAutoSamplerStatuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T"
+                  placeholder="T (°C)"
                 />
                 <input
                   type="text"
@@ -2975,6 +3531,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitAutoSampler} disabled={isAutoSamplerDataSent}>Submit Auto Sampler Data</button>
             {isAutoSamplerDataSent && <div className={styles.alert}>Auto Sampler data sent successfully</div>}
+            {validationError_13 && <div className={styles.validationError}>{validationError_13}</div>}
 
             {/* Vortex Grit field */}
             <h3>Vortex Grit </h3>
@@ -3007,7 +3564,7 @@ const allSection_7Sent = () => {
                     setVortexGridStatuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T"
+                  placeholder="T (°C)"
                 />
                 <input
                   type="text"
@@ -3024,6 +3581,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitVortexGrit} disabled={isVortexGridDataSent}>Submit Vortex Grit Data</button>
             {isVortexGridDataSent && <div className={styles.alert}>Vortex Grit data sent successfully</div>}
+            {validationError_14 && <div className={styles.validationError}>{validationError_14}</div>}
 
             {/* Air Flow field */}
             <h3>Air Flow </h3>
@@ -3136,6 +3694,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFineScreen} disabled={isFineScreenDataSent}>Submit Fine Screen Data</button>
             {isFineScreenDataSent && <div className={styles.alert}>Fine Screen data sent successfully</div>}
+            {validationError_15 && <div className={styles.validationError}>{validationError_15}</div>}
             
             {/* Drainage Pump 3 field */}
             <h3>Drainage Pump 3 </h3>
@@ -3201,7 +3760,7 @@ const allSection_7Sent = () => {
                     setDrainagePump3Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T"
+                  placeholder="T (°C)"
                 />
                 <input
                   type="text"
@@ -3218,6 +3777,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitDrainagePump3} disabled={isDrainagePump3DataSent}>Submit Drainage Pump 3 Data</button>
             {isDrainagePump3DataSent && <div className={styles.alert}>Drainage Pump 3 data sent successfully</div>}
+            {validationError_16 && <div className={styles.validationError}>{validationError_16}</div>}
             
             {/* Fan 4 field */}
             <h3>Fan 4 </h3>
@@ -3283,7 +3843,7 @@ const allSection_7Sent = () => {
                     setFan4Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T"
+                  placeholder="T (°C)"
                 />
                 <input
                   type="text"
@@ -3300,6 +3860,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan4} disabled={isVentilationFan4DataSent}>Submit Fan 4 Data</button>
             {isVentilationFan4DataSent && <div className={styles.alert}>Fan 4 data sent successfully</div>}
+            {validationError_17 && <div className={styles.validationError}>{validationError_17}</div>}
 
             {/* Anoxic Mixer 1 field */}
             <h3>Anoxic Mixer 1 </h3>
@@ -3364,7 +3925,7 @@ const allSection_7Sent = () => {
                       setAnoxicMixer1Statuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T"
+                    placeholder="T (°C)"
                   />
                   <input
                     type="text"
@@ -3381,6 +3942,7 @@ const allSection_7Sent = () => {
               ))}
               <button type="button" className={styles.button} onClick={handleSubmitAnoxicMixer1} disabled={isAnoxicMixer1DataSent}>Submit Anoxic Mixer 1 Data</button>
               {isAnoxicMixer1DataSent && <div className={styles.alert}>Anoxic Mixer 1 data sent successfully</div>}
+              {validationError_18 && <div className={styles.validationError}>{validationError_18}</div>}
               
               {/* Anoxic Mixer 2 field */}
               <h3>Anoxic Mixer 2 </h3>
@@ -3446,7 +4008,7 @@ const allSection_7Sent = () => {
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T"
+                    placeholder="T (°C)"
                   />
                   <input
                     type="text"
@@ -3463,6 +4025,7 @@ const allSection_7Sent = () => {
               ))}
               <button type="button" className={styles.button} onClick={handleSubmitAnoxicMixer2} disabled={isAnoxicMixer2DataSent}>Submit Anoxic Mixer 2 Data</button>
               {isAnoxicMixer2DataSent && <div className={styles.alert}>Anoxic Mixer 2 data sent successfully</div>}
+              {validationError_19 && <div className={styles.validationError}>{validationError_19}</div>}
 
               {/* Anoxic Mixer 3 field */}
               <h3>Anoxic Mixer 3 </h3>
@@ -3528,7 +4091,7 @@ const allSection_7Sent = () => {
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T"
+                    placeholder="T (°C)"
                   />
                   <input
                     type="text"
@@ -3545,6 +4108,7 @@ const allSection_7Sent = () => {
               ))}
               <button type="button" className={styles.button} onClick={handleSubmitAnoxicMixer3} disabled={isAnoxicMixer3DataSent}>Submit Anoxic Mixer 3 Data</button>
               {isAnoxicMixer3DataSent && <div className={styles.alert}>Anoxic Mixer 3 data sent successfully</div>}
+              {validationError_20 && <div className={styles.validationError}>{validationError_20}</div>}
 
               {/* Anoxic Mixer 4 field */}
               <h3>Anoxic Mixer 4 </h3>
@@ -3610,7 +4174,7 @@ const allSection_7Sent = () => {
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T"
+                    placeholder="T (°C)"
                   />
                   <input
                     type="text"
@@ -3627,6 +4191,7 @@ const allSection_7Sent = () => {
               ))}
               <button type="button" className={styles.button} onClick={handleSubmitAnoxicMixer4} disabled={isAnoxicMixer4DataSent}>Submit Anoxic Mixer 4 Data</button>
               {isAnoxicMixer4DataSent && <div className={styles.alert}>Anoxic Mixer 4 data sent successfully</div>}
+              {validationError_21 && <div className={styles.validationError}>{validationError_21}</div>}
 
               {/* Single Air Blower field */}
               <h3>Single Air Blower </h3>
@@ -3692,7 +4257,7 @@ const allSection_7Sent = () => {
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T"
+                    placeholder="T (°C)"
                   />
                   <input
                     type="text"
@@ -3709,6 +4274,7 @@ const allSection_7Sent = () => {
               ))}
               <button type="button" className={styles.button} onClick={handleSubmitSingleAirBlower} disabled={isSingleAirBlowerDataSent}>Submit Single Air Blower Data</button>
               {isSingleAirBlowerDataSent && <div className={styles.alert}>Single Air Blower data sent successfully</div>}
+              {validationError_22 && <div className={styles.validationError}>{validationError_22}</div>}
 
               {/* Positive Air Blower field */}
               <h3>Positive Air Blower </h3>
@@ -3773,7 +4339,7 @@ const allSection_7Sent = () => {
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T"
+                    placeholder="T (°C)"
                   />
                   <input
                     type="text"
@@ -3790,8 +4356,7 @@ const allSection_7Sent = () => {
               ))}
               <button type="button" className={styles.button} onClick={handleSubmitPositiveAirBlower} disabled={isPositiveAirBlowerDataSent}>Submit Positive Air Blower Data</button>
               {isPositiveAirBlowerDataSent && <div className={styles.alert}>Positive Air Blower data sent successfully</div>}
-
-
+              {validationError_23 && <div className={styles.validationError}>{validationError_23}</div>}
 
             </>
           )}
@@ -3922,6 +4487,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitClarifier} disabled={isClarifier1DataSent}>Submit Clarifier Data</button>
             {isClarifier1DataSent && <div className={styles.alert}>Clarifier data sent successfully</div>}
+            {validationError_24 && <div className={styles.validationError}>{validationError_24}</div>}
             
             {/* Clarifier2 field */}
             <h3>Clarifier2 </h3>
@@ -4037,7 +4603,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitClarifier2} disabled={isClarifier2DataSent}>Submit Clarifier2 Data</button>
             {isClarifier2DataSent && <div className={styles.alert}>Clarifier2 data sent successfully</div>}
-
+            {validationError_25 && <div className={styles.validationError}>{validationError_25}</div>}
 
 
             {/* Clarifier3 field */}
@@ -4154,6 +4720,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitClarifier3} disabled={isClarifier3DataSent}>Submit Clarifier3 Data</button>
             {isClarifier3DataSent && <div className={styles.alert}>Clarifier3 data sent successfully</div>}
+            {validationError_26 && <div className={styles.validationError}>{validationError_26}</div>}
             
             {/* Clarifier4 field */}
             <h3>Clarifier4 </h3>
@@ -4269,6 +4836,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitClarifier4} disabled={isClarifier4DataSent}>Submit Clarifier4 Data</button>
             {isClarifier4DataSent && <div className={styles.alert}>Clarifier4 data sent successfully</div>}
+            {validationError_27 && <div className={styles.validationError}>{validationError_27}</div>}
 
             {/* AutoSampler_2 field */}
             <h3>AutoSampler_2 </h3>
@@ -4301,7 +4869,7 @@ const allSection_7Sent = () => {
                     setAutoSampler_2Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T"
+                  placeholder="T (°C)"
                 />
                 <input
                   type="text"
@@ -4318,7 +4886,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitAutoSampler_2} disabled={isAutoSampler_2DataSent}>Submit AutoSampler_2 Data</button>
             {isAutoSampler_2DataSent && <div className={styles.alert}>AutoSampler_2 data sent successfully</div>}
-
+            {validationError_28 && <div className={styles.validationError}>{validationError_28}</div>}
 
             </>
         )}
@@ -4371,6 +4939,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan5} disabled={isVentilationFan5DataSent}>Submit Ventilation Fan Room 5 Data</button>
             {isVentilationFan5DataSent && <div className={styles.alert}>Ventilation Fan Room 5 data sent successfully</div>}
+            {validationError_29 && <div className={styles.validationError}>{validationError_29}</div>}
 
             {/* Fan5_2 field */}
             
@@ -4409,7 +4978,8 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan5_2} disabled={isVentilationFan5_2DataSent}>Submit Ventilation Fan Room 5_2 Data</button>
             {isVentilationFan5_2DataSent && <div className={styles.alert}>Ventilation Fan Room 5_2 data sent successfully</div>}
-            
+            {validationError_30 && <div className={styles.validationError}>{validationError_30}</div>}
+
             {/* Fan5_3 field */}
 
             {fan5_3Statuses.map((fan5_3, index) => (
@@ -4447,6 +5017,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan5_3} disabled={isVentilationFan5_3DataSent}>Submit Ventilation Fan Room 5_3 Data</button>
             {isVentilationFan5_3DataSent && <div className={styles.alert}>Ventilation Fan Room 5_3 data sent successfully</div>}
+            {validationError_31 && <div className={styles.validationError}>{validationError_31}</div>}
 
             {/* Fan5_4 field */}
             <h3>Ventilation Fan Room 5 (ตู้ไฟ)</h3>
@@ -4485,7 +5056,8 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan5_4} disabled={isVentilationFan5_4DataSent}>Submit Ventilation Fan Room 5_4 Data</button>
             {isVentilationFan5_4DataSent && <div className={styles.alert}>Ventilation Fan Room 5_4 data sent successfully</div>}
-            
+            {validationError_32 && <div className={styles.validationError}>{validationError_32}</div>}
+
             {/* Fan5_5 field */}
             <h3>Ventilation Fan Room 5_5 </h3>
             {fan5_5Statuses.map((fan5_5, index) => (
@@ -4523,7 +5095,8 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan5_5} disabled={isVentilationFan5_5DataSent}>Submit Ventilation Fan Room 5_5 Data</button>
             {isVentilationFan5_5DataSent && <div className={styles.alert}>Ventilation Fan Room 5_5 data sent successfully</div>}
-            
+            {validationError_33 && <div className={styles.validationError}>{validationError_33}</div>}
+
             {/* Fan5_6 field */}
             {fan5_6Statuses.map((fan5_6, index) => (
                 <div key={index} className={styles.fieldGroup}>
@@ -4560,7 +5133,8 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan5_6} disabled={isVentilationFan5_6DataSent}>Submit Ventilation Fan Room 5_6 Data</button>
             {isVentilationFan5_6DataSent && <div className={styles.alert}>Ventilation Fan Room 5_6 data sent successfully</div>}
-            
+            {validationError_34 && <div className={styles.validationError}>{validationError_34}</div>}
+
             {/* Fan5_7 field */}
             {fan5_7Statuses.map((fan5_7, index) => (
                 <div key={index} className={styles.fieldGroup}>
@@ -4597,6 +5171,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan5_7} disabled={isVentilationFan5_7DataSent}>Submit Ventilation Fan Room 5_7 Data</button>
             {isVentilationFan5_7DataSent && <div className={styles.alert}>Ventilation Fan Room 5_7 data sent successfully</div>}
+            {validationError_35 && <div className={styles.validationError}>{validationError_35}</div>}
 
             {/* DrainagePump2 field */}
             <h3>Drainage Pump </h3>
@@ -4663,7 +5238,7 @@ const allSection_7Sent = () => {
                             setDrainagePump2Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T"
+                        placeholder="T (°C)"
                     />
                     <input
                         type="text"
@@ -4680,6 +5255,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitDrainagePump2} disabled={isDrainagePump2DataSent}>Submit Drainage Pump Data</button>
             {isDrainagePump2DataSent && <div className={styles.alert}>Drainage Pump data sent successfully</div>}
+            {validationError_36 && <div className={styles.validationError}>{validationError_36}</div>}
 
             {/* ScrumPump field */}
             <h3>Scrum Pump </h3>
@@ -4746,7 +5322,7 @@ const allSection_7Sent = () => {
                             setScrumPumpStatuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T"
+                        placeholder="T (°C)"
                     />
                     <input
                         type="text"
@@ -4763,6 +5339,7 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitScrumPump} disabled={isScrumPumpDataSent}>Submit Scrum Pump Data</button>
             {isScrumPumpDataSent && <div className={styles.alert}>Scrum Pump data sent successfully</div>}
+            {validationError_37 && <div className={styles.validationError}>{validationError_37}</div>}
 
             </>
         )}
@@ -4818,6 +5395,7 @@ const allSection_7Sent = () => {
           ))}
           <button type="button" className={styles.button} onClick={handleSubmitHiLowWaterPump} disabled={isHiLowWaterPumpDataSent}>Submit Hi-Low Water Pump Data</button>
           {isHiLowWaterPumpDataSent && <div className={styles.alert}>Hi-Low Water Pump data sent successfully</div>}
+          {validationError_38 && <div className={styles.validationError}>{validationError_38}</div>}
 
           {/* CWRW Water Pump field */}
           <h3>CWRW Water Pump </h3>
@@ -4857,6 +5435,7 @@ const allSection_7Sent = () => {
           ))}
           <button type="button" className={styles.button} onClick={handleSubmitCWRWWaterPump} disabled={isCWRWWaterPumpDataSent}>Submit CWRW Water Pump Data</button>
           {isCWRWWaterPumpDataSent && <div className={styles.alert}>CWRW Water Pump data sent successfully</div>}
+          {validationError_39 && <div className={styles.validationError}>{validationError_39}</div>}
 
           {/* Drainage Pump 1 field */}
           <h3>Drainage Pump 1 </h3>
@@ -4923,7 +5502,7 @@ const allSection_7Sent = () => {
                   setDrainagePump1Statuses(newStatuses);
                 }}
                 className={styles.input}
-                placeholder="T"
+                placeholder="T (°C)"
               />
               <input
                 type="text"
@@ -4940,6 +5519,7 @@ const allSection_7Sent = () => {
           ))}
           <button type="button" className={styles.button} onClick={handleSubmitDrainagePump1} disabled={isDrainagePump1DataSent}>Submit Drainage Pump 1 Data</button>
           {isDrainagePump1DataSent && <div className={styles.alert}>Drainage Pump 1 data sent successfully</div>}
+          {validationError_40 && <div className={styles.validationError}>{validationError_40}</div>}
 
           {/* EffluentPump field */}
           <h3>Effluent Pump </h3>
@@ -5006,7 +5586,7 @@ const allSection_7Sent = () => {
                           setEffluentPumpStatuses(newStatuses);
                       }}
                       className={styles.input}
-                      placeholder="T"
+                      placeholder="T (°C)"
                   />
                   <input
                       type="text"
@@ -5023,7 +5603,7 @@ const allSection_7Sent = () => {
           ))}
           <button type="button" className={styles.button} onClick={handleSubmitEffluentPump} disabled={isEffluentPumpDataSent}>Submit Effluent Pump Data</button>
           {isEffluentPumpDataSent && <div className={styles.alert}>Effluent Pump data sent successfully</div>}
-
+          {validationError_41 && <div className={styles.validationError}>{validationError_41}</div>}
 
           </>
         )}
