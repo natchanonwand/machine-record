@@ -2600,10 +2600,23 @@ const allSection_7Sent = () => {
 
 
   return (
-      <form onSubmit={handleSubmit} className={styles.form}>
-          <h1 className={styles.title}>แบบบันทึกการเดินระบบประจำวัน - ตรวจเช็คสภาพทั่วไปของเครื่องจักร (Daily Check Sheet)</h1>
-          <h2 className={styles.subtitle}>FM-OP-01-06.REV 06</h2>
+    <div style={{display: 'flex', flexDirection: 'column'}}>
+      
+      <div
+        style={{
+          background: 'rgba(200, 200, 200, 0.1)',
+          border: '1px solid rgba(200, 200, 200, 0.2)',
+          borderRadius: '10px',
+          margin: '20px',
+          padding: '20px', // Add padding for better readability
+        }}
+      >
+        <h2 className={styles.title}>แบบบันทึกการเดินระบบประจำวัน - ตรวจเช็คสภาพทั่วไปของเครื่องจักร (Daily Check Sheet)</h2>
+        <h3 className={styles.subtitle}>FM-OP-01-06.REV 06</h3>
+      </div>
+      
 
+      <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="recorderName">ผู้บันทึก (ชื่อ-นามสกุล)</label>
               <input
@@ -2623,7 +2636,7 @@ const allSection_7Sent = () => {
                       onChange={(date: Date) => setRecordDate(date)}
                       dateFormat="dd/MM/yyyy"
                       className={styles.datePicker}
-                      popperPlacement="right" // Set popperPlacement to "right"
+                      popperPlacement="bottom" // Set popperPlacement to "right"
                   />
                   <AiOutlineCalendar className={styles.calendarIcon} />
               </div>
@@ -2902,7 +2915,7 @@ const allSection_7Sent = () => {
           )}
           
           
-              <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection1}>
+              <button type="button" className={styles.Hidebutton} onClick={handleSaveSection1}>
                     {showSections1 ? 'Hide Section 1' : 'Show Section 1'}
               </button>
         </>
@@ -3231,7 +3244,7 @@ const allSection_7Sent = () => {
                 {validationError_9 && <div className={styles.validationError}>{validationError_9}</div>}
             </>
           )}  
-          <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection2}>
+          <button type="button" className={styles.Hidebutton} onClick={handleSaveSection2}>
                 {showSections2 ? 'Hide Section 2' : 'Show Section 2'}
           </button>
           </>
@@ -3641,7 +3654,7 @@ const allSection_7Sent = () => {
 
             </>
           )} 
-          <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection3}>
+          <button type="button" className={styles.Hidebutton} onClick={handleSaveSection3}>
                 {showSections3 ? 'Hide Section 3' : 'Show Section 3'}
           </button>
 
@@ -4368,7 +4381,7 @@ const allSection_7Sent = () => {
 
             </>
           )}
-          <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection4}>
+          <button type="button" className={styles.Hidebutton} onClick={handleSaveSection4}>
                 {showSections4 ? 'Hide Section 4' : 'Show Section 4'}
           </button>
 
@@ -4899,7 +4912,7 @@ const allSection_7Sent = () => {
             </>
         )}
 
-          <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection5}>
+          <button type="button" className={styles.Hidebutton} onClick={handleSaveSection5}>
                 {showSections5 ? 'Hide Section 5' : 'Show Section 5'}
           </button>
 
@@ -5352,7 +5365,7 @@ const allSection_7Sent = () => {
             </>
         )}
 
-        <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection6}>
+        <button type="button" className={styles.Hidebutton} onClick={handleSaveSection6}>
               {showSections6 ? 'Hide Section 6' : 'Show Section 6'}
         </button>
 
@@ -5615,7 +5628,7 @@ const allSection_7Sent = () => {
 
           </>
         )}
-        <button type="button" className={styles.button} style={{backgroundColor: 'green'}} onClick={handleSaveSection7}>
+        <button type="button" className={styles.Hidebutton} onClick={handleSaveSection7}>
               {showSections7 ? 'Hide Section 7' : 'Show Section 7'}
         </button>
 
@@ -5624,6 +5637,7 @@ const allSection_7Sent = () => {
 
         <button type="button" className={styles.button} onClick={handleComplete}>Complete</button>
       </form>
+    </div>
   );
 };
 

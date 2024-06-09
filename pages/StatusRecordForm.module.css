@@ -7,10 +7,13 @@
 
 .title {
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 4vw;
 }
 
 .subtitle {
-  text-align: right;
+  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -20,20 +23,129 @@
   font-weight: bold;
 }
 
-.input {
+.datePickerWrapper{
+  display: flex;
+  align-items: center;
+}
+
+.datePicker{
+  height: 4vh;
   width: 100%;
   padding: 5px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: none;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 1em;
+  background-color: #e6e6e6;
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+  transition: 300ms ease-in-out;
+}
+
+.datePicker:focus{
+  background-color: white;
+  transform: scale(1.05);
+  box-shadow: 13px 13px 100px #969696,
+             -13px -13px 100px #ffffff;
+}
+
+.calendarIcon {
+  height: 28px;
+  width: 28px;
+  margin-left: 5px;
+  box-sizing: border-box;
+}
+
+.input {
+  width: 100%;
+  height: 4vh;
   margin-bottom: 10px;
   box-sizing: border-box;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding-left: 1em;
+  padding-right: 1em;
+  background-color: #e6e6e6;
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+  transition: 200ms ease-in-out;
+  appearance: none; /* Ensures consistent styling across browsers */
+  -webkit-appearance: none; /* Safari and Chrome */
+  -moz-appearance: none; /* Firefox */
+  position: relative; /* Ensure the dropdown appears below the select */
+}
+
+.input:focus {
+  background-color: white;
+  transform: scale(1.05);
+  box-shadow: 13px 13px 100px #969696,
+             -13px -13px 100px #ffffff;
+}
+
+.input option {
+  background-color: #fff;
+  color: #000;
+  padding: 5px 10px;
 }
 
 .button {
   width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
+  font-size: 18px;
+  display: inline-block;
+  outline: 0;
+  border: 0;
   cursor: pointer;
+  will-change: box-shadow,transform;
+  background: radial-gradient( 100% 100% at 100% 0%, #70a7f9 0%, #0161d6 100% );
+  box-shadow: 0px 0.01em 0.01em rgb(45 35 66 / 40%), 0px 0.3em 0.7em -0.01em rgb(45 35 66 / 30%), inset 0px -0.01em 0px rgb(58 65 111 / 50%);
+  padding: 0 2em;
+  border-radius: 10px;
+  color: #fff;
+  height: 2.6em;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  margin-bottom: 10px;
+}
+
+.button:hover {
+  box-shadow: 0px 0.1em 0.2em rgb(45 35 66 / 40%), 0px 0.4em 0.7em -0.1em rgb(45 35 66 / 30%), inset 0px -0.1em 0px #3c4fe0;
+  transform: translateY(-0.1em);
+}
+
+.button:active {
+  box-shadow: inset 0px 0.1em 0.6em #3c70e0;
+  transform: translateY(0em);
+}
+
+.Hidebutton {
+  width: 100%;
+  font-size: 18px;
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  will-change: box-shadow,transform;
+  background: radial-gradient( 100% 100% at 100% 0%, #00f99a 0%, #009669 100% );
+  box-shadow: 0px 0.01em 0.01em rgb(45 35 66 / 40%), 0px 0.3em 0.7em -0.01em rgb(45 35 66 / 30%), inset 0px -0.01em 0px rgb(58 65 111 / 50%);
+  padding: 0 2em;
+  border-radius: 10px;
+  color: #fff;
+  height: 2.6em;
+  text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  margin-bottom: 10px;
+}
+
+.Hidebutton:hover {
+  box-shadow: 0px 0.1em 0.2em rgb(45 35 66 / 40%), 0px 0.4em 0.7em -0.1em rgb(45 35 66 / 30%), inset 0px -0.1em 0px #00980f;
+  transform: translateY(-0.1em);
+}
+
+.Hidebutton:active {
+  box-shadow: inset 0px 0.1em 0.6em #12aa02;
+  transform: translateY(0em);
 }
 
 .validationError {
