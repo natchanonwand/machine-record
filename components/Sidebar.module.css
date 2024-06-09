@@ -9,6 +9,9 @@
   overflow-x: hidden;
   transition: width 0.5s;
   padding-top: 30px; /* Adjusted for space occupied by top bar */
+  appearance: none; /* Ensures consistent styling across browsers */
+  -webkit-appearance: none; /* Safari and Chrome */
+  -moz-appearance: none; /* Firefox */
 }
 
 .listItem {
