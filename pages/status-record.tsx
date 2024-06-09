@@ -2537,6 +2537,14 @@ const handleComplete = () => {
   // Clear localStorage
   localStorage.clear();
 
+  setShowSections1(false);
+  setShowSections2(false);
+  setShowSections3(false);
+  setShowSections4(false);
+  setShowSections5(false);
+  setShowSections6(false);
+  setShowSections7(false);
+
   console.log('All forms cleared and localStorage reset');
 };
 
