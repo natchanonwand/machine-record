@@ -4975,6 +4975,50 @@ const allSection_7Sent = () => {
                     </select>
                     <input
                         type="text"
+                        value={fan5.A1}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5Statuses];
+                            newStatuses[index].A1 = e.target.value;
+                            setFan5Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A1"
+                    />
+                    <input
+                        type="text"
+                        value={fan5.A2}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5Statuses];
+                            newStatuses[index].A2 = e.target.value;
+                            setFan5Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A2"
+                    />
+                    <input
+                        type="text"
+                        value={fan5.A3}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5Statuses];
+                            newStatuses[index].A3 = e.target.value;
+                            setFan5Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A3"
+                    />
+                    <input
+                        type="text"
+                        value={fan5.T}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5Statuses];
+                            newStatuses[index].T = e.target.value;
+                            setFan5Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="T (°C)"
+                    />
+                    <input
+                        type="text"
                         value={fan5.note}
                         onChange={(e) => {
                             const newStatuses = [...fan5Statuses];
@@ -4990,8 +5034,8 @@ const allSection_7Sent = () => {
             {isVentilationFan5DataSent && <div className={styles.alert}>Ventilation Fan Room 5 data sent successfully</div>}
             {validationError_29 && <div className={styles.validationError}>{validationError_29}</div>}
 
+
             {/* Fan5_2 field */}
-            
             {fan5_2Statuses.map((fan5_2, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <label className={styles.label} htmlFor={`fan5_2${index + 1}Status`}>{fan5_2.machine_name}</label>
@@ -5014,6 +5058,50 @@ const allSection_7Sent = () => {
                     </select>
                     <input
                         type="text"
+                        value={fan5_2.A1}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_2Statuses];
+                            newStatuses[index].A1 = e.target.value;
+                            setFan5_2Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A1"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_2.A2}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_2Statuses];
+                            newStatuses[index].A2 = e.target.value;
+                            setFan5_2Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A2"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_2.A3}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_2Statuses];
+                            newStatuses[index].A3 = e.target.value;
+                            setFan5_2Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A3"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_2.T}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_2Statuses];
+                            newStatuses[index].T = e.target.value;
+                            setFan5_2Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="T (°C)"
+                    />
+                    <input
+                        type="text"
                         value={fan5_2.note}
                         onChange={(e) => {
                             const newStatuses = [...fan5_2Statuses];
@@ -5030,7 +5118,6 @@ const allSection_7Sent = () => {
             {validationError_30 && <div className={styles.validationError}>{validationError_30}</div>}
 
             {/* Fan5_3 field */}
-
             {fan5_3Statuses.map((fan5_3, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <label className={styles.label} htmlFor={`fan5_3${index + 1}Status`}>{fan5_3.machine_name}</label>
@@ -5051,6 +5138,50 @@ const allSection_7Sent = () => {
                         <option value="E">E</option>
                         <option value="F">F</option>
                     </select>
+                    <input
+                        type="text"
+                        value={fan5_3.A1}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_3Statuses];
+                            newStatuses[index].A1 = e.target.value;
+                            setFan5_3Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A1"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_3.A2}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_3Statuses];
+                            newStatuses[index].A2 = e.target.value;
+                            setFan5_3Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A2"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_3.A3}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_3Statuses];
+                            newStatuses[index].A3 = e.target.value;
+                            setFan5_3Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A3"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_3.T}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_3Statuses];
+                            newStatuses[index].T = e.target.value;
+                            setFan5_3Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="T (°C)"
+                    />
                     <input
                         type="text"
                         value={fan5_3.note}
@@ -5092,6 +5223,50 @@ const allSection_7Sent = () => {
                     </select>
                     <input
                         type="text"
+                        value={fan5_4.A1}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_4Statuses];
+                            newStatuses[index].A1 = e.target.value;
+                            setFan5_4Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A1"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_4.A2}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_4Statuses];
+                            newStatuses[index].A2 = e.target.value;
+                            setFan5_4Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A2"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_4.A3}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_4Statuses];
+                            newStatuses[index].A3 = e.target.value;
+                            setFan5_4Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A3"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_4.T}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_4Statuses];
+                            newStatuses[index].T = e.target.value;
+                            setFan5_4Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="T (°C)"
+                    />
+                    <input
+                        type="text"
                         value={fan5_4.note}
                         onChange={(e) => {
                             const newStatuses = [...fan5_4Statuses];
@@ -5129,6 +5304,50 @@ const allSection_7Sent = () => {
                         <option value="E">E</option>
                         <option value="F">F</option>
                     </select>
+                    <input
+                        type="text"
+                        value={fan5_5.A1}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_5Statuses];
+                            newStatuses[index].A1 = e.target.value;
+                            setFan5_5Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A1"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_5.A2}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_5Statuses];
+                            newStatuses[index].A2 = e.target.value;
+                            setFan5_5Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A2"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_5.A3}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_5Statuses];
+                            newStatuses[index].A3 = e.target.value;
+                            setFan5_5Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A3"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_5.T}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_5Statuses];
+                            newStatuses[index].T = e.target.value;
+                            setFan5_5Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="T (°C)"
+                    />
                     <input
                         type="text"
                         value={fan5_5.note}
@@ -5169,6 +5388,50 @@ const allSection_7Sent = () => {
                     </select>
                     <input
                         type="text"
+                        value={fan5_6.A1}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_6Statuses];
+                            newStatuses[index].A1 = e.target.value;
+                            setFan5_6Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A1"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_6.A2}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_6Statuses];
+                            newStatuses[index].A2 = e.target.value;
+                            setFan5_6Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A2"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_6.A3}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_6Statuses];
+                            newStatuses[index].A3 = e.target.value;
+                            setFan5_6Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A3"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_6.T}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_6Statuses];
+                            newStatuses[index].T = e.target.value;
+                            setFan5_6Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="T (°C)"
+                    />
+                    <input
+                        type="text"
                         value={fan5_6.note}
                         onChange={(e) => {
                             const newStatuses = [...fan5_6Statuses];
@@ -5207,6 +5470,50 @@ const allSection_7Sent = () => {
                     </select>
                     <input
                         type="text"
+                        value={fan5_7.A1}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_7Statuses];
+                            newStatuses[index].A1 = e.target.value;
+                            setFan5_7Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A1"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_7.A2}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_7Statuses];
+                            newStatuses[index].A2 = e.target.value;
+                            setFan5_7Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A2"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_7.A3}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_7Statuses];
+                            newStatuses[index].A3 = e.target.value;
+                            setFan5_7Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="A3"
+                    />
+                    <input
+                        type="text"
+                        value={fan5_7.T}
+                        onChange={(e) => {
+                            const newStatuses = [...fan5_7Statuses];
+                            newStatuses[index].T = e.target.value;
+                            setFan5_7Statuses(newStatuses);
+                        }}
+                        className={styles.input}
+                        placeholder="T (°C)"
+                    />
+                    <input
+                        type="text"
                         value={fan5_7.note}
                         onChange={(e) => {
                             const newStatuses = [...fan5_7Statuses];
@@ -5221,6 +5528,7 @@ const allSection_7Sent = () => {
             <button type="button" className={styles.button} onClick={handleSubmitFan5_7} disabled={isVentilationFan5_7DataSent}>Submit Ventilation Fan Room 5_7 Data</button>
             {isVentilationFan5_7DataSent && <div className={styles.alert}>Ventilation Fan Room 5_7 data sent successfully</div>}
             {validationError_35 && <div className={styles.validationError}>{validationError_35}</div>}
+
 
             {/* DrainagePump2 field */}
             <h3>Drainage Pump </h3>
