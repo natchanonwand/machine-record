@@ -251,53 +251,53 @@ const StatusRecordForm = () => {
   ])
   const [isAutoSampler_2DataSent, setIsAutoSampler_2DataSent] = useState(false);
   const [fan5Statuses, setFan5Statuses] = useState([
-    { machine_name: 'EF-BR-01',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BR-02',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BR-03',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-BR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-03',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5DataSent, setIsVentilationFan5DataSent] = useState(false);
   const [fan5_2Statuses, setFan5_2Statuses] = useState([
-    { machine_name: 'SMEF-TTR-01',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SMEF-TTR-02',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BSM-01',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'SMEF-TTR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SMEF-TTR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BSM-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_2DataSent, setIsVentilationFan5_2DataSent] = useState(false);
   const [fan5_3Statuses, setFan5_3Statuses] = useState([
-    { machine_name: 'EF-CL-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-04 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SF-CL-01',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SF-CL-02',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SF-CL-03',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SF-CL-04',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-04 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-03',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-04',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_3DataSent, setIsVentilationFan5_3DataSent] = useState(false);
   // ตู้ไฟ
   const [fan5_4Statuses, setFan5_4Statuses] = useState([                                
-    { machine_name: 'EF-BR-01',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BR-02',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BR-03',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-BR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-03',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_4DataSent, setIsVentilationFan5_4DataSent] = useState(false);
   const [fan5_5Statuses, setFan5_5Statuses] = useState([                                
-    { machine_name: 'SMEF-TTR-01',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SMEF-TTR-02',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'SMEF-TTR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SMEF-TTR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_5DataSent, setIsVentilationFan5_5DataSent] = useState(false);
   const [fan5_6Statuses, setFan5_6Statuses] = useState([                                
-    { machine_name: 'EF-BSM-01',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-BSM-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_6DataSent, setIsVentilationFan5_6DataSent] = useState(false);
   const [fan5_7Statuses, setFan5_7Statuses] = useState([                                
-    { machine_name: 'EF-CL-01 (ตู้ไฟ)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-02 (ตู้ไฟ)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-03 (ตู้ไฟ)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-04 (ตู้ไฟ)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SF-CL-01',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SF-CL-02',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SF-CL-03',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SF-CL-04',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-01 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-02 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-03 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-04 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-03',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-04',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_7DataSent, setIsVentilationFan5_7DataSent] = useState(false);
   const [drainagePump2Statuses, setDrainagePump2Statuses] = useState([
@@ -1904,6 +1904,10 @@ const handleSubmitFan5 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5.status,
+          A1: fan5.A1,
+          A2: fan5.A2,
+          A3: fan5.A3,
+          T: fan5.T,
           note: fan5.note,
         }),
       });
@@ -1941,6 +1945,10 @@ const handleSubmitFan5_2 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5_2.status,
+          A1: fan5_2.A1,
+          A2: fan5_2.A2,
+          A3: fan5_2.A3,
+          T: fan5_2.T,
           note: fan5_2.note,
         }),
       });
@@ -1979,6 +1987,10 @@ const handleSubmitFan5_3 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5_3.status,
+          A1: fan5_3.A1,
+          A2: fan5_3.A2,
+          A3: fan5_3.A3,
+          T: fan5_3.T,
           note: fan5_3.note,
         }),
       });
@@ -2017,6 +2029,10 @@ const handleSubmitFan5_4 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5_4.status,
+          A1: fan5_4.A1,
+          A2: fan5_4.A2,
+          A3: fan5_4.A3,
+          T: fan5_4.T,
           note: fan5_4.note,
         }),
       });
@@ -2055,6 +2071,10 @@ const handleSubmitFan5_5 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5_5.status,
+          A1: fan5_5.A1,
+          A2: fan5_5.A2,
+          A3: fan5_5.A3,
+          T: fan5_5.T,
           note: fan5_5.note,
         }),
       });
@@ -2093,6 +2113,10 @@ const handleSubmitFan5_6 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5_6.status,
+          A1: fan5_6.A1,
+          A2: fan5_6.A2,
+          A3: fan5_6.A3,
+          T: fan5_6.T,
           note: fan5_6.note,
         }),
       });
@@ -2130,6 +2154,10 @@ const handleSubmitFan5_7 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5_7.status,
+          A1: fan5_7.A1,
+          A2: fan5_7.A2,
+          A3: fan5_7.A3,
+          T: fan5_7.T,
           note: fan5_7.note,
         }),
       });
