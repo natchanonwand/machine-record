@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect   } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AiOutlineCalendar } from 'react-icons/ai';
@@ -152,12 +152,14 @@ const StatusRecordForm = () => {
   ])
   const [isVortexGridDataSent, setIsVortexGridDataSent] = useState(false);
   const [airFlowStatuses, setAirFlowStatuses] = useState([
-    { machine_name: 'FIT-3611',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
-    { machine_name: 'FIT-3612',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
-    { machine_name: 'FIT-3613',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
     { machine_name: 'FIT-3614',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
+    { machine_name: 'FIT-3613',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
+    { machine_name: 'FIT-3612',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
+    { machine_name: 'FIT-3611',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
   ])
   const [isAirFlowDataSent, setIsAirFlowDataSent] = useState(false);
+  const reversedAirFlowStatuses = [...airFlowStatuses].reverse();
+
   const [fineScreenStatuses, setFineScreenStatuses] = useState([
     { machine_name: 'SC-FS-2505',record_date: '', record_time: '', status: '', A1:'', note: '' },
     { machine_name: 'SC-FS-2504',record_date: '', record_time: '', status: '', A1:'', note: '' },
@@ -172,12 +174,16 @@ const StatusRecordForm = () => {
   ])
   const [isDrainagePump3DataSent, setIsDrainagePump3DataSent] = useState(false);
   const [fan4Statuses, setFan4Statuses] = useState([
-    { machine_name: 'EF-ABR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-ABR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'SF-CRP-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'SF-CRP-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-ABR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-ABR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan4DataSent, setIsVentilationFan4DataSent] = useState(false);
+  const sortedFan4Statuses = [...fan4Statuses].sort((a, b) => {
+    const order = ['SF-CRP-01', 'SF-CRP-02', 'EF-ABR-01', 'EF-ABR-02'];
+    return order.indexOf(a.machine_name) - order.indexOf(b.machine_name);
+  });
   const [anoxicMixer1Statuses, setAnoxicMixer1Statuses] = useState([
     { machine_name: 'MX-BIO-3101A',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'MX-BIO-3101B',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
@@ -2793,7 +2799,7 @@ const allSection_7Sent = () => {
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -2878,7 +2884,7 @@ const allSection_7Sent = () => {
                             setFan6Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -2954,45 +2960,6 @@ const allSection_7Sent = () => {
   <>
           {showSections2 && (
             <>
-              {/* Garden Pump field */}
-                <h3>Garden Pump </h3>
-                {gardenPumpStatuses.map((gp, index) => (
-                    <div key={index} className={styles.fieldGroup}>
-                        <label className={styles.label} htmlFor={`status-${gp.machine_name}`}>{gp.machine_name}</label>
-                        <select
-                            id={`status-${gp.machine_name}`}
-                            className={styles.input}
-                            value={gp.status}
-                            onChange={(e) => {
-                                const newStatuses = [...gardenPumpStatuses];
-                                newStatuses[index] = { ...gp, status: e.target.value };
-                                setGardenPumpStatuses(newStatuses);
-                            }}
-                            disabled={isGardenPumpDataSent}
-                        >
-                            <option value="" disabled>Select Status</option>
-                            <option value="R">R</option>
-                            <option value="N">N</option>
-                            <option value="E">E</option>
-                            <option value="F">F</option>
-                        </select>
-                        <input
-                            type="text"
-                            value={gp.note}
-                            onChange={(e) => {
-                                const newStatuses = [...gardenPumpStatuses];
-                                newStatuses[index].note = e.target.value;
-                                setGardenPumpStatuses(newStatuses);
-                            }}
-                            className={styles.input}
-                            placeholder="Note"
-                        />
-                       
-                    </div>
-                ))}
-                <button type="button" className={styles.button} onClick={handleSubmitGardenPump} disabled={isGardenPumpDataSent}>Submit Garden Pump Data</button>
-                {isGardenPumpDataSent && <div className={styles.alert}>Garden Pump data sent successfully</div>}
-                {validationError_5 && <div className={styles.validationError}>{validationError_5}</div>}
 
               {/* Inlet Pumping field */}
                 <h3>Inlet Pumping </h3>
@@ -3058,7 +3025,7 @@ const allSection_7Sent = () => {
                                 setInletPumpingStatuses(newStatuses);
                             }}
                             className={styles.input}
-                            placeholder="T (°C)"
+                            placeholder="T"
                         />
                         <input
                             type="text"
@@ -3076,6 +3043,46 @@ const allSection_7Sent = () => {
                 <button type="button" className={styles.button} onClick={handleSubmitInletPumping} disabled={isInletPumpingDataSent}>Submit Inlet Pumping Data</button>
                 {isInletPumpingDataSent && <div className={styles.alert}>Inlet Pumping data sent successfully</div>}
                 {validationError_6 && <div className={styles.validationError}>{validationError_6}</div>}
+
+                {/* Garden Pump field */}
+                <h3>Garden Pump </h3>
+                {gardenPumpStatuses.map((gp, index) => (
+                    <div key={index} className={styles.fieldGroup}>
+                        <label className={styles.label} htmlFor={`status-${gp.machine_name}`}>{gp.machine_name}</label>
+                        <select
+                            id={`status-${gp.machine_name}`}
+                            className={styles.input}
+                            value={gp.status}
+                            onChange={(e) => {
+                                const newStatuses = [...gardenPumpStatuses];
+                                newStatuses[index] = { ...gp, status: e.target.value };
+                                setGardenPumpStatuses(newStatuses);
+                            }}
+                            disabled={isGardenPumpDataSent}
+                        >
+                            <option value="" disabled>Select Status</option>
+                            <option value="R">R</option>
+                            <option value="N">N</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                        <input
+                            type="text"
+                            value={gp.note}
+                            onChange={(e) => {
+                                const newStatuses = [...gardenPumpStatuses];
+                                newStatuses[index].note = e.target.value;
+                                setGardenPumpStatuses(newStatuses);
+                            }}
+                            className={styles.input}
+                            placeholder="Note"
+                        />
+                       
+                    </div>
+                ))}
+                <button type="button" className={styles.button} onClick={handleSubmitGardenPump} disabled={isGardenPumpDataSent}>Submit Garden Pump Data</button>
+                {isGardenPumpDataSent && <div className={styles.alert}>Garden Pump data sent successfully</div>}
+                {validationError_5 && <div className={styles.validationError}>{validationError_5}</div>}
 
               {/* Ventilation Inlet Pumping field */}
                 <h3>Ventilation Inlet Pumping </h3>
@@ -3141,7 +3148,7 @@ const allSection_7Sent = () => {
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
                             className={styles.input}
-                            placeholder="T (°C)"
+                            placeholder="T"
                         />
                         <input
                             type="text"
@@ -3347,7 +3354,7 @@ const allSection_7Sent = () => {
                     setFan3Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T (°C)"
+                  placeholder="T"
                 />
                 <input
                   type="text"
@@ -3430,7 +3437,7 @@ const allSection_7Sent = () => {
                     setFan2Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T (°C)"
+                  placeholder="T"
                 />
                 <input
                   type="text"
@@ -3513,7 +3520,7 @@ const allSection_7Sent = () => {
                     setFan1Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T (°C)"
+                  placeholder="T"
                 />
                 <input
                   type="text"
@@ -3613,7 +3620,7 @@ const allSection_7Sent = () => {
                     setVortexGridStatuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T (°C)"
+                  placeholder="T"
                 />
                 <input
                   type="text"
@@ -3632,9 +3639,8 @@ const allSection_7Sent = () => {
             {isVortexGridDataSent && <div className={styles.alert}>Vortex Grit data sent successfully</div>}
             {validationError_14 && <div className={styles.validationError}>{validationError_14}</div>}
 
-            {/* Air Flow field */}
             <h3>Air Flow </h3>
-            {airFlowStatuses.map((airFlow, index) => (
+            {reversedAirFlowStatuses.map((airFlow, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`flow-${airFlow.machine_name}`}>{airFlow.machine_name}</label>
                 <input
@@ -3643,9 +3649,9 @@ const allSection_7Sent = () => {
                   className={styles.input}
                   value={airFlow.Flow}
                   onChange={(e) => {
-                    const newStatuses = [...airFlowStatuses];
+                    const newStatuses = [...reversedAirFlowStatuses];
                     newStatuses[index] = { ...airFlow, Flow: e.target.value };
-                    setAirFlowStatuses(newStatuses);
+                    setAirFlowStatuses(newStatuses.reverse());
                   }}
                   placeholder="Flow"
                   disabled={isAirFlowDataSent}
@@ -3654,9 +3660,9 @@ const allSection_7Sent = () => {
                   type="text"
                   value={airFlow.valve_percentage}
                   onChange={(e) => {
-                    const newStatuses = [...airFlowStatuses];
+                    const newStatuses = [...reversedAirFlowStatuses];
                     newStatuses[index].valve_percentage = e.target.value;
-                    setAirFlowStatuses(newStatuses);
+                    setAirFlowStatuses(newStatuses.reverse());
                   }}
                   className={styles.input}
                   placeholder="Valve Percentage"
@@ -3666,9 +3672,9 @@ const allSection_7Sent = () => {
                   type="text"
                   value={airFlow.note}
                   onChange={(e) => {
-                    const newStatuses = [...airFlowStatuses];
+                    const newStatuses = [...reversedAirFlowStatuses];
                     newStatuses[index].note = e.target.value;
-                    setAirFlowStatuses(newStatuses);
+                    setAirFlowStatuses(newStatuses.reverse());
                   }}
                   className={styles.input}
                   placeholder="Note"
@@ -3678,7 +3684,6 @@ const allSection_7Sent = () => {
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitAirFlow} disabled={isAirFlowDataSent}>Submit Air Flow Data</button>
             {isAirFlowDataSent && <div className={styles.alert}>Air Flow data sent successfully</div>}
-        
 
             </>
           )} 
@@ -3809,7 +3814,7 @@ const allSection_7Sent = () => {
                     setDrainagePump3Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T (°C)"
+                  placeholder="T"
                 />
                 <input
                   type="text"
@@ -3830,7 +3835,7 @@ const allSection_7Sent = () => {
             
             {/* Fan 4 field */}
             <h3>Fan 4 </h3>
-            {fan4Statuses.map((fan4, index) => (
+            {sortedFan4Statuses.map((fan4, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fan4.machine_name}`}>{fan4.machine_name}</label>
                 <select
@@ -3892,7 +3897,7 @@ const allSection_7Sent = () => {
                     setFan4Statuses(newStatuses);
                   }}
                   className={styles.input}
-                  placeholder="T (°C)"
+                  placeholder="T"
                 />
                 <input
                   type="text"
@@ -3974,7 +3979,7 @@ const allSection_7Sent = () => {
                       setAnoxicMixer1Statuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T (°C)"
+                    placeholder="T"
                   />
                   <input
                     type="text"
@@ -4057,7 +4062,7 @@ const allSection_7Sent = () => {
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T (°C)"
+                    placeholder="T"
                   />
                   <input
                     type="text"
@@ -4140,7 +4145,7 @@ const allSection_7Sent = () => {
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T (°C)"
+                    placeholder="T"
                   />
                   <input
                     type="text"
@@ -4223,7 +4228,7 @@ const allSection_7Sent = () => {
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T (°C)"
+                    placeholder="T"
                   />
                   <input
                     type="text"
@@ -4306,7 +4311,7 @@ const allSection_7Sent = () => {
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T (°C)"
+                    placeholder="T"
                   />
                   <input
                     type="text"
@@ -4388,7 +4393,7 @@ const allSection_7Sent = () => {
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
                     className={styles.input}
-                    placeholder="T (°C)"
+                    placeholder="T"
                   />
                   <input
                     type="text"
@@ -5015,7 +5020,7 @@ const allSection_7Sent = () => {
                             setFan5Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -5098,7 +5103,7 @@ const allSection_7Sent = () => {
                             setFan5_2Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -5180,7 +5185,7 @@ const allSection_7Sent = () => {
                             setFan5_3Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -5263,7 +5268,7 @@ const allSection_7Sent = () => {
                             setFan5_4Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -5346,7 +5351,7 @@ const allSection_7Sent = () => {
                             setFan5_5Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -5428,7 +5433,7 @@ const allSection_7Sent = () => {
                             setFan5_6Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -5510,7 +5515,7 @@ const allSection_7Sent = () => {
                             setFan5_7Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -5595,7 +5600,7 @@ const allSection_7Sent = () => {
                             setDrainagePump2Statuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -5679,7 +5684,7 @@ const allSection_7Sent = () => {
                             setScrumPumpStatuses(newStatuses);
                         }}
                         className={styles.input}
-                        placeholder="T (°C)"
+                        placeholder="T"
                     />
                     <input
                         type="text"
@@ -5859,7 +5864,7 @@ const allSection_7Sent = () => {
                   setDrainagePump1Statuses(newStatuses);
                 }}
                 className={styles.input}
-                placeholder="T (°C)"
+                placeholder="T"
               />
               <input
                 type="text"
@@ -5943,7 +5948,7 @@ const allSection_7Sent = () => {
                           setEffluentPumpStatuses(newStatuses);
                       }}
                       className={styles.input}
-                      placeholder="T (°C)"
+                      placeholder="T"
                   />
                   <input
                       type="text"
