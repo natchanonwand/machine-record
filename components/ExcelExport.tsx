@@ -9,13 +9,19 @@ const ExcelExport: React.FC<ExcelExportProps> = ({ records }) => {
   const downloadCSV = () => {
     // Modify records: Remove 'record_id' field and time part from 'record_date'
     const modifiedRecords = records.map(record => {
-      const { record_id, record_date, record_time, ...modifiedRecord } = record;
+      const { record_id, record_date, record_time, machine_name, ...modifiedRecord } = record;
       return {
         ...modifiedRecord,
         record_date: record_date.split('T')[0], // Remove time part from record_date
-        record_time
+        record_time,
+        machine_name
       };
     });
+
+    // Construct file name based on machine_name and record_date
+    const machineName = modifiedRecords.length > 0 ? modifiedRecords[0].machine_name : 'unknown_machine';
+    const recordDate = modifiedRecords.length > 0 ? modifiedRecords[0].record_date.replace(/-/g, '_') : 'unknown_date';
+    const fileName = `${machineName}_${recordDate}.csv`;
 
     // Convert modified records array to CSV format
     stringify(modifiedRecords, { header: true }, (err, output) => {
@@ -33,7 +39,7 @@ const ExcelExport: React.FC<ExcelExportProps> = ({ records }) => {
       // Create a temporary <a> element to trigger the download
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'records.csv';
+      link.download = fileName; // Set the filename here
 
       // Trigger the download
       link.click();

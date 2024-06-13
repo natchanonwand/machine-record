@@ -15,6 +15,7 @@ const MachineHistoryFormat = () => {
   const [selectedTable, setSelectedTable] = useState<string | null>(null);
   const [machineNames, setMachineNames] = useState<string[]>([]);
   const [selectedMachine, setSelectedMachine] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false); // Initialize loading state
 
   const buttonTableMap: { [key: string]: string } = {
     'Air Blower': 'air-blower',
@@ -47,6 +48,7 @@ const MachineHistoryFormat = () => {
   const handleButtonClick = async (buttonName: string) => {
     const tableName = buttonTableMap[buttonName];
     setSelectedTable(tableName);
+    setLoading(true); // Start loading state
 
     try {
       const response = await axios.get<Record[]>(`https://jb-api-1.onrender.com/api/${tableName}`);
@@ -54,6 +56,8 @@ const MachineHistoryFormat = () => {
       setMachineNames(machineNames);
     } catch (error) {
       console.error(`Error fetching machine names from ${tableName}:`, error);
+    } finally {
+      setLoading(false); // End loading state
     }
   };
 
@@ -70,23 +74,29 @@ const MachineHistoryFormat = () => {
   return (
     <div>
       <h1 className={styles.responsiveH1} style={{ color: 'blue', marginBottom: '10px' }}>Machine History Format</h1>
-      {selectedTable ? (
-        selectedMachine ? (
-          <TablesDisplay tableName={selectedTable} machineName={selectedMachine} goBack={goBackToList} />
+      {loading ? ( // Conditionally render loading message
+        <div>Loading...</div>
+      ) : (
+        selectedTable ? (
+          selectedMachine ? (
+            <TablesDisplay tableName={selectedTable} machineName={selectedMachine} goBack={goBackToList} />
+          ) : (
+            <div className="button-list">
+              {machineNames.map((machineName, index) => (
+                <button key={index} onClick={() => handleMachineClick(machineName)}>{machineName}</button>
+              ))}
+              <button style={{ marginTop: '10px', backgroundColor: "green" }} onClick={goBackToList}>
+                <span>Back to Tables</span>
+              </button>
+            </div>
+          )
         ) : (
           <div className="button-list">
-            {machineNames.map((machineName, index) => (
-              <button key={index} onClick={() => handleMachineClick(machineName)}>{machineName}</button>
+            {Object.keys(buttonTableMap).map((buttonName, index) => (
+              <button key={index} onClick={() => handleButtonClick(buttonName)}>{buttonName}</button>
             ))}
-            <button style={{ marginTop: '10px' }} onClick={goBackToList}>Back to Tables</button>
           </div>
         )
-      ) : (
-        <div className="button-list">
-          {Object.keys(buttonTableMap).map((buttonName, index) => (
-            <button key={index} onClick={() => handleButtonClick(buttonName)}>{buttonName}</button>
-          ))}
-        </div>
       )}
       <style jsx>{`
         .button-list {
