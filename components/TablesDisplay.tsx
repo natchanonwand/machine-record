@@ -18,7 +18,7 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tableName, machineName, g
         const response = await axios.get(`https://jb-api-1.onrender.com/api/${tableName}?machine_name=${machineName}`);
         setRecords(response.data);
       } catch (error) {
-        console.error(`Error fetching records from ${tableName}:`, error);
+        console.error(`Error fetching records for ${machineName} from ${tableName}:`, error);
       } finally {
         setLoading(false);
       }
@@ -38,7 +38,7 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tableName, machineName, g
   return (
     <div style={{ marginTop: '10px' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom: '10px' }}>
-        <h2 style={{ marginRight: '20px', fontSize: '30px' }}>{`${tableName} - ${machineName}`}</h2>
+        <h2 style={{ marginRight: '20px', fontSize: '30px' }}>{machineName}</h2>
         <ExcelExport records={records} />
       </div>
 

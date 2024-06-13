@@ -3,7 +3,6 @@ import axios from 'axios';
 import TablesDisplay from './TablesDisplay';
 import styles from './Font.module.css';
 
-// Define an interface for the expected record structure
 interface Record {
   machine_name: string;
   record_date: string;
