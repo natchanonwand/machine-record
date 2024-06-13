@@ -311,19 +311,19 @@ const StatusRecordForm = () => {
     { machine_name: 'P-D-5504',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isDrainagePump2DataSent, setIsDrainagePump2DataSent] = useState(false);
-  const [scrumPumpStatuses, setScrumPumpStatuses] = useState([
+  const [scumPumpStatuses, setScumPumpStatuses] = useState([
     { machine_name: 'P-SC-4201',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'P-SC-4202',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
-  const [isScrumPumpDataSent, setIsScrumPumpDataSent] = useState(false);
+  const [isScumPumpDataSent, setIsScumPumpDataSent] = useState(false);
   const [hiLowWaterPumpStatuses, setHiLowWaterPumpStatuses] = useState([                                
-    { machine_name: 'P-PW-A301 ถึง P-PW-A302',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'P-HPPW-A201 ถึง P-HPPW-A203',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'Low Pressure Pump',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'Hi Pressure Pump',record_date: '', record_time: '', status: '', note: '' },
   ])
   const [isHiLowWaterPumpDataSent, setIsHiLowWaterPumpDataSent] = useState(false);
   const [cWRWWaterPumpStatuses, setCWRWWaterPumpStatuses] = useState([                                
-    { machine_name: 'P-CW-A001 ถึง P-CW-A002',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'P-RW-A101 ถึง P-RW-A102',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'CW Pump',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'RW Pump',record_date: '', record_time: '', status: '', note: '' },
   ])
   const [isCWRWWaterPumpDataSent, setIsCWRWWaterPumpDataSent] = useState(false);
   const [drainagePump1Statuses, setDrainagePump1Statuses] = useState([
@@ -2225,44 +2225,44 @@ const handleSubmitDrainagePump2 = async () => {
 };
 
 
-const handleSubmitScrumPump = async () => {
+const handleSubmitScumPump = async () => {
   try {
-    for (const scrumPump of scrumPumpStatuses) {
-      if (scrumPump.status === 'E' && (!scrumPump.note || scrumPump.note.trim() === '' || scrumPump.note.trim() === '-')) {
-        setValidationError_37(`*** Please enter a note for machine ${scrumPump.machine_name} with status 'E'. ***`);
+    for (const scumPump of scumPumpStatuses) {
+      if (scumPump.status === 'E' && (!scumPump.note || scumPump.note.trim() === '' || scumPump.note.trim() === '-')) {
+        setValidationError_37(`*** Please enter a note for machine ${scumPump.machine_name} with status 'E'. ***`);
         return; // Prevent submission
       }
     }
 
     const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-    for (const scrumPump of scrumPumpStatuses) {
+    for (const scumPump of scumPumpStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Scum_Pump_Fan_Room6', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          machine_name: scrumPump.machine_name,
+          machine_name: scumPump.machine_name,
           record_date: formattedDate,
           record_time: recordTime,
-          status: scrumPump.status,
-          A1: scrumPump.A1,
-          A2: scrumPump.A2,
-          A3: scrumPump.A3,
-          T: scrumPump.T,
-          note: scrumPump.note,
+          status: scumPump.status,
+          A1: scumPump.A1,
+          A2: scumPump.A2,
+          A3: scumPump.A3,
+          T: scumPump.T,
+          note: scumPump.note,
         }),
       });
 
       if (!response.ok) {
-        setValidationError_37(`Failed to add record for machine ${scrumPump.machine_name}`);
+        setValidationError_37(`Failed to add record for machine ${scumPump.machine_name}`);
         return;
       }
     }
-    console.log('All ScrumPump records added successfully');
-    setIsScrumPumpDataSent(true);
+    console.log('All ScumPump records added successfully');
+    setIsScumPumpDataSent(true);
     setValidationError_37(null); // Clear validation error if data is successfully sent
   } catch (error) {
-    console.error('Error adding ScrumPump records:', error);
-    setValidationError_37('Error adding ScrumPump records.');
+    console.error('Error adding ScumPump records:', error);
+    setValidationError_37('Error adding ScumPump records.');
   }
 };
 
@@ -2543,8 +2543,8 @@ const handleComplete = () => {
   setDrainagePump2Statuses(drainagePump2Statuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' })));
   setIsDrainagePump2DataSent(false);
 
-  setScrumPumpStatuses(scrumPumpStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' })));
-  setIsScrumPumpDataSent(false);
+  setScumPumpStatuses(scumPumpStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' })));
+  setIsScumPumpDataSent(false);
 
   setHiLowWaterPumpStatuses(hiLowWaterPumpStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', note: '' })));
   setIsHiLowWaterPumpDataSent(false);
@@ -2626,7 +2626,7 @@ const allSection_5Sent = () => {
   return isClarifier1DataSent && isClarifier2DataSent && isClarifier3DataSent && isAutoSampler_2DataSent;
 };
 const allSection_6Sent = () => {
-  return isVentilationFan5DataSent && isVentilationFan5_2DataSent && isVentilationFan5_3DataSent && isVentilationFan5_4DataSent && isVentilationFan5_5DataSent && isVentilationFan5_6DataSent && isVentilationFan5_7DataSent && isDrainagePump2DataSent && isScrumPumpDataSent;
+  return isVentilationFan5DataSent && isVentilationFan5_2DataSent && isVentilationFan5_3DataSent && isVentilationFan5_4DataSent && isVentilationFan5_5DataSent && isVentilationFan5_6DataSent && isVentilationFan5_7DataSent && isDrainagePump2DataSent && isScumPumpDataSent;
 };
 const allSection_7Sent = () => {
   return isHiLowWaterPumpDataSent && isCWRWWaterPumpDataSent && isDrainagePump1DataSent && isEffluentPumpDataSent;
@@ -5619,22 +5619,22 @@ const allSection_7Sent = () => {
             {isDrainagePump2DataSent && <div className={styles.alert}>Drainage Pump data sent successfully</div>}
             {validationError_36 && <div className={styles.validationError}>{validationError_36}</div>}
 
-            {/* ScrumPump field */}
-            <h3>Scrum Pump </h3>
-            {scrumPumpStatuses.map((scrumPump, index) => (
+            {/* ScumPump field */}
+            <h3>Scum Pump </h3>
+            {scumPumpStatuses.map((scumPump, index) => (
                 <div key={index} className={styles.fieldGroup}>
-                    <p className={styles.machineText}>{scrumPump.machine_name}</p>
-                    <label className={styles.label} htmlFor={`scrumPump${index + 1}Status`}>Status</label>
+                    <p className={styles.machineText}>{scumPump.machine_name}</p>
+                    <label className={styles.label} htmlFor={`scumPump${index + 1}Status`}>Status</label>
                     <select
-                        id={`scrumPump${index + 1}Status`}
+                        id={`scumPump${index + 1}Status`}
                         className={styles.input}
-                        value={scrumPump.status}
+                        value={scumPump.status}
                         onChange={(e) => {
-                            const newStatuses = [...scrumPumpStatuses];
-                            newStatuses[index] = { ...scrumPump, status: e.target.value };
-                            setScrumPumpStatuses(newStatuses);
+                            const newStatuses = [...scumPumpStatuses];
+                            newStatuses[index] = { ...scumPump, status: e.target.value };
+                            setScumPumpStatuses(newStatuses);
                         }}
-                        disabled={isScrumPumpDataSent}
+                        disabled={isScumPumpDataSent}
                     >
                         <option value="" disabled>Select Status</option>
                         <option value="R">R</option>
@@ -5644,63 +5644,63 @@ const allSection_7Sent = () => {
                     </select>
                     <input
                         type="text"
-                        value={scrumPump.A1}
+                        value={scumPump.A1}
                         onChange={(e) => {
-                            const newStatuses = [...scrumPumpStatuses];
+                            const newStatuses = [...scumPumpStatuses];
                             newStatuses[index].A1 = e.target.value;
-                            setScrumPumpStatuses(newStatuses);
+                            setScumPumpStatuses(newStatuses);
                         }}
                         className={styles.input}
                         placeholder="A1"
                     />
                     <input
                         type="text"
-                        value={scrumPump.A2}
+                        value={scumPump.A2}
                         onChange={(e) => {
-                            const newStatuses = [...scrumPumpStatuses];
+                            const newStatuses = [...scumPumpStatuses];
                             newStatuses[index].A2 = e.target.value;
-                            setScrumPumpStatuses(newStatuses);
+                            setScumPumpStatuses(newStatuses);
                         }}
                         className={styles.input}
                         placeholder="A2"
                     />
                     <input
                         type="text"
-                        value={scrumPump.A3}
+                        value={scumPump.A3}
                         onChange={(e) => {
-                            const newStatuses = [...scrumPumpStatuses];
+                            const newStatuses = [...scumPumpStatuses];
                             newStatuses[index].A3 = e.target.value;
-                            setScrumPumpStatuses(newStatuses);
+                            setScumPumpStatuses(newStatuses);
                         }}
                         className={styles.input}
                         placeholder="A3"
                     />
                     <input
                         type="text"
-                        value={scrumPump.T}
+                        value={scumPump.T}
                         onChange={(e) => {
-                            const newStatuses = [...scrumPumpStatuses];
+                            const newStatuses = [...scumPumpStatuses];
                             newStatuses[index].T = e.target.value;
-                            setScrumPumpStatuses(newStatuses);
+                            setScumPumpStatuses(newStatuses);
                         }}
                         className={styles.input}
                         placeholder="T"
                     />
                     <input
                         type="text"
-                        value={scrumPump.note}
+                        value={scumPump.note}
                         onChange={(e) => {
-                            const newStatuses = [...scrumPumpStatuses];
+                            const newStatuses = [...scumPumpStatuses];
                             newStatuses[index].note = e.target.value;
-                            setScrumPumpStatuses(newStatuses);
+                            setScumPumpStatuses(newStatuses);
                         }}
                         className={styles.input}
                         placeholder="Note"
                     />
                 </div>
             ))}
-            <button type="button" className={styles.button} onClick={handleSubmitScrumPump} disabled={isScrumPumpDataSent}>Submit Scrum Pump Data</button>
-            {isScrumPumpDataSent && <div className={styles.alert}>Scrum Pump data sent successfully</div>}
+            <button type="button" className={styles.button} onClick={handleSubmitScumPump} disabled={isScumPumpDataSent}>Submit Scum Pump Data</button>
+            {isScumPumpDataSent && <div className={styles.alert}>Scum Pump data sent successfully</div>}
             {validationError_37 && <div className={styles.validationError}>{validationError_37}</div>}
 
             </>
