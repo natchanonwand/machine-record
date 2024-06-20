@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PDFDocument, rgb } from 'pdf-lib';
+import fontkit from '@pdf-lib/fontkit';
 import styles from './Font.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -53,43 +54,111 @@ const FormFormat: React.FC = () => {
 
   const handleRecordClick = async (record: string) => {
     setSelectedRecord(record);
-    const [_, date, time] = record.split(' ');
-    console.log('Fetching data for:', date, time);
+  
+    // Extract date and time from the record
+    const datePart = record.split(' ')[1];
+    const timePart = record.split(' ')[3];
+  
+    // Format the date and time
+    const formattedDate = `${datePart}T00:00:00.000Z`;
+    const formattedTime = timePart;
+  
+    const apiUrlPS = `https://jb-api-1.onrender.com/api/inlet_gate?machine_name=SG-PS-1301&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlBY = `https://jb-api-1.onrender.com/api/inlet_gate?machine_name=SG-BY-1301&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlCS_1101 = `https://jb-api-1.onrender.com/api/coarse_screen?machine_name=SC-CS-1101&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlCS_1102 = `https://jb-api-1.onrender.com/api/coarse_screen?machine_name=SC-CS-1102&record_date=${formattedDate}&record_time=${formattedTime}`;
+  
+    console.log(apiUrlPS); // Log the constructed URL for PS to check if it's correct
+    console.log(apiUrlBY); // Log the constructed URL for BY to check if it's correct
+    console.log(apiUrlCS_1101); // Log the constructed URL for CS_1101 to check if it's correct
+    console.log(apiUrlCS_1102); // Log the constructed URL for CS_1102 to check if it's correct
+  
     try {
-      const response = await axios.get(`https://jb-api-1.onrender.com/api/chiller?date=${date}&time=${time}`);
-      const data = response.data;
-      console.log('Fetched data:', data);
-      overlayDataOnPDF(data, date, time);
+      const [responsePS, responseBY, responseCS1, responseCS2] = await Promise.all([
+        axios.get(apiUrlPS),
+        axios.get(apiUrlBY),
+        axios.get(apiUrlCS_1101),
+        axios.get(apiUrlCS_1102)
+      ]);
+  
+      const dataPS = responsePS.data;
+      const dataBY = responseBY.data;
+      const dataCS1 = responseCS1.data;
+      const dataCS2 = responseCS2.data;
+  
+      // Combine the data from all API responses
+      const combinedData = [...dataPS, ...dataBY, ...dataCS1, ...dataCS2];
+  
+      console.log(combinedData); // Log the combined data
+      console.log(record); // Log the selected record
+      overlayDataOnPDF(combinedData, formattedDate, formattedTime);
     } catch (error) {
-      console.error('Error fetching chiller data:', error);
+      console.error('Error fetching data:', error);
     }
   };
-
+  
   const overlayDataOnPDF = async (data: any[], date: string, time: string) => {
     try {
       const existingPdfBytes = await fetch('/DailyCheckSheet.pdf').then(res => res.arrayBuffer());
-      console.log('PDF fetched successfully');
       const pdfDoc = await PDFDocument.load(existingPdfBytes);
+  
+      // Register fontkit
+      pdfDoc.registerFontkit(fontkit);
+  
+      // Load custom font
+      const fontUrl = '/NotoSansThai.ttf';
+      const fontBytes = await fetch(fontUrl).then(res => res.arrayBuffer());
+      const customFont = await pdfDoc.embedFont(fontBytes);
+  
       const page = pdfDoc.getPages()[0];
-
+  
+      let yOffset = 739;
+      const step = 20;
+  
       data.forEach((record, index) => {
-        page.drawText(`Machine ${record.machine_name} Status: ${record.status}`, {
-          x: 50,
-          y: 600 - index * 20,
-          size: 12,
-          color: rgb(0, 0, 0),
-        });
+        const text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => `${value}`)
+          .join('              ');
+  
+        let xOffset = 132;
+        if (record.machine_name === 'SG-BY-1301') {
+          page.drawText(text, {
+            x: xOffset,
+            y: yOffset - step * index + 5, // Move text higher for SG-BY-1301
+            size: 12,
+            font: customFont,
+            color: rgb(0, 0, 0),
+          });
+        } else if (record.machine_name === 'SC-CS-1101' || record.machine_name === 'SC-CS-1102') {
+          xOffset += 50; // Adjust x position for CS records
+          page.drawText(text, {
+            x: xOffset,
+            y: yOffset - step * index,
+            size: 12,
+            font: customFont,
+            color: rgb(0, 0, 0),
+          });
+        } else {
+          page.drawText(text, {
+            x: xOffset,
+            y: yOffset - step * index,
+            size: 12,
+            font: customFont,
+            color: rgb(0, 0, 0),
+          });
+        }
       });
-
+  
       const pdfBytes = await pdfDoc.save();
       const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
       const pdfUrl = URL.createObjectURL(pdfBlob);
       window.open(pdfUrl, '_blank');
-      console.log('PDF generated and opened');
     } catch (error) {
       console.error('Error overlaying data on PDF:', error);
     }
   };
+  
 
   return (
     <div>

@@ -116,8 +116,8 @@ const StatusRecordForm = () => {
   ])
   const [isInletGateDataSent, setIsInletGateDataSent] = useState(false);
   const [coarseScreenStatuses, setCoarseScreenStatuses] = useState([
-    { machine_name: 'SC-CS-1101',record_date: '', record_time: '', status: '',T_1: '', T_2:'',  note: '' },
-    { machine_name: 'SC-CS-1102',record_date: '', record_time: '', status: '',T_1: '', T_2:'',  note: '' },
+    { machine_name: 'SC-CS-1101',record_date: '', record_time: '', status: '',T1: '', T2:'',  note: '' },
+    { machine_name: 'SC-CS-1102',record_date: '', record_time: '', status: '',T1: '', T2:'',  note: '' },
   ])
   const [isCoarseScreenDataSent, setIsCoarseScreenDataSent] = useState(false);
   const [fan3Statuses, setFan3Statuses] = useState([
@@ -152,13 +152,17 @@ const StatusRecordForm = () => {
   ])
   const [isVortexGridDataSent, setIsVortexGridDataSent] = useState(false);
   const [airFlowStatuses, setAirFlowStatuses] = useState([
-    { machine_name: 'FIT-3614',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
-    { machine_name: 'FIT-3613',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
-    { machine_name: 'FIT-3612',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
-    { machine_name: 'FIT-3611',record_date: '', record_time: '', Flow: '', valve_percentage:'', note: '' },
-  ])
+    { machine_name: 'FIT-3614', record_date: '', record_time: '', Flow: '', valve_percentage: '', note: '' },
+    { machine_name: 'FIT-3613', record_date: '', record_time: '', Flow: '', valve_percentage: '', note: '' },
+    { machine_name: 'FIT-3612', record_date: '', record_time: '', Flow: '', valve_percentage: '', note: '' },
+    { machine_name: 'FIT-3611', record_date: '', record_time: '', Flow: '', valve_percentage: '', note: '' },
+  ]);
   const [isAirFlowDataSent, setIsAirFlowDataSent] = useState(false);
-  const reversedAirFlowStatuses = [...airFlowStatuses].reverse();
+  
+  const sortedAirFlowStatuses = [...airFlowStatuses].sort((a, b) => {
+    const order = ['FIT-3614', 'FIT-3613', 'FIT-3612', 'FIT-3611'];
+    return order.indexOf(a.machine_name) - order.indexOf(b.machine_name);
+  });
 
   const [fineScreenStatuses, setFineScreenStatuses] = useState([
     { machine_name: 'SC-FS-2505',record_date: '', record_time: '', status: '', A1:'', note: '' },
@@ -1062,8 +1066,8 @@ const handleSubmitCoarseScreen = async () => {
                   record_date: formattedDate,
                   record_time: recordTime,
                   status: coarseScreen.status,
-                  T_1: coarseScreen.T_1,
-                  T_2: coarseScreen.T_2,
+                  T_1: coarseScreen.T1,
+                  T_2: coarseScreen.T2,
                   note: coarseScreen.note,
               }),
           });
@@ -3241,10 +3245,10 @@ const allSection_7Sent = () => {
                         </select>
                         <input
                             type="text"
-                            value={cs.T_1}
+                            value={cs.T1}
                             onChange={(e) => {
                                 const newStatuses = [...coarseScreenStatuses];
-                                newStatuses[index].T_1 = e.target.value;
+                                newStatuses[index].T1 = e.target.value;
                                 setCoarseScreenStatuses(newStatuses);
                             }}
                             className={styles.input}
@@ -3252,10 +3256,10 @@ const allSection_7Sent = () => {
                         />
                         <input
                             type="text"
-                            value={cs.T_2}
+                            value={cs.T2}
                             onChange={(e) => {
                                 const newStatuses = [...coarseScreenStatuses];
-                                newStatuses[index].T_2 = e.target.value;
+                                newStatuses[index].T2 = e.target.value;
                                 setCoarseScreenStatuses(newStatuses);
                             }}
                             className={styles.input}
@@ -3374,7 +3378,7 @@ const allSection_7Sent = () => {
             {validationError_10 && <div className={styles.validationError}>{validationError_10}</div>}
 
             {/* fan 2 field */}
-            <h3>Ventilation Fan 2 </h3>
+            <h3>Fan Room 2 </h3>
             {fan2Statuses.map((fan2, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fan2.machine_name}`}>{fan2.machine_name}</label>
@@ -3452,12 +3456,12 @@ const allSection_7Sent = () => {
                 />
               </div>
             ))}
-            <button type="button" className={styles.button} onClick={handleSubmitFan2} disabled={isVentilationFan2DataSent}>Submit Fan 2 Data</button>
+            <button type="button" className={styles.button} onClick={handleSubmitFan2} disabled={isVentilationFan2DataSent}>Submit Fan Room 2 Data</button>
             {isVentilationFan2DataSent && <div className={styles.alert}>Fan 2 data sent successfully</div>}
             {validationError_11 && <div className={styles.validationError}>{validationError_11}</div>}
 
             {/* fan 1 field */}
-            <h3>Ventilation Fan 1 </h3>
+            <h3>Fan Room 1 </h3>
             {fan1Statuses.map((fan1, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fan1.machine_name}`}>{fan1.machine_name}</label>
@@ -3535,7 +3539,7 @@ const allSection_7Sent = () => {
                 />
               </div>
             ))}
-            <button type="button" className={styles.button} onClick={handleSubmitFan1} disabled={isVentilationFan1DataSent}>Submit Fan 1 Data</button>
+            <button type="button" className={styles.button} onClick={handleSubmitFan1} disabled={isVentilationFan1DataSent}>Submit Fan Room 1 Data</button>
             {isVentilationFan1DataSent && <div className={styles.alert}>Fan 1 data sent successfully</div>}
             {validationError_12 && <div className={styles.validationError}>{validationError_12}</div>}
 
@@ -3639,8 +3643,9 @@ const allSection_7Sent = () => {
             {isVortexGridDataSent && <div className={styles.alert}>Vortex Grit data sent successfully</div>}
             {validationError_14 && <div className={styles.validationError}>{validationError_14}</div>}
 
-            <h3>Air Flow </h3>
-            {reversedAirFlowStatuses.map((airFlow, index) => (
+            {/* Air flow field */}
+            <h3>Air Flow</h3>
+            {sortedAirFlowStatuses.map((airFlow, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`flow-${airFlow.machine_name}`}>{airFlow.machine_name}</label>
                 <input
@@ -3649,9 +3654,9 @@ const allSection_7Sent = () => {
                   className={styles.input}
                   value={airFlow.Flow}
                   onChange={(e) => {
-                    const newStatuses = [...reversedAirFlowStatuses];
+                    const newStatuses = [...airFlowStatuses];
                     newStatuses[index] = { ...airFlow, Flow: e.target.value };
-                    setAirFlowStatuses(newStatuses.reverse());
+                    setAirFlowStatuses(newStatuses);
                   }}
                   placeholder="Flow"
                   disabled={isAirFlowDataSent}
@@ -3660,9 +3665,9 @@ const allSection_7Sent = () => {
                   type="text"
                   value={airFlow.valve_percentage}
                   onChange={(e) => {
-                    const newStatuses = [...reversedAirFlowStatuses];
+                    const newStatuses = [...airFlowStatuses];
                     newStatuses[index].valve_percentage = e.target.value;
-                    setAirFlowStatuses(newStatuses.reverse());
+                    setAirFlowStatuses(newStatuses);
                   }}
                   className={styles.input}
                   placeholder="Valve Percentage"
@@ -3672,9 +3677,9 @@ const allSection_7Sent = () => {
                   type="text"
                   value={airFlow.note}
                   onChange={(e) => {
-                    const newStatuses = [...reversedAirFlowStatuses];
+                    const newStatuses = [...airFlowStatuses];
                     newStatuses[index].note = e.target.value;
-                    setAirFlowStatuses(newStatuses.reverse());
+                    setAirFlowStatuses(newStatuses);
                   }}
                   className={styles.input}
                   placeholder="Note"
@@ -3682,7 +3687,9 @@ const allSection_7Sent = () => {
                 />
               </div>
             ))}
-            <button type="button" className={styles.button} onClick={handleSubmitAirFlow} disabled={isAirFlowDataSent}>Submit Air Flow Data</button>
+            <button type="button" className={styles.button} onClick={handleSubmitAirFlow} disabled={isAirFlowDataSent}>
+              Submit Air Flow Data
+            </button>
             {isAirFlowDataSent && <div className={styles.alert}>Air Flow data sent successfully</div>}
 
             </>
