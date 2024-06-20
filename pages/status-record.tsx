@@ -2955,7 +2955,7 @@ const allSection_7Sent = () => {
           {showSections2 && (
             <>
 
-              {/* Inlet Pumping field
+              {/* Inlet Pumping field */}
                 <h3>Inlet Pumping </h3>
                 {inletPumpingStatuses.map((ip, index) => (
                     <div key={index} className={styles.fieldGroup}>
@@ -3036,7 +3036,7 @@ const allSection_7Sent = () => {
                 ))}
                 <button type="button" className={styles.button} onClick={handleSubmitInletPumping} disabled={isInletPumpingDataSent}>Submit Inlet Pumping Data</button>
                 {isInletPumpingDataSent && <div className={styles.alert}>Inlet Pumping data sent successfully</div>}
-                {validationError_6 && <div className={styles.validationError}>{validationError_6}</div>} */}
+                {validationError_6 && <div className={styles.validationError}>{validationError_6}</div>}
 
                 {/* Garden Pump field */}
                 <h3>Garden Pump </h3>
