@@ -90,6 +90,7 @@ const StatusRecordForm = () => {
   ])
   const [isGardenPumpDataSent, setIsGardenPumpDataSent] = useState(false);
   const [inletPumpingStatuses, setInletPumpingStatuses] = useState([
+    { machine_name: 'P-PS-1203',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
 
 
   ])
