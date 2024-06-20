@@ -261,42 +261,42 @@ const StatusRecordForm = () => {
   ])
   const [isAutoSampler_2DataSent, setIsAutoSampler_2DataSent] = useState(false);
   const [fan5Statuses, setFan5Statuses] = useState([
-    { machine_name: 'EF-BR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-BR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-BR-03',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-BR-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-BR-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
   ])
   const [isVentilationFan5DataSent, setIsVentilationFan5DataSent] = useState(false);
   const [fan5_2Statuses, setFan5_2Statuses] = useState([
-    { machine_name: 'SMEF-TTR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SMEF-TTR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-BSM-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SMEF-TTR-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'SMEF-TTR-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-BSM-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
   ])
   const [isVentilationFan5_2DataSent, setIsVentilationFan5_2DataSent] = useState(false);
   const [fan5_3Statuses, setFan5_3Statuses] = useState([
-    { machine_name: 'EF-CL-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-CL-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-CL-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-CL-04 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SF-CL-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SF-CL-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SF-CL-03',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SF-CL-04',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-04 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'SF-CL-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-04 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_3DataSent, setIsVentilationFan5_3DataSent] = useState(false);
   // ตู้ไฟ
   const [fan5_4Statuses, setFan5_4Statuses] = useState([                                
-    { machine_name: 'EF-BR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-BR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'EF-BR-03',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-01 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-02 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-03 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_4DataSent, setIsVentilationFan5_4DataSent] = useState(false);
   const [fan5_5Statuses, setFan5_5Statuses] = useState([                                
-    { machine_name: 'SMEF-TTR-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SMEF-TTR-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SMEF-TTR-01 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SMEF-TTR-02 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_5DataSent, setIsVentilationFan5_5DataSent] = useState(false);
   const [fan5_6Statuses, setFan5_6Statuses] = useState([                                
-    { machine_name: 'EF-BSM-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BSM-01 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_6DataSent, setIsVentilationFan5_6DataSent] = useState(false);
   const [fan5_7Statuses, setFan5_7Statuses] = useState([                                
@@ -304,10 +304,10 @@ const StatusRecordForm = () => {
     { machine_name: 'EF-CL-02 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'EF-CL-03 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'EF-CL-04 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SF-CL-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SF-CL-02',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SF-CL-03',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'SF-CL-04',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-01 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-02 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-03 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SF-CL-04 (ตู้ไฟ)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_7DataSent, setIsVentilationFan5_7DataSent] = useState(false);
   const [drainagePump2Statuses, setDrainagePump2Statuses] = useState([
@@ -321,13 +321,13 @@ const StatusRecordForm = () => {
   ])
   const [isScumPumpDataSent, setIsScumPumpDataSent] = useState(false);
   const [hiLowWaterPumpStatuses, setHiLowWaterPumpStatuses] = useState([                                
-    { machine_name: 'Low Pressure Pump',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'Hi Pressure Pump',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'P-PW-A301 ถึง P-PW-A302',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'P-HPPW-A201 ถึง P-HPPW-A203',record_date: '', record_time: '', status: '', note: '' },
   ])
   const [isHiLowWaterPumpDataSent, setIsHiLowWaterPumpDataSent] = useState(false);
   const [cWRWWaterPumpStatuses, setCWRWWaterPumpStatuses] = useState([                                
-    { machine_name: 'CW Pump',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'RW Pump',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'P-CW-A001 ถึง P-CW-A002',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'P-RW-A101 ถึง P-RW-A102',record_date: '', record_time: '', status: '', note: '' },
   ])
   const [isCWRWWaterPumpDataSent, setIsCWRWWaterPumpDataSent] = useState(false);
   const [drainagePump1Statuses, setDrainagePump1Statuses] = useState([
@@ -1066,8 +1066,8 @@ const handleSubmitCoarseScreen = async () => {
                   record_date: formattedDate,
                   record_time: recordTime,
                   status: coarseScreen.status,
-                  T_1: coarseScreen.T1,
-                  T_2: coarseScreen.T2,
+                  T1: coarseScreen.T1,
+                  T2: coarseScreen.T2,
                   note: coarseScreen.note,
               }),
           });
@@ -1914,10 +1914,6 @@ const handleSubmitFan5 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5.status,
-          A1: fan5.A1,
-          A2: fan5.A2,
-          A3: fan5.A3,
-          T: fan5.T,
           note: fan5.note,
         }),
       });
@@ -1955,10 +1951,6 @@ const handleSubmitFan5_2 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5_2.status,
-          A1: fan5_2.A1,
-          A2: fan5_2.A2,
-          A3: fan5_2.A3,
-          T: fan5_2.T,
           note: fan5_2.note,
         }),
       });
@@ -3841,7 +3833,7 @@ const allSection_7Sent = () => {
             {validationError_16 && <div className={styles.validationError}>{validationError_16}</div>}
             
             {/* Fan 4 field */}
-            <h3>Fan 4 </h3>
+            <h3>Fan Room 4 </h3>
             {sortedFan4Statuses.map((fan4, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fan4.machine_name}`}>{fan4.machine_name}</label>
@@ -4964,7 +4956,7 @@ const allSection_7Sent = () => {
           {showSections6 && (
             <>
             {/* Fan5 field */}
-            <h3>Ventilation Fan Room 5 (เครื่องจักร)</h3>
+            <h3>Fan Room 5 (เครื่องจักร)</h3>
             {fan5Statuses.map((fan5, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <label className={styles.label} htmlFor={`fan5${index + 1}Status`}>{fan5.machine_name}</label>
@@ -4985,50 +4977,6 @@ const allSection_7Sent = () => {
                         <option value="E">E</option>
                         <option value="F">F</option>
                     </select>
-                    <input
-                        type="text"
-                        value={fan5.A1}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5Statuses];
-                            newStatuses[index].A1 = e.target.value;
-                            setFan5Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="A1"
-                    />
-                    <input
-                        type="text"
-                        value={fan5.A2}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5Statuses];
-                            newStatuses[index].A2 = e.target.value;
-                            setFan5Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="A2"
-                    />
-                    <input
-                        type="text"
-                        value={fan5.A3}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5Statuses];
-                            newStatuses[index].A3 = e.target.value;
-                            setFan5Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="A3"
-                    />
-                    <input
-                        type="text"
-                        value={fan5.T}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5Statuses];
-                            newStatuses[index].T = e.target.value;
-                            setFan5Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="T"
-                    />
                     <input
                         type="text"
                         value={fan5.note}
@@ -5070,50 +5018,6 @@ const allSection_7Sent = () => {
                     </select>
                     <input
                         type="text"
-                        value={fan5_2.A1}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5_2Statuses];
-                            newStatuses[index].A1 = e.target.value;
-                            setFan5_2Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="A1"
-                    />
-                    <input
-                        type="text"
-                        value={fan5_2.A2}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5_2Statuses];
-                            newStatuses[index].A2 = e.target.value;
-                            setFan5_2Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="A2"
-                    />
-                    <input
-                        type="text"
-                        value={fan5_2.A3}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5_2Statuses];
-                            newStatuses[index].A3 = e.target.value;
-                            setFan5_2Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="A3"
-                    />
-                    <input
-                        type="text"
-                        value={fan5_2.T}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5_2Statuses];
-                            newStatuses[index].T = e.target.value;
-                            setFan5_2Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="T"
-                    />
-                    <input
-                        type="text"
                         value={fan5_2.note}
                         onChange={(e) => {
                             const newStatuses = [...fan5_2Statuses];
@@ -5152,50 +5056,6 @@ const allSection_7Sent = () => {
                     </select>
                     <input
                         type="text"
-                        value={fan5_3.A1}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5_3Statuses];
-                            newStatuses[index].A1 = e.target.value;
-                            setFan5_3Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="A1"
-                    />
-                    <input
-                        type="text"
-                        value={fan5_3.A2}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5_3Statuses];
-                            newStatuses[index].A2 = e.target.value;
-                            setFan5_3Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="A2"
-                    />
-                    <input
-                        type="text"
-                        value={fan5_3.A3}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5_3Statuses];
-                            newStatuses[index].A3 = e.target.value;
-                            setFan5_3Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="A3"
-                    />
-                    <input
-                        type="text"
-                        value={fan5_3.T}
-                        onChange={(e) => {
-                            const newStatuses = [...fan5_3Statuses];
-                            newStatuses[index].T = e.target.value;
-                            setFan5_3Statuses(newStatuses);
-                        }}
-                        className={styles.input}
-                        placeholder="T"
-                    />
-                    <input
-                        type="text"
                         value={fan5_3.note}
                         onChange={(e) => {
                             const newStatuses = [...fan5_3Statuses];
@@ -5212,7 +5072,7 @@ const allSection_7Sent = () => {
             {validationError_31 && <div className={styles.validationError}>{validationError_31}</div>}
 
             {/* Fan5_4 field */}
-            <h3>Ventilation Fan Room 5 (ตู้ไฟ)</h3>
+            <h3>Fan Room 5 (ตู้ไฟ)</h3>
             {fan5_4Statuses.map((fan5_4, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <label className={styles.label} htmlFor={`fan5_4${index + 1}Status`}>{fan5_4.machine_name}</label>
@@ -5295,7 +5155,6 @@ const allSection_7Sent = () => {
             {validationError_32 && <div className={styles.validationError}>{validationError_32}</div>}
 
             {/* Fan5_5 field */}
-            <h3>Ventilation Fan Room 5_5 </h3>
             {fan5_5Statuses.map((fan5_5, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <label className={styles.label} htmlFor={`fan5_5${index + 1}Status`}>{fan5_5.machine_name}</label>
@@ -5727,83 +5586,89 @@ const allSection_7Sent = () => {
         {showSections7 && (
           <>
           {/* HiLowWaterPump field */}
-          <h3>Hi-Low Water Pump </h3>
+          <h3>Low Water Pump</h3>
           {hiLowWaterPumpStatuses.map((hiLowWaterPump, index) => (
-            <div key={index} className={styles.fieldGroup}>
-              <p className={styles.machineText}>{hiLowWaterPump.machine_name}</p>
-              <label className={styles.label} htmlFor={`hiLowWaterPump${index + 1}Status`}>Status</label>
-              <select
-                id={`hiLowWaterPump${index + 1}Status`}
-                className={styles.input}
-                value={hiLowWaterPump.status}
-                onChange={(e) => {
-                  const newStatuses = [...hiLowWaterPumpStatuses];
-                  newStatuses[index] = { ...hiLowWaterPump, status: e.target.value };
-                  setHiLowWaterPumpStatuses(newStatuses);
-                }}
-                disabled={isHiLowWaterPumpDataSent}
-              >
-                <option value="" disabled>Select Status</option>
-                <option value="R">R</option>
-                <option value="N">N</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-              </select>
-              <input
-                type="text"
-                value={hiLowWaterPump.note}
-                onChange={(e) => {
-                  const newStatuses = [...hiLowWaterPumpStatuses];
-                  newStatuses[index].note = e.target.value;
-                  setHiLowWaterPumpStatuses(newStatuses);
-                }}
-                className={styles.input}
-                placeholder="Note"
-              />
+            <div key={index}>
+              {hiLowWaterPump.machine_name === 'P-HPPW-A201 ถึง P-HPPW-A203' && <h3>Hi Water Pump</h3>}
+              <div className={styles.fieldGroup}>
+                <p className={styles.machineText}>{hiLowWaterPump.machine_name}</p>
+                <label className={styles.label} htmlFor={`hiLowWaterPump${index + 1}Status`}>Status</label>
+                <select
+                  id={`hiLowWaterPump${index + 1}Status`}
+                  className={styles.input}
+                  value={hiLowWaterPump.status}
+                  onChange={(e) => {
+                    const newStatuses = [...hiLowWaterPumpStatuses];
+                    newStatuses[index] = { ...hiLowWaterPump, status: e.target.value };
+                    setHiLowWaterPumpStatuses(newStatuses);
+                  }}
+                  disabled={isHiLowWaterPumpDataSent}
+                >
+                  <option value="" disabled>Select Status</option>
+                  <option value="R">R</option>
+                  <option value="N">N</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                </select>
+                <input
+                  type="text"
+                  value={hiLowWaterPump.note}
+                  onChange={(e) => {
+                    const newStatuses = [...hiLowWaterPumpStatuses];
+                    newStatuses[index].note = e.target.value;
+                    setHiLowWaterPumpStatuses(newStatuses);
+                  }}
+                  className={styles.input}
+                  placeholder="Note"
+                />
+              </div>
             </div>
           ))}
           <button type="button" className={styles.button} onClick={handleSubmitHiLowWaterPump} disabled={isHiLowWaterPumpDataSent}>Submit Hi-Low Water Pump Data</button>
           {isHiLowWaterPumpDataSent && <div className={styles.alert}>Hi-Low Water Pump data sent successfully</div>}
           {validationError_38 && <div className={styles.validationError}>{validationError_38}</div>}
 
-          {/* CWRW Water Pump field */}
-          <h3>CWRW Water Pump </h3>
+          {/* CW-RW Water Pump field */}
+          <h3>CW Water Pump</h3>
           {cWRWWaterPumpStatuses.map((cWRWWaterPump, index) => (
-            <div key={index} className={styles.fieldGroup}>
-              <p className={styles.machineText}>{cWRWWaterPump.machine_name}</p>
-              <label className={styles.label} htmlFor={`cWRWWaterPump${index + 1}Status`}>Status</label>
-              <select
-                id={`cWRWWaterPump${index + 1}Status`}
-                className={styles.input}
-                value={cWRWWaterPump.status}
-                onChange={(e) => {
-                  const newStatuses = [...cWRWWaterPumpStatuses];
-                  newStatuses[index] = { ...cWRWWaterPump, status: e.target.value };
-                  setCWRWWaterPumpStatuses(newStatuses);
-                }}
-                disabled={isCWRWWaterPumpDataSent}
-              >
-                <option value="" disabled>Select Status</option>
-                <option value="R">R</option>
-                <option value="N">N</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-              </select>
-              <input
-                type="text"
-                value={cWRWWaterPump.note}
-                onChange={(e) => {
-                  const newStatuses = [...cWRWWaterPumpStatuses];
-                  newStatuses[index].note = e.target.value;
-                  setCWRWWaterPumpStatuses(newStatuses);
-                }}
-                className={styles.input}
-                placeholder="Note"
-              />
+            <div key={index}>
+              {cWRWWaterPump.machine_name === 'P-RW-A101 ถึง P-RW-A102' && <h3>RW Water Pump</h3>}
+              <div className={styles.fieldGroup}>
+                <p className={styles.machineText}>{cWRWWaterPump.machine_name}</p>
+                <label className={styles.label} htmlFor={`cWRWWaterPump${index + 1}Status`}>Status</label>
+                <select
+                  id={`cWRWWaterPump${index + 1}Status`}
+                  className={styles.input}
+                  value={cWRWWaterPump.status}
+                  onChange={(e) => {
+                    const newStatuses = [...cWRWWaterPumpStatuses];
+                    newStatuses[index] = { ...cWRWWaterPump, status: e.target.value };
+                    setCWRWWaterPumpStatuses(newStatuses);
+                  }}
+                  disabled={isCWRWWaterPumpDataSent}
+                >
+                  <option value="" disabled>Select Status</option>
+                  <option value="R">R</option>
+                  <option value="N">N</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                </select>
+                <input
+                  type="text"
+                  value={cWRWWaterPump.note}
+                  onChange={(e) => {
+                    const newStatuses = [...cWRWWaterPumpStatuses];
+                    newStatuses[index].note = e.target.value;
+                    setCWRWWaterPumpStatuses(newStatuses);
+                  }}
+                  className={styles.input}
+                  placeholder="Note"
+                />
+              </div>
             </div>
           ))}
-          <button type="button" className={styles.button} onClick={handleSubmitCWRWWaterPump} disabled={isCWRWWaterPumpDataSent}>Submit CWRW Water Pump Data</button>
-          {isCWRWWaterPumpDataSent && <div className={styles.alert}>CWRW Water Pump data sent successfully</div>}
+          <button type="button" className={styles.button} onClick={handleSubmitCWRWWaterPump} disabled={isCWRWWaterPumpDataSent}>Submit CW-RW Water Pump Data</button>
+          {isCWRWWaterPumpDataSent && <div className={styles.alert}>CW-RW Water Pump data sent successfully</div>}
           {validationError_39 && <div className={styles.validationError}>{validationError_39}</div>}
 
           {/* Drainage Pump 1 field */}
