@@ -2626,6 +2626,11 @@ const allSection_7Sent = () => {
   return isHiLowWaterPumpDataSent && isCWRWWaterPumpDataSent && isDrainagePump1DataSent && isEffluentPumpDataSent;
 };
 
+useEffect(() => {
+  console.log('inletPumpingStatuses:', inletPumpingStatuses);
+}, [inletPumpingStatuses]);
+
+
 
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
