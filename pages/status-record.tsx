@@ -101,7 +101,7 @@ const StatusRecordForm = () => {
     { machine_name: 'P-PS-1206(VFD)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'P-PS-1207(VFD)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
 
-  ])
+  ])  
   const [isInletPumpingDataSent, setIsInletPumpingDataSent] = useState(false);
   const [ventilationInletPumpingStatuses, setVentilationInletPumpingStatuses] = useState([
     { machine_name: 'EF-PS-01',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
@@ -2955,84 +2955,84 @@ const allSection_7Sent = () => {
           {showSections2 && (
             <>
 
-              {/* Inlet Pumping field */}
-                <h3>Inlet Pumping </h3>
+                {/* Inlet Pumping field */}
+                <h3>Inlet Pumping</h3>
                 {inletPumpingStatuses.map((ip, index) => (
-                    <div key={index} className={styles.fieldGroup}>
-                        <label className={styles.label} htmlFor={`status-${ip.machine_name}`}>{ip.machine_name}</label>
-                        <select
-                            id={`status-${ip.machine_name}`}
-                            className={styles.input}
-                            value={ip.status}
-                            onChange={(e) => {
-                                const newStatuses = [...inletPumpingStatuses];
-                                newStatuses[index] = { ...ip, status: e.target.value };
-                                setInletPumpingStatuses(newStatuses);
-                            }}
-                            disabled={isInletPumpingDataSent}
-                        >
-                            <option value="" disabled>Select Status</option>
-                            <option value="R">R</option>
-                            <option value="N">N</option>
-                            <option value="E">E</option>
-                            <option value="F">F</option>
-                        </select>
-                        <input
-                            type="text"
-                            value={ip.A1}
-                            onChange={(e) => {
-                                const newStatuses = [...inletPumpingStatuses];
-                                newStatuses[index].A1 = e.target.value;
-                                setInletPumpingStatuses(newStatuses);
-                            }}
-                            className={styles.input}
-                            placeholder="A1"
-                        />
-                        <input
-                            type="text"
-                            value={ip.A2}
-                            onChange={(e) => {
-                                const newStatuses = [...inletPumpingStatuses];
-                                newStatuses[index].A2 = e.target.value;
-                                setInletPumpingStatuses(newStatuses);
-                            }}
-                            className={styles.input}
-                            placeholder="A2"
-                        />
-                        <input
-                            type="text"
-                            value={ip.A3}
-                            onChange={(e) => {
-                                const newStatuses = [...inletPumpingStatuses];
-                                newStatuses[index].A3 = e.target.value;
-                                setInletPumpingStatuses(newStatuses);
-                            }}
-                            className={styles.input}
-                            placeholder="A3"
-                        />
-                        <input
-                            type="text"
-                            value={ip.T}
-                            onChange={(e) => {
-                                const newStatuses = [...inletPumpingStatuses];
-                                newStatuses[index].T = e.target.value;
-                                setInletPumpingStatuses(newStatuses);
-                            }}
-                            className={styles.input}
-                            placeholder="T"
-                        />
-                        <input
-                            type="text"
-                            value={ip.note}
-                            onChange={(e) => {
-                                const newStatuses = [...inletPumpingStatuses];
-                                newStatuses[index].note = e.target.value;
-                                setInletPumpingStatuses(newStatuses);
-                            }}
-                            className={styles.input}
-                            placeholder="Note"
-                        />
-                    </div>
+                  <div key={index} className={styles.fieldGroup}>
+                    <label className={styles.label} htmlFor={`status-${ip.machine_name}`}>{ip.machine_name}</label>
+                    <select
+                      id={`status-${ip.machine_name}`}
+                      className={styles.input}
+                      value={ip.status}
+                      onChange={(e) => {
+                        const newStatuses = [...inletPumpingStatuses];
+                        newStatuses[index] = { ...ip, status: e.target.value };
+                        setInletPumpingStatuses(newStatuses);
+                      }}
+                      disabled={isInletPumpingDataSent}
+                    >
+                      <option value="" disabled>Select Status</option>
+                      <option value="R">R</option>
+                      <option value="N">N</option>
+                      <option value="E">E</option>
+                      <option value="F">F</option>
+                    </select>
+                    <input
+                      type="text"
+                      value={ip.note}
+                      onChange={(e) => {
+                        const newStatuses = [...inletPumpingStatuses];
+                        newStatuses[index].note = e.target.value;
+                        setInletPumpingStatuses(newStatuses);
+                      }}
+                      className={styles.input}
+                      placeholder="Note"
+                    />
+                    <input
+                      type="text"
+                      value={ip.A1}
+                      onChange={(e) => {
+                        const newStatuses = [...inletPumpingStatuses];
+                        newStatuses[index].A1 = e.target.value;
+                        setInletPumpingStatuses(newStatuses);
+                      }}
+                      className={styles.input}
+                      placeholder="A1"
+                    />
+                    <input
+                      type="text"
+                      value={ip.A2}
+                      onChange={(e) => {
+                        const newStatuses = [...inletPumpingStatuses];
+                        newStatuses[index].A2 = e.target.value;
+                        setInletPumpingStatuses(newStatuses);
+                      }}
+                      className={styles.input}
+                      placeholder="A2"
+                    />
+                    <input
+                      type="text"
+                      value={ip.A3}
+                      onChange={(e) => {
+                        const newStatuses = [...inletPumpingStatuses];
+                        newStatuses[index].A3 = e.target.value;
+                        setInletPumpingStatuses(newStatuses);
+                      }}
+                      className={styles.input}
+                      placeholder="A3"
+                    />
+                    <input
+                      type="text"
+                      value={ip.T}
+                      onChange={(e) => {
+                        const newStatuses = [...inletPumpingStatuses];
+                        newStatuses[index].T = e.target.value;
+                        setInletPumpingStatuses(newStatuses);
+                      }}
+                      className={styles.input}
+                      placeholder="T"
+                    />
+                  </div>
                 ))}
                 <button type="button" className={styles.button} onClick={handleSubmitInletPumping} disabled={isInletPumpingDataSent}>Submit Inlet Pumping Data</button>
                 {isInletPumpingDataSent && <div className={styles.alert}>Inlet Pumping data sent successfully</div>}
