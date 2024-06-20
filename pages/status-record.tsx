@@ -90,16 +90,7 @@ const StatusRecordForm = () => {
   ])
   const [isGardenPumpDataSent, setIsGardenPumpDataSent] = useState(false);
   const [inletPumpingStatuses, setInletPumpingStatuses] = useState([
-    { machine_name: 'P-PS-1203',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1204',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1205',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1208',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1209',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1210',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1201(VFD)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1202(VFD)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1206(VFD)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
-    { machine_name: 'P-PS-1207(VFD)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+
 
   ])
   const [isInletPumpingDataSent, setIsInletPumpingDataSent] = useState(false);
