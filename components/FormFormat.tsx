@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { PDFDocument, rgb } from 'pdf-lib';
-import fontkit from '@pdf-lib/fontkit';
 import styles from './Font.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { PDFDocument, rgb, PDFFont, PDFPage } from 'pdf-lib';
+import fontkit from '@pdf-lib/fontkit';
+
+interface Record {
+  machine_name: string;
+  record_id: number;
+  record_date: string;
+  record_time: string;
+  status: string;
+  T1?: number;
+  T2?: number;
+  A1?: number;
+  A2?: number;
+  A3?: number;
+  T?: number;
+  note?: string;
+}
 
 const FormFormat: React.FC = () => {
   const [records, setRecords] = useState<string[]>([]);
@@ -67,27 +82,66 @@ const FormFormat: React.FC = () => {
     const apiUrlBY = `https://jb-api-1.onrender.com/api/inlet_gate?machine_name=SG-BY-1301&record_date=${formattedDate}&record_time=${formattedTime}`;
     const apiUrlCS_1101 = `https://jb-api-1.onrender.com/api/coarse_screen?machine_name=SC-CS-1101&record_date=${formattedDate}&record_time=${formattedTime}`;
     const apiUrlCS_1102 = `https://jb-api-1.onrender.com/api/coarse_screen?machine_name=SC-CS-1102&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1201 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1201(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1202 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1202(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1203 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1203&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1204 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1204&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1205 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1205&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1206 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1206(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1207 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1207(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1208 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1208&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1209 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1209&record_date=${formattedDate}&record_time=${formattedTime}`;
+    const apiUrlPS_1210 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1210&record_date=${formattedDate}&record_time=${formattedTime}`;
   
-    console.log(apiUrlPS); // Log the constructed URL for PS to check if it's correct
-    console.log(apiUrlBY); // Log the constructed URL for BY to check if it's correct
-    console.log(apiUrlCS_1101); // Log the constructed URL for CS_1101 to check if it's correct
-    console.log(apiUrlCS_1102); // Log the constructed URL for CS_1102 to check if it's correct
+    console.log(apiUrlPS);
+    console.log(apiUrlBY); 
+    console.log(apiUrlCS_1101);
+    console.log(apiUrlCS_1102); 
+    console.log(apiUrlPS_1201);
+    console.log(apiUrlPS_1202);
+    console.log(apiUrlPS_1203);
+    console.log(apiUrlPS_1204);
+    console.log(apiUrlPS_1205);
+    console.log(apiUrlPS_1206);
+    console.log(apiUrlPS_1207);
+    console.log(apiUrlPS_1208);
+    console.log(apiUrlPS_1209);
+    console.log(apiUrlPS_1210);
   
     try {
-      const [responsePS, responseBY, responseCS1, responseCS2] = await Promise.all([
+      const [responsePS, responseBY, responseCS1, responseCS2, responsePS1, responsePS2, responsePS3, responsePS4, responsePS5, responsePS6, responsePS7, responsePS8, responsePS9] = await Promise.all([
         axios.get(apiUrlPS),
         axios.get(apiUrlBY),
         axios.get(apiUrlCS_1101),
-        axios.get(apiUrlCS_1102)
+        axios.get(apiUrlCS_1102),
+        axios.get(apiUrlPS_1201),
+        axios.get(apiUrlPS_1202),
+        axios.get(apiUrlPS_1203),
+        axios.get(apiUrlPS_1204),
+        axios.get(apiUrlPS_1205),
+        axios.get(apiUrlPS_1206),
+        axios.get(apiUrlPS_1207),
+        axios.get(apiUrlPS_1208),
+        axios.get(apiUrlPS_1209),
+        axios.get(apiUrlPS_1210),
       ]);
   
       const dataPS = responsePS.data;
       const dataBY = responseBY.data;
       const dataCS1 = responseCS1.data;
       const dataCS2 = responseCS2.data;
+      const dataPS1 = responsePS1.data;
+      const dataPS2 = responsePS2.data;
+      const dataPS3 = responsePS3.data;
+      const dataPS4 = responsePS4.data;
+      const dataPS5 = responsePS5.data;
+      const dataPS6 = responsePS6.data;
+      const dataPS7 = responsePS7.data;
+      const dataPS8 = responsePS8.data;
+      const dataPS9 = responsePS9.data;
   
       // Combine the data from all API responses
-      const combinedData = [...dataPS, ...dataBY, ...dataCS1, ...dataCS2];
+      const combinedData = [...dataPS, ...dataBY, ...dataCS1, ...dataCS2, ...dataPS1, ...dataPS2, ...dataPS3, ...dataPS4, ...dataPS5, ...dataPS6, ...dataPS7, ...dataPS8, ...dataPS9];
   
       console.log(combinedData); // Log the combined data
       console.log(record); // Log the selected record
@@ -97,7 +151,7 @@ const FormFormat: React.FC = () => {
     }
   };
   
-  const overlayDataOnPDF = async (data: any[], date: string, time: string) => {
+  const overlayDataOnPDF = async (data: Record[], date: string, time: string): Promise<void> => {
     try {
       const existingPdfBytes = await fetch('/DailyCheckSheet.pdf').then(res => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(existingPdfBytes);
@@ -112,41 +166,39 @@ const FormFormat: React.FC = () => {
   
       const page = pdfDoc.getPages()[0];
   
-      let yOffset = 739;
+      const yOffset = 739;
       const step = 20;
   
       data.forEach((record, index) => {
-        const text = Object.entries(record)
-          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
-          .map(([key, value]) => `${value}`)
-          .join('              ');
-  
+        let text: string;
         let xOffset = 132;
-        if (record.machine_name === 'SG-BY-1301') {
-          page.drawText(text, {
-            x: xOffset,
-            y: yOffset - step * index + 5, // Move text higher for SG-BY-1301
-            size: 12,
-            font: customFont,
-            color: rgb(0, 0, 0),
-          });
+  
+        if (record.machine_name === 'SG-PS-1301' || record.machine_name === 'SG-BY-1301') {
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => `${value}`)
+            .join('                 '); // 12 spaces
+          xOffset += 0;
+          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SG-BY-1301' ? 4 : 1));
         } else if (record.machine_name === 'SC-CS-1101' || record.machine_name === 'SC-CS-1102') {
-          xOffset += 50; // Adjust x position for CS records
-          page.drawText(text, {
-            x: xOffset,
-            y: yOffset - step * index,
-            size: 12,
-            font: customFont,
-            color: rgb(0, 0, 0),
-          });
-        } else {
-          page.drawText(text, {
-            x: xOffset,
-            y: yOffset - step * index,
-            size: 12,
-            font: customFont,
-            color: rgb(0, 0, 0),
-          });
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => `${value}`)
+            .join('                '); // 8 spaces
+          xOffset += 0;
+          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SC-CS-1101' ? -6 : 0));
+        } else if (record.machine_name.startsWith('P-PS-120')) {
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'T') {
+                return `         ${value}        `; // 6 spaces after 'T'
+              } else {
+                return `${value}    `; // 4 spaces after 'Status', 'A1', 'A2', 'A3'
+              }
+            })
+            .join('    '); // 4 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 13);
         }
       });
   
@@ -159,6 +211,21 @@ const FormFormat: React.FC = () => {
     }
   };
   
+  const drawTextOnPage = (
+    page: PDFPage,
+    text: string,
+    font: PDFFont,
+    x: number,
+    y: number
+  ): void => {
+    page.drawText(text, {
+      x,
+      y,
+      size: 10,
+      font,
+      color: rgb(0, 0, 0),
+    });
+  };
 
   return (
     <div>
