@@ -2819,7 +2819,7 @@ useEffect(() => {
           {validationError_2 && <div className={styles.validationError}>{validationError_2}</div>}
 
           {/* Ventilation Fan Room 6 field */}
-          <h3>Ventilation Fan Room 6 </h3>
+          <h3>Fan Room 6 </h3>
           {fan6Statuses.map((fan, index) => (
                 <div key={index} className={styles.fieldGroup}>
                     <p className={styles.machineText}>{fan.machine_name}</p>
@@ -2899,8 +2899,8 @@ useEffect(() => {
                 </div>
             ))}
 
-          <button type="button" className={styles.button} onClick={handleSubmitFan6Data} disabled={isVentilationFan6DataSent}>Submit Ventilation Fan Room 6 Data</button>
-          {isVentilationFan6DataSent && <div className={styles.alert}>Ventilation Fan data sent successfully</div>}
+          <button type="button" className={styles.button} onClick={handleSubmitFan6Data} disabled={isVentilationFan6DataSent}>Submit Fan Room 6 Data</button>
+          {isVentilationFan6DataSent && <div className={styles.alert}>Fan Room 6 data sent successfully</div>}
           {validationError_3 && <div className={styles.validationError}>{validationError_3}</div>}
 
           {/* Biofilter field */}
@@ -2984,17 +2984,6 @@ useEffect(() => {
                     </select>
                     <input
                       type="text"
-                      value={ip.note}
-                      onChange={(e) => {
-                        const newStatuses = [...inletPumpingStatuses];
-                        newStatuses[index].note = e.target.value;
-                        setInletPumpingStatuses(newStatuses);
-                      }}
-                      className={styles.input}
-                      placeholder="Note"
-                    />
-                    <input
-                      type="text"
                       value={ip.A1}
                       onChange={(e) => {
                         const newStatuses = [...inletPumpingStatuses];
@@ -3036,6 +3025,17 @@ useEffect(() => {
                       }}
                       className={styles.input}
                       placeholder="T"
+                    />
+                    <input
+                      type="text"
+                      value={ip.note}
+                      onChange={(e) => {
+                        const newStatuses = [...inletPumpingStatuses];
+                        newStatuses[index].note = e.target.value;
+                        setInletPumpingStatuses(newStatuses);
+                      }}
+                      className={styles.input}
+                      placeholder="Note"
                     />
                   </div>
                 ))}
