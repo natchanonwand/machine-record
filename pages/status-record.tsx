@@ -3290,7 +3290,7 @@ useEffect(() => {
           {showSections3 && (
             <>
             {/* fan 3 field */}
-            <h3>Ventilation Fan 3 </h3>
+            <h3>Fan Room 3 </h3>
             {fan3Statuses.map((fan3, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`status-${fan3.machine_name}`}>{fan3.machine_name}</label>
@@ -3369,7 +3369,7 @@ useEffect(() => {
               </div>
             ))}
             <button type="button" className={styles.button} onClick={handleSubmitFan3} disabled={isVentilationFan3DataSent}>Submit Fan 3 Data</button>
-            {isVentilationFan3DataSent && <div className={styles.alert}>Fan 3 data sent successfully</div>}
+            {isVentilationFan3DataSent && <div className={styles.alert}>Fan Room 3 data sent successfully</div>}
             {validationError_10 && <div className={styles.validationError}>{validationError_10}</div>}
 
             {/* fan 2 field */}
