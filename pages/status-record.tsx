@@ -5592,7 +5592,7 @@ useEffect(() => {
           <h3>Low Water Pump</h3>
           {hiLowWaterPumpStatuses.map((hiLowWaterPump, index) => (
             <div key={index}>
-              {hiLowWaterPump.machine_name === 'P-HPPW-A201 ถึง P-HPPW-A203' && <h3>Hi Water Pump</h3>}
+              {hiLowWaterPump.machine_name === 'P-HPPW-A201 ถึง P-HPPW-A203' && <h3>High Water Pump</h3>}
               <div className={styles.fieldGroup}>
                 <p className={styles.machineText}>{hiLowWaterPump.machine_name}</p>
                 <label className={styles.label} htmlFor={`hiLowWaterPump${index + 1}Status`}>Status</label>
