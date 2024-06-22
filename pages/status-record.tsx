@@ -2739,7 +2739,7 @@ useEffect(() => {
               </div>
           ))}
           <button type="button" className={styles.button} onClick={handleSubmitChillerData} disabled={isChillerDataSent}>Submit Chiller Data</button>
-          {isChillerDataSent && <div className="alert">Chiller data sent successfully</div>}
+          {isChillerDataSent && <div className={styles.alert}>Chiller data sent successfully</div>}
           {validationError && <div className={styles.validationError}>{validationError}</div>}
 
           {/* Chiller Water Pump field */}
@@ -2757,7 +2757,7 @@ useEffect(() => {
                             newStatuses[index] = { ...chwp, status: e.target.value };
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        disabled={isDataSent}
+                        disabled={isChillerWaterPumpDataSent}
                     >
                         <option value="" disabled>Select Status</option>
                         <option value="R">R</option>
@@ -2842,7 +2842,7 @@ useEffect(() => {
                             newStatuses[index] = { ...fan, status: e.target.value };
                             setFan6Statuses(newStatuses);
                         }}
-                        disabled={isDataSent}
+                        disabled={isVentilationFan6DataSent}
                     >
                         <option value="" disabled>Select Status</option>
                         <option value="R">R</option>
@@ -2927,7 +2927,7 @@ useEffect(() => {
                             newStatuses[index] = { ...biofilter, status: e.target.value };
                             setBiofilterStatuses(newStatuses);
                         }}
-                        disabled={isDataSent}
+                        disabled={isBiofilterDataSent}
                     >
                         <option value="" disabled>Select Status</option>
                         <option value="R">R</option>
