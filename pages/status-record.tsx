@@ -1912,6 +1912,10 @@ const handleSubmitFan5 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5.status,
+          A1: null,
+          A2: null,
+          A3: null,
+          T: null,
           note: fan5.note,
         }),
       });
@@ -1949,6 +1953,10 @@ const handleSubmitFan5_2 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5_2.status,
+          A1: null,
+          A2: null,
+          A3: null,
+          T: null,
           note: fan5_2.note,
         }),
       });
@@ -1987,10 +1995,10 @@ const handleSubmitFan5_3 = async () => {
           record_date: formattedDate,
           record_time: recordTime,
           status: fan5_3.status,
-          A1: fan5_3.A1,
-          A2: fan5_3.A2,
-          A3: fan5_3.A3,
-          T: fan5_3.T,
+          A1: null,
+          A2: null,
+          A3: null,
+          T: null,
           note: fan5_3.note,
         }),
       });
@@ -2424,7 +2432,8 @@ const handleComplete = () => {
 
   setRecorderName('');
   setRecordDate(null);
-  setRecordTime('');  
+  setRecordTime('');
+  setIsDataSent(false);
 
   setChStatuses(chStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', note: '' })));
   setIsChillerDataSent(false);
