@@ -259,22 +259,22 @@ const StatusRecordForm = () => {
   ])
   const [isAutoSampler_2DataSent, setIsAutoSampler_2DataSent] = useState(false);
   const [fan5Statuses, setFan5Statuses] = useState([
-    { machine_name: 'EF-BR-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BR-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BR-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-BR-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BR-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5DataSent, setIsVentilationFan5DataSent] = useState(false);
   const [fan5_2Statuses, setFan5_2Statuses] = useState([
-    { machine_name: 'SMEF-TTR-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'SMEF-TTR-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-BSM-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'SMEF-TTR-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'SMEF-TTR-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-BSM-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
   ])
   const [isVentilationFan5_2DataSent, setIsVentilationFan5_2DataSent] = useState(false);
   const [fan5_3Statuses, setFan5_3Statuses] = useState([
-    { machine_name: 'EF-CL-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
-    { machine_name: 'EF-CL-04 (เครื่องจักร)',record_date: '', record_time: '', status: '', note: '' },
+    { machine_name: 'EF-CL-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
+    { machine_name: 'EF-CL-04 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'SF-CL-01 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'SF-CL-02 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
     { machine_name: 'SF-CL-03 (เครื่องจักร)',record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' },
