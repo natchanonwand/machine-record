@@ -78,78 +78,130 @@ const FormFormat: React.FC = () => {
     const formattedDate = `${datePart}T00:00:00.000Z`;
     const formattedTime = timePart;
   
-    const apiUrlPS = `https://jb-api-1.onrender.com/api/inlet_gate?machine_name=SG-PS-1301&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlBY = `https://jb-api-1.onrender.com/api/inlet_gate?machine_name=SG-BY-1301&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlCS_1101 = `https://jb-api-1.onrender.com/api/coarse_screen?machine_name=SC-CS-1101&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlCS_1102 = `https://jb-api-1.onrender.com/api/coarse_screen?machine_name=SC-CS-1102&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1201 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1201(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1202 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1202(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1203 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1203&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1204 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1204&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1205 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1205&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1206 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1206(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1207 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1207(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1208 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1208&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1209 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1209&record_date=${formattedDate}&record_time=${formattedTime}`;
-    const apiUrlPS_1210 = `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1210&record_date=${formattedDate}&record_time=${formattedTime}`;
-  
-    console.log(apiUrlPS);
-    console.log(apiUrlBY); 
-    console.log(apiUrlCS_1101);
-    console.log(apiUrlCS_1102); 
-    console.log(apiUrlPS_1201);
-    console.log(apiUrlPS_1202);
-    console.log(apiUrlPS_1203);
-    console.log(apiUrlPS_1204);
-    console.log(apiUrlPS_1205);
-    console.log(apiUrlPS_1206);
-    console.log(apiUrlPS_1207);
-    console.log(apiUrlPS_1208);
-    console.log(apiUrlPS_1209);
-    console.log(apiUrlPS_1210);
-  
+    const apiUrls = [
+      `https://jb-api-1.onrender.com/api/inlet_gate?machine_name=SG-PS-1301&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/inlet_gate?machine_name=SG-BY-1301&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/coarse_screen?machine_name=SC-CS-1101&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/coarse_screen?machine_name=SC-CS-1102&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1201(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1202(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1203&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1204&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1205&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1206(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1207(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1208&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1209&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Inlet_Pumping?machine_name=P-PS-1210&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/fine_screen?machine_name=SC-FS-2501&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/fine_screen?machine_name=SC-FS-2502&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/fine_screen?machine_name=SC-FS-2503&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/fine_screen?machine_name=SC-FS-2504&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/fine_screen?machine_name=SC-FS-2505&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3101A&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3101B&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3101C&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3101D&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3102A&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3102B&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3102C&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3102D&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3103A&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3103B&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3103C&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3103D&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3104A&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3104B&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3104C&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Anoxic_Mixer?machine_name=MX-BIO-3104D&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Effluent_Pump?machine_name=P-EF-5301(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Effluent_Pump?machine_name=P-EF-5302(VFD)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Effluent_Pump?machine_name=P-EF-5303&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Effluent_Pump?machine_name=P-EF-5304&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Effluent_Pump?machine_name=P-EF-5305&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Effluent_Pump?machine_name=P-EF-5306&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Inlet_Pumping_Station?machine_name=EF-PS-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Inlet_Pumping_Station?machine_name=EF-PS-02&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room1?machine_name=EF-BRR-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room2?machine_name=EF-VFD-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room2?machine_name=EF-BRR-02&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room3?machine_name=SF-BRR-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room3?machine_name=SF-BRR-02&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room3?machine_name=SF-STR-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room3?machine_name=SMEF-STR-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room4?machine_name=EF-ABR-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room4?machine_name=EF-ABR-02&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room4?machine_name=SF-CRP-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room4?machine_name=SF-CRP-02&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-BR-01 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-BR-02 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-BR-03 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SMEF-TTR-01 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SMEF-TTR-02 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-BSM-01 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-CL-01 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-CL-02 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-CL-03 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-CL-04 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SF-CL-01 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SF-CL-02 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SF-CL-03 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SF-CL-04 (เครื่องจักร)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-BR-01 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-BR-02 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-BR-03 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SMEF-TTR-01 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SMEF-TTR-02 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-BSM-01 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-CL-01 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-CL-02 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-CL-03 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=EF-CL-04 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SF-CL-01 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SF-CL-02 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SF-CL-03 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5?machine_name=SF-CL-04 (ตู้ไฟ)&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room6?machine_name=EF-BF-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room6?machine_name=EF-BF-02&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room6?machine_name=EF-BF-03&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Scum_Pump_Fan_Room6?machine_name=P-SC-4201&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Scum_Pump_Fan_Room6?machine_name=P-SC-4202&record_date=${formattedDate}&record_time=${formattedTime}`,
+    ];
+    
     try {
-      const [responsePS, responseBY, responseCS1, responseCS2, responsePS1, responsePS2, responsePS3, responsePS4, responsePS5, responsePS6, responsePS7, responsePS8, responsePS9] = await Promise.all([
-        axios.get(apiUrlPS),
-        axios.get(apiUrlBY),
-        axios.get(apiUrlCS_1101),
-        axios.get(apiUrlCS_1102),
-        axios.get(apiUrlPS_1201),
-        axios.get(apiUrlPS_1202),
-        axios.get(apiUrlPS_1203),
-        axios.get(apiUrlPS_1204),
-        axios.get(apiUrlPS_1205),
-        axios.get(apiUrlPS_1206),
-        axios.get(apiUrlPS_1207),
-        axios.get(apiUrlPS_1208),
-        axios.get(apiUrlPS_1209),
-        axios.get(apiUrlPS_1210),
-      ]);
-  
-      const dataPS = responsePS.data;
-      const dataBY = responseBY.data;
-      const dataCS1 = responseCS1.data;
-      const dataCS2 = responseCS2.data;
-      const dataPS1 = responsePS1.data;
-      const dataPS2 = responsePS2.data;
-      const dataPS3 = responsePS3.data;
-      const dataPS4 = responsePS4.data;
-      const dataPS5 = responsePS5.data;
-      const dataPS6 = responsePS6.data;
-      const dataPS7 = responsePS7.data;
-      const dataPS8 = responsePS8.data;
-      const dataPS9 = responsePS9.data;
-  
-      // Combine the data from all API responses
-      const combinedData = [...dataPS, ...dataBY, ...dataCS1, ...dataCS2, ...dataPS1, ...dataPS2, ...dataPS3, ...dataPS4, ...dataPS5, ...dataPS6, ...dataPS7, ...dataPS8, ...dataPS9];
+      const responses = await Promise.all(apiUrls.map(url => axios.get(url)));
+      
+      const combinedData: Record[] = responses.map(response => {
+        const data: Record[] = response.data;
+        if (data.length > 0) {
+          // Find the record with the highest record_id
+          return data.reduce((maxRecord, currentRecord) => {
+            return currentRecord.record_id > maxRecord.record_id ? currentRecord : maxRecord;
+          });
+        }
+        return null;
+      }).filter(record => record !== null) as Record[];
   
       console.log(combinedData); // Log the combined data
       console.log(record); // Log the selected record
+      console.log(apiUrls)
       overlayDataOnPDF(combinedData, formattedDate, formattedTime);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+  const formatDate = (date: string): string => {
+    if (!date) {
+      return '';
+    }
+    const dateParts = date.split('T')[0].split('-');
+    const year = dateParts[0].slice(-2); // Get last two digits of the year
+    const month = dateParts[1];
+    const day = dateParts[2];
+    return `${day}/${month}/${year}`;
+  };
+  
+  
   
   const overlayDataOnPDF = async (data: Record[], date: string, time: string): Promise<void> => {
     try {
@@ -167,38 +219,297 @@ const FormFormat: React.FC = () => {
       const page = pdfDoc.getPages()[0];
   
       const yOffset = 739;
-      const step = 20;
   
       data.forEach((record, index) => {
         let text: string;
         let xOffset = 132;
+        let step = 20;
+
+        if (!date || !time) {
+          throw new Error('Date or time is undefined');
+        }
+    
+        // Format date and time
+        const formattedDate = formatDate(date);
+    
+        // Define the position for the date and time
+        const dateX = 110;
+        const dateY = 780;
+        const timeX = 400;
+        const timeY = 780;
+    
+        // Overlay the date and time on the PDF
+        drawTextOnPage(page, `${formattedDate}`, customFont, dateX, dateY, 10); // Smaller font size
+        drawTextOnPage(page, `${time}`, customFont, timeX, timeY, 10); // Smaller font size
+    
   
         if (record.machine_name === 'SG-PS-1301' || record.machine_name === 'SG-BY-1301') {
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => `${value}`)
-            .join('                 '); // 12 spaces
+            .join('                 '); 
           xOffset += 0;
-          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SG-BY-1301' ? 4 : 1));
+          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SG-BY-1301' ? 4 : 1), 10);
         } else if (record.machine_name === 'SC-CS-1101' || record.machine_name === 'SC-CS-1102') {
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
-            .map(([key, value]) => `${value}`)
-            .join('                '); // 8 spaces
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}    `;
+              } else if (key === 'T1' || key === 'T2') {
+                return `${value}     `;
+              }
+            })
+            .join('             '); // 5 spaces
           xOffset += 0;
-          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SC-CS-1101' ? -6 : 0));
-        } else if (record.machine_name.startsWith('P-PS-120')) {
+          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SC-CS-1101' ? -6 : 0), 10);
+        } else if (record.machine_name.startsWith('P-PS-12')) {
+          step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
-              if (key === 'T') {
-                return `         ${value}        `; // 6 spaces after 'T'
-              } else {
-                return `${value}    `; // 4 spaces after 'Status', 'A1', 'A2', 'A3'
+              if (key === 'status') {
+                return `${value}       `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
               }
             })
-            .join('    '); // 4 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 13);
+            .join(''); 
+          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 30, 10);
+        } else if (record.machine_name.startsWith('SC-FS-25')) {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}  `; 
+              } else if (key === 'A1') {
+                return `             ${value}`;
+              }
+            })
+            .join(''); 
+          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 43, 10);
+        } else if (record.machine_name.startsWith('MX-BIO-31')) {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}       `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 57, 10);
+        } else if (record.machine_name.startsWith('P-EF-53')) {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}       `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 72, 10);
+        } else if (record.machine_name.startsWith('EF-PS-')) {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}          `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 620, 10);
+        } else if (record.machine_name.startsWith('EF-BRR-01')) {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}          `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 590, 10);
+        } else if (record.machine_name === 'EF-VFD-01' || record.machine_name === 'EF-BRR-02') {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}          `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 560, 10);
+        } else if (record.machine_name === 'SF-BRR-01' || record.machine_name === 'SF-BRR-02' || record.machine_name === 'SF-STR-01' || record.machine_name === 'SMEF-STR-01') {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}          `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 530, 10);
+        } else if (record.machine_name === 'EF-ABR-01' || record.machine_name === 'EF-ABR-02' || record.machine_name === 'SF-CRP-01' || record.machine_name === 'SF-CRP-02') {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}          `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 500, 10);
+        } else if  //แยกเครื่องจักรกับตู้ไฟ!!!
+          (
+          record.machine_name === 'EF-BR-01 (เครื่องจักร)' || 
+          record.machine_name === 'EF-BR-02 (เครื่องจักร)' || 
+          record.machine_name === 'EF-BR-03 (เครื่องจักร)' || 
+          record.machine_name === 'SMEF-TTR-01 (เครื่องจักร)' || 
+          record.machine_name === 'SMEF-TTR-02 (เครื่องจักร)' || 
+          record.machine_name ==='EF-BSM-01 (เครื่องจักร)' || 
+          record.machine_name === 'EF-CL-01 (เครื่องจักร)' || 
+          record.machine_name === 'EF-CL-02 (เครื่องจักร)' || 
+          record.machine_name === 'EF-CL-03 (เครื่องจักร)' ||
+          record.machine_name === 'EF-CL-04 (เครื่องจักร)' ||
+          record.machine_name === 'SF-CL-01 (เครื่องจักร)' ||
+          record.machine_name === 'SF-CL-02 (เครื่องจักร)' || 
+          record.machine_name === 'SF-CL-03 (เครื่องจักร)' ||
+          record.machine_name === 'SF-CL-04 (เครื่องจักร)' 
+          ) 
+        {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'A1', 'A2', 'A3', 'T', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}`; 
+              } 
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset + 235, yOffset - step * index + 470, 10);
+        } else if 
+            (
+            record.machine_name === 'EF-BR-01 (ตู้ไฟ)' || 
+            record.machine_name === 'EF-BR-02 (ตู้ไฟ)' || 
+            record.machine_name === 'EF-BR-03 (ตู้ไฟ)' || 
+            record.machine_name === 'SMEF-TTR-01 (ตู้ไฟ)' || 
+            record.machine_name === 'SMEF-TTR-02 (ตู้ไฟ)' || 
+            record.machine_name ==='EF-BSM-01 (ตู้ไฟ)' || 
+            record.machine_name === 'EF-CL-01 (ตู้ไฟ)' || 
+            record.machine_name === 'EF-CL-02 (ตู้ไฟ)' || 
+            record.machine_name === 'EF-CL-03 (ตู้ไฟ)' ||
+            record.machine_name === 'EF-CL-04 (ตู้ไฟ)' ||
+            record.machine_name === 'SF-CL-01 (ตู้ไฟ)' ||
+            record.machine_name === 'SF-CL-02 (ตู้ไฟ)' || 
+            record.machine_name === 'SF-CL-03 (ตู้ไฟ)' ||
+            record.machine_name === 'SF-CL-04 (ตู้ไฟ)' 
+            )
+          {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}    `; 
+              } else if (key === 'A1') {
+                return `${value}  `; 
+              } else if (key === 'A2') {
+                return `${value}  `; 
+              } else if (key === 'A3') {
+                return `  ${value}`; 
+              } else if (key === 'T'){
+                return `            ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset + 255, yOffset - step * index + 687, 10);
+        } else if (record.machine_name === 'EF-BF-01' || record.machine_name === 'EF-BF-02' || record.machine_name === 'EF-BF-03') {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}          `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 657, 10);
+        } else if (record.machine_name === 'P-SC-4201' || record.machine_name === 'P-SC-4202') {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}          `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 643, 10);
         }
       });
   
@@ -211,21 +522,17 @@ const FormFormat: React.FC = () => {
     }
   };
   
-  const drawTextOnPage = (
-    page: PDFPage,
-    text: string,
-    font: PDFFont,
-    x: number,
-    y: number
-  ): void => {
+  const drawTextOnPage = (page: PDFPage, text: string, font: PDFFont, x: number, y: number, size: number): void => {
     page.drawText(text, {
       x,
       y,
-      size: 10,
+      size,
       font,
       color: rgb(0, 0, 0),
     });
   };
+  
+  
 
   return (
     <div>
