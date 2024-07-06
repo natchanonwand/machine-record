@@ -2639,7 +2639,10 @@ useEffect(() => {
   console.log('inletPumpingStatuses:', inletPumpingStatuses);
 }, [inletPumpingStatuses]);
 
-
+const [clickedButton, setClickedButton] = useState<string | null>(null);
+const handleButtonClick = (machineName: string) => {
+  setClickedButton(machineName);
+};
 
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -2710,7 +2713,7 @@ useEffect(() => {
                   <label className={styles.label} htmlFor={`status-${ch.machine_name}`}>{ch.machine_name}</label>
                   <select
                       id={`status-${ch.machine_name}`}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === ch.machine_name ? styles.centered : ''}`}
                       value={ch.status}
                       onChange={(e) => {
                           const newStatuses = [...chStatuses];
@@ -2733,7 +2736,7 @@ useEffect(() => {
                           newStatuses[index].note = e.target.value;
                           setChStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === ch.machine_name ? styles.centered : ''}`}
                       placeholder="Note"
                   />
               </div>
@@ -2750,7 +2753,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`chwp${index + 1}Status`}>Status</label>
                     <select
                         id={`chwp${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
                         value={chwp.status}
                         onChange={(e) => {
                             const newStatuses = [...chillerWaterPumpStatuses];
@@ -2773,7 +2776,7 @@ useEffect(() => {
                             newStatuses[index].A1 = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
                         placeholder="A1"
                     />
                     <input
@@ -2784,7 +2787,7 @@ useEffect(() => {
                             newStatuses[index].A2 = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
                         placeholder="A2"
                     />
                     <input
@@ -2795,7 +2798,7 @@ useEffect(() => {
                             newStatuses[index].A3 = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
                         placeholder="A3"
                     />
                     <input
@@ -2806,7 +2809,7 @@ useEffect(() => {
                             newStatuses[index].T = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
                         placeholder="T"
                     />
                     <input
@@ -2817,7 +2820,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -2835,7 +2838,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`fan${index + 1}Status`}>Status</label>
                     <select
                         id={`fan${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
                         value={fan.status}
                         onChange={(e) => {
                             const newStatuses = [...fan6Statuses];
@@ -2858,7 +2861,7 @@ useEffect(() => {
                             newStatuses[index].A1 = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
                         placeholder="A1"
                     />
                     <input
@@ -2869,7 +2872,7 @@ useEffect(() => {
                             newStatuses[index].A2 = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
                         placeholder="A2"
                     />
                     <input
@@ -2880,7 +2883,7 @@ useEffect(() => {
                             newStatuses[index].A3 = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
                         placeholder="A3"
                     />
                     <input
@@ -2891,7 +2894,7 @@ useEffect(() => {
                             newStatuses[index].T = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
                         placeholder="T"
                     />
                     <input
@@ -2902,7 +2905,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -2920,7 +2923,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`biofilter${index + 1}Status`}>Status</label>
                     <select
                         id={`biofilter${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === biofilter.machine_name ? styles.centered : ''}`}
                         value={biofilter.status}
                         onChange={(e) => {
                             const newStatuses = [...biofilterStatuses];
@@ -2943,7 +2946,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setBiofilterStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === biofilter.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -2976,7 +2979,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`status-${ip.machine_name}`}>{ip.machine_name}</label>
                     <select
                       id={`status-${ip.machine_name}`}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
                       value={ip.status}
                       onChange={(e) => {
                         const newStatuses = [...inletPumpingStatuses];
@@ -2999,7 +3002,7 @@ useEffect(() => {
                         newStatuses[index].A1 = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
                       placeholder="A1"
                     />
                     <input
@@ -3010,7 +3013,7 @@ useEffect(() => {
                         newStatuses[index].A2 = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
                       placeholder="A2"
                     />
                     <input
@@ -3021,7 +3024,7 @@ useEffect(() => {
                         newStatuses[index].A3 = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
                       placeholder="A3"
                     />
                     <input
@@ -3032,7 +3035,7 @@ useEffect(() => {
                         newStatuses[index].T = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
                       placeholder="T"
                     />
                     <input
@@ -3043,7 +3046,7 @@ useEffect(() => {
                         newStatuses[index].note = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
                       placeholder="Note"
                     />
                   </div>
@@ -3059,7 +3062,7 @@ useEffect(() => {
                         <label className={styles.label} htmlFor={`status-${gp.machine_name}`}>{gp.machine_name}</label>
                         <select
                             id={`status-${gp.machine_name}`}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === gp.machine_name ? styles.centered : ''}`}
                             value={gp.status}
                             onChange={(e) => {
                                 const newStatuses = [...gardenPumpStatuses];
@@ -3082,7 +3085,7 @@ useEffect(() => {
                                 newStatuses[index].note = e.target.value;
                                 setGardenPumpStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === gp.machine_name ? styles.centered : ''}`}
                             placeholder="Note"
                         />
                        
@@ -3099,7 +3102,7 @@ useEffect(() => {
                         <label className={styles.label} htmlFor={`status-${vip.machine_name}`}>{vip.machine_name}</label>
                         <select
                             id={`status-${vip.machine_name}`}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
                             value={vip.status}
                             onChange={(e) => {
                                 const newStatuses = [...ventilationInletPumpingStatuses];
@@ -3122,7 +3125,7 @@ useEffect(() => {
                                 newStatuses[index].A1 = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
                             placeholder="A1"
                         />
                         <input
@@ -3133,7 +3136,7 @@ useEffect(() => {
                                 newStatuses[index].A2 = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
                             placeholder="A2"
                         />
                         <input
@@ -3144,7 +3147,7 @@ useEffect(() => {
                                 newStatuses[index].A3 = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
                             placeholder="A3"
                         />
                         <input
@@ -3155,7 +3158,7 @@ useEffect(() => {
                                 newStatuses[index].T = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
                             placeholder="T"
                         />
                         <input
@@ -3166,7 +3169,7 @@ useEffect(() => {
                                 newStatuses[index].note = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
                             placeholder="Note"
                         />
                     </div>
@@ -3182,7 +3185,7 @@ useEffect(() => {
                         <label className={styles.label} htmlFor={`status-${ig.machine_name}`}>{ig.machine_name}</label>
                         <select
                             id={`status-${ig.machine_name}`}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === ig.machine_name ? styles.centered : ''}`}
                             value={ig.status}
                             onChange={(e) => {
                                 const newStatuses = [...inletGateStatuses];
@@ -3205,7 +3208,7 @@ useEffect(() => {
                                 newStatuses[index].gate_percentage = e.target.value;
                                 setInletGateStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === ig.machine_name ? styles.centered : ''}`}
                             placeholder="Gate %"
                         />
                         <input
@@ -3216,7 +3219,7 @@ useEffect(() => {
                                 newStatuses[index].note = e.target.value;
                                 setInletGateStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === ig.machine_name ? styles.centered : ''}`}
                             placeholder="Note"
                           />
                     </div>
@@ -3232,7 +3235,7 @@ useEffect(() => {
                         <label className={styles.label} htmlFor={`status-${cs.machine_name}`}>{cs.machine_name}</label>
                         <select
                             id={`status-${cs.machine_name}`}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === cs.machine_name ? styles.centered : ''}`}
                             value={cs.status}
                             onChange={(e) => {
                                 const newStatuses = [...coarseScreenStatuses];
@@ -3255,7 +3258,7 @@ useEffect(() => {
                                 newStatuses[index].T1 = e.target.value;
                                 setCoarseScreenStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === cs.machine_name ? styles.centered : ''}`}
                             placeholder="T1"
                         />
                         <input
@@ -3266,7 +3269,7 @@ useEffect(() => {
                                 newStatuses[index].T2 = e.target.value;
                                 setCoarseScreenStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === cs.machine_name ? styles.centered : ''}`}
                             placeholder="T2"
                         />
                         <input
@@ -3277,7 +3280,7 @@ useEffect(() => {
                                 newStatuses[index].note = e.target.value;
                                 setCoarseScreenStatuses(newStatuses);
                             }}
-                            className={styles.input}
+                            className={`${styles.input} ${clickedButton === cs.machine_name ? styles.centered : ''}`}
                             placeholder="Note"
                         />
                     </div>
@@ -3305,7 +3308,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${fan3.machine_name}`}>{fan3.machine_name}</label>
                 <select
                   id={`status-${fan3.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
                   value={fan3.status}
                   onChange={(e) => {
                     const newStatuses = [...fan3Statuses];
@@ -3328,7 +3331,7 @@ useEffect(() => {
                     newStatuses[index].A1 = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
                   placeholder="A1"
                 />
                 <input
@@ -3339,7 +3342,7 @@ useEffect(() => {
                     newStatuses[index].A2 = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
                   placeholder="A2"
                 />
                 <input
@@ -3350,7 +3353,7 @@ useEffect(() => {
                     newStatuses[index].A3 = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
                   placeholder="A3"
                 />
                 <input
@@ -3361,7 +3364,7 @@ useEffect(() => {
                     newStatuses[index].T = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
                   placeholder="T"
                 />
                 <input
@@ -3372,7 +3375,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -3388,7 +3391,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${fan2.machine_name}`}>{fan2.machine_name}</label>
                 <select
                   id={`status-${fan2.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
                   value={fan2.status}
                   onChange={(e) => {
                     const newStatuses = [...fan2Statuses];
@@ -3411,7 +3414,7 @@ useEffect(() => {
                     newStatuses[index].A1 = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
                   placeholder="A1"
                 />
                 <input
@@ -3422,7 +3425,7 @@ useEffect(() => {
                     newStatuses[index].A2 = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
                   placeholder="A2"
                 />
                 <input
@@ -3433,7 +3436,7 @@ useEffect(() => {
                     newStatuses[index].A3 = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
                   placeholder="A3"
                 />
                 <input
@@ -3444,7 +3447,7 @@ useEffect(() => {
                     newStatuses[index].T = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
                   placeholder="T"
                 />
                 <input
@@ -3455,7 +3458,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -3471,7 +3474,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${fan1.machine_name}`}>{fan1.machine_name}</label>
                 <select
                   id={`status-${fan1.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
                   value={fan1.status}
                   onChange={(e) => {
                     const newStatuses = [...fan1Statuses];
@@ -3494,7 +3497,7 @@ useEffect(() => {
                     newStatuses[index].A1 = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
                   placeholder="A1"
                 />
                 <input
@@ -3505,7 +3508,7 @@ useEffect(() => {
                     newStatuses[index].A2 = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
                   placeholder="A2"
                 />
                 <input
@@ -3516,7 +3519,7 @@ useEffect(() => {
                     newStatuses[index].A3 = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
                   placeholder="A3"
                 />
                 <input
@@ -3527,7 +3530,7 @@ useEffect(() => {
                     newStatuses[index].T = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
                   placeholder="T"
                 />
                 <input
@@ -3538,7 +3541,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -3554,7 +3557,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${autoSampler.machine_name}`}>{autoSampler.machine_name}</label>
                 <select
                   id={`status-${autoSampler.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === autoSampler.machine_name ? styles.centered : ''}`}
                   value={autoSampler.status}
                   onChange={(e) => {
                     const newStatuses = [...autoSamplerStatuses];
@@ -3577,7 +3580,7 @@ useEffect(() => {
                     newStatuses[index].T = e.target.value;
                     setAutoSamplerStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === autoSampler.machine_name ? styles.centered : ''}`}
                   placeholder="T (°C)"
                 />
                 <input
@@ -3588,7 +3591,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setAutoSamplerStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === autoSampler.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -3604,7 +3607,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${vortexGrit.machine_name}`}>{vortexGrit.machine_name}</label>
                 <select
                   id={`status-${vortexGrit.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === vortexGrit.machine_name ? styles.centered : ''}`}
                   value={vortexGrit.status}
                   onChange={(e) => {
                     const newStatuses = [...vortexGritStatuses];
@@ -3627,7 +3630,7 @@ useEffect(() => {
                     newStatuses[index].T = e.target.value;
                     setVortexGridStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === vortexGrit.machine_name ? styles.centered : ''}`}
                   placeholder="T"
                 />
                 <input
@@ -3638,7 +3641,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setVortexGridStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === vortexGrit.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -3655,7 +3658,7 @@ useEffect(() => {
                 <input
                   type="text"
                   id={`flow-${airFlow.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === airFlow.machine_name ? styles.centered : ''}`}
                   value={airFlow.Flow}
                   onChange={(e) => {
                     const newStatuses = [...airFlowStatuses];
@@ -3673,7 +3676,7 @@ useEffect(() => {
                     newStatuses[index].valve_percentage = e.target.value;
                     setAirFlowStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === airFlow.machine_name ? styles.centered : ''}`}
                   placeholder="Valve Percentage"
                   disabled={isAirFlowDataSent}
                 />
@@ -3685,7 +3688,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setAirFlowStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === airFlow.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                   disabled={isAirFlowDataSent}
                 />
@@ -3718,7 +3721,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${fineScreen.machine_name}`}>{fineScreen.machine_name}</label>
                 <select
                   id={`status-${fineScreen.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fineScreen.machine_name ? styles.centered : ''}`}
                   value={fineScreen.status}
                   onChange={(e) => {
                     const newStatuses = [...fineScreenStatuses];
@@ -3741,7 +3744,7 @@ useEffect(() => {
                     newStatuses[index].A1 = e.target.value;
                     setFineScreenStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fineScreen.machine_name ? styles.centered : ''}`}
                   placeholder="A1"
                 />
                 <input
@@ -3752,7 +3755,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setFineScreenStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fineScreen.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -3768,7 +3771,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${drainagePump3.machine_name}`}>{drainagePump3.machine_name}</label>
                 <select
                   id={`status-${drainagePump3.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
                   value={drainagePump3.status}
                   onChange={(e) => {
                     const newStatuses = [...drainagePump3Statuses];
@@ -3791,7 +3794,7 @@ useEffect(() => {
                     newStatuses[index].A1 = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
                   placeholder="A1"
                 />
                 <input
@@ -3802,7 +3805,7 @@ useEffect(() => {
                     newStatuses[index].A2 = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
                   placeholder="A2"
                 />
                 <input
@@ -3813,7 +3816,7 @@ useEffect(() => {
                     newStatuses[index].A3 = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
                   placeholder="A3"
                 />
                 <input
@@ -3824,7 +3827,7 @@ useEffect(() => {
                     newStatuses[index].T = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
                   placeholder="T"
                 />
                 <input
@@ -3835,7 +3838,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -3851,7 +3854,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${fan4.machine_name}`}>{fan4.machine_name}</label>
                 <select
                   id={`status-${fan4.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
                   value={fan4.status}
                   onChange={(e) => {
                     const newStatuses = [...fan4Statuses];
@@ -3874,7 +3877,7 @@ useEffect(() => {
                     newStatuses[index].A1 = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
                   placeholder="A1"
                 />
                 <input
@@ -3885,7 +3888,7 @@ useEffect(() => {
                     newStatuses[index].A2 = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
                   placeholder="A2"
                 />
                 <input
@@ -3896,7 +3899,7 @@ useEffect(() => {
                     newStatuses[index].A3 = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
                   placeholder="A3"
                 />
                 <input
@@ -3907,7 +3910,7 @@ useEffect(() => {
                     newStatuses[index].T = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
                   placeholder="T"
                 />
                 <input
@@ -3918,7 +3921,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -3934,7 +3937,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${anoxicMixer1.machine_name}`}>{anoxicMixer1.machine_name}</label>
                 <select
                   id={`status-${anoxicMixer1.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
                   value={anoxicMixer1.status}
                   onChange={(e) => {
                     const newStatuses = [...anoxicMixer1Statuses];
@@ -3957,7 +3960,7 @@ useEffect(() => {
                     newStatuses[index].A1 = e.target.value;
                     setAnoxicMixer1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
                   placeholder="A1"
                 />
                 <input
@@ -3968,7 +3971,7 @@ useEffect(() => {
                     newStatuses[index].A2 = e.target.value;
                     setAnoxicMixer1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
                   placeholder="A2"    />
                   <input
                     type="text"
@@ -3978,7 +3981,7 @@ useEffect(() => {
                       newStatuses[index].A3 = e.target.value;
                       setAnoxicMixer1Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
                     placeholder="A3"
                   />
                   <input
@@ -3989,7 +3992,7 @@ useEffect(() => {
                       newStatuses[index].T = e.target.value;
                       setAnoxicMixer1Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
                     placeholder="T"
                   />
                   <input
@@ -4000,7 +4003,7 @@ useEffect(() => {
                       newStatuses[index].note = e.target.value;
                       setAnoxicMixer1Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
                     placeholder="Note"
                   />
                 </div>
@@ -4016,7 +4019,7 @@ useEffect(() => {
                   <label className={styles.label} htmlFor={`status-${anoxicMixer2.machine_name}`}>{anoxicMixer2.machine_name}</label>
                   <select
                     id={`status-${anoxicMixer2.machine_name}`}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
                     value={anoxicMixer2.status}
                     onChange={(e) => {
                       const newStatuses = [...anoxicMixer2Statuses];
@@ -4039,7 +4042,7 @@ useEffect(() => {
                       newStatuses[index].A1 = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
                     placeholder="A1"
                   />
                   <input
@@ -4050,7 +4053,7 @@ useEffect(() => {
                       newStatuses[index].A2 = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
                     placeholder="A2"
                   />
                   <input
@@ -4061,7 +4064,7 @@ useEffect(() => {
                       newStatuses[index].A3 = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
                     placeholder="A3"
                   />
                   <input
@@ -4072,7 +4075,7 @@ useEffect(() => {
                       newStatuses[index].T = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
                     placeholder="T"
                   />
                   <input
@@ -4083,7 +4086,7 @@ useEffect(() => {
                       newStatuses[index].note = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
                     placeholder="Note"
                   />
                 </div>
@@ -4099,7 +4102,7 @@ useEffect(() => {
                   <label className={styles.label} htmlFor={`status-${anoxicMixer3.machine_name}`}>{anoxicMixer3.machine_name}</label>
                   <select
                     id={`status-${anoxicMixer3.machine_name}`}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
                     value={anoxicMixer3.status}
                     onChange={(e) => {
                       const newStatuses = [...anoxicMixer3Statuses];
@@ -4122,7 +4125,7 @@ useEffect(() => {
                       newStatuses[index].A1 = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
                     placeholder="A1"
                   />
                   <input
@@ -4133,7 +4136,7 @@ useEffect(() => {
                       newStatuses[index].A2 = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
                     placeholder="A2"
                   />
                   <input
@@ -4144,7 +4147,7 @@ useEffect(() => {
                       newStatuses[index].A3 = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
                     placeholder="A3"
                   />
                   <input
@@ -4155,7 +4158,7 @@ useEffect(() => {
                       newStatuses[index].T = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
                     placeholder="T"
                   />
                   <input
@@ -4166,7 +4169,7 @@ useEffect(() => {
                       newStatuses[index].note = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
                     placeholder="Note"
                   />
                 </div>
@@ -4182,7 +4185,7 @@ useEffect(() => {
                   <label className={styles.label} htmlFor={`status-${anoxicMixer4.machine_name}`}>{anoxicMixer4.machine_name}</label>
                   <select
                     id={`status-${anoxicMixer4.machine_name}`}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
                     value={anoxicMixer4.status}
                     onChange={(e) => {
                       const newStatuses = [...anoxicMixer4Statuses];
@@ -4205,7 +4208,7 @@ useEffect(() => {
                       newStatuses[index].A1 = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
                     placeholder="A1"
                   />
                   <input
@@ -4216,7 +4219,7 @@ useEffect(() => {
                       newStatuses[index].A2 = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
                     placeholder="A2"
                   />
                   <input
@@ -4227,7 +4230,7 @@ useEffect(() => {
                       newStatuses[index].A3 = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
                     placeholder="A3"
                   />
                   <input
@@ -4238,7 +4241,7 @@ useEffect(() => {
                       newStatuses[index].T = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
                     placeholder="T"
                   />
                   <input
@@ -4249,7 +4252,7 @@ useEffect(() => {
                       newStatuses[index].note = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
                     placeholder="Note"
                   />
                 </div>
@@ -4265,7 +4268,7 @@ useEffect(() => {
                   <label className={styles.label} htmlFor={`status-${singleAirBlower.machine_name}`}>{singleAirBlower.machine_name}</label>
                   <select
                     id={`status-${singleAirBlower.machine_name}`}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
                     value={singleAirBlower.status}
                     onChange={(e) => {
                       const newStatuses = [...singleAirBlowerStatuses];
@@ -4288,7 +4291,7 @@ useEffect(() => {
                       newStatuses[index].A1 = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="A1"
                   />
                   <input
@@ -4299,7 +4302,7 @@ useEffect(() => {
                       newStatuses[index].A2 = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="A2"
                   />
                   <input
@@ -4310,7 +4313,7 @@ useEffect(() => {
                       newStatuses[index].A3 = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="A3"
                   />
                   <input
@@ -4321,7 +4324,7 @@ useEffect(() => {
                       newStatuses[index].T = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="T"
                   />
                   <input
@@ -4332,7 +4335,7 @@ useEffect(() => {
                       newStatuses[index].note = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="Note"
                   />
                 </div>
@@ -4348,7 +4351,7 @@ useEffect(() => {
                   <label className={styles.label} htmlFor={`status-${positiveAirBlower.machine_name}`}>{positiveAirBlower.machine_name}</label>
                   <select
                     id={`status-${positiveAirBlower.machine_name}`}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
                     value={positiveAirBlower.status}
                     onChange={(e) => {
                       const newStatuses = [...positiveAirBlowerStatuses];
@@ -4371,7 +4374,7 @@ useEffect(() => {
                       newStatuses[index].A1 = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="A1"
                   />
                   <input
@@ -4382,7 +4385,7 @@ useEffect(() => {
                       newStatuses[index].A2 = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="A2"
                   />
                   <input      type="text"
@@ -4392,7 +4395,7 @@ useEffect(() => {
                       newStatuses[index].A3 = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="A3"
                   />
                   <input
@@ -4403,7 +4406,7 @@ useEffect(() => {
                       newStatuses[index].T = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="T"
                   />
                   <input
@@ -4414,7 +4417,7 @@ useEffect(() => {
                       newStatuses[index].note = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={styles.input}
+                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
                     placeholder="Note"
                   />
                 </div>
@@ -4445,7 +4448,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${clarifier1.machine_name}`}>{clarifier1.machine_name}</label>
                 <select
                   id={`status-${clarifier1.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
                   value={clarifier1.status}
                   onChange={(e) => {
                     const newStatuses = [...clarifier1Statuses];
@@ -4468,7 +4471,7 @@ useEffect(() => {
                     newStatuses[index].A_motor1 = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
                   placeholder="A_motor1"
                 />
                 <input
@@ -4479,7 +4482,7 @@ useEffect(() => {
                     newStatuses[index].A_motor2 = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
                   placeholder="A_motor2"
                 />
                 <input
@@ -4490,7 +4493,7 @@ useEffect(() => {
                     newStatuses[index].A_scum = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
                   placeholder="A_scum"
                 />
                 <input
@@ -4501,7 +4504,7 @@ useEffect(() => {
                     newStatuses[index].A_pump = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
                   placeholder="A_pump"
                 />
                 <input
@@ -4512,7 +4515,7 @@ useEffect(() => {
                     newStatuses[index].T_motor = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
                   placeholder="T_motor"
                 />
                 <input
@@ -4523,7 +4526,7 @@ useEffect(() => {
                     newStatuses[index].T_scum = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
                   placeholder="T_scum"
                 />
                 <input
@@ -4534,7 +4537,7 @@ useEffect(() => {
                     newStatuses[index].T_pump = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
                   placeholder="T_pump"
                 />
                 <input
@@ -4545,7 +4548,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -4561,7 +4564,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${clarifier2.machine_name}`}>{clarifier2.machine_name}</label>
                 <select
                   id={`status-${clarifier2.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
                   value={clarifier2.status}
                   onChange={(e) => {
                     const newStatuses = [...clarifier2Statuses];
@@ -4584,7 +4587,7 @@ useEffect(() => {
                     newStatuses[index].A_motor1 = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
                   placeholder="A_motor1"
                 />
                 <input
@@ -4595,7 +4598,7 @@ useEffect(() => {
                     newStatuses[index].A_motor2 = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
                   placeholder="A_motor2"
                 />
                 <input
@@ -4606,7 +4609,7 @@ useEffect(() => {
                     newStatuses[index].A_scum = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
                   placeholder="A_scum"
                 />
                 <input
@@ -4617,7 +4620,7 @@ useEffect(() => {
                     newStatuses[index].A_pump = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
                   placeholder="A_pump"
                 />
                 <input
@@ -4628,7 +4631,7 @@ useEffect(() => {
                     newStatuses[index].T_motor = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
                   placeholder="T_motor"
                 />
                 <input
@@ -4639,7 +4642,7 @@ useEffect(() => {
                     newStatuses[index].T_scum = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
                   placeholder="T_scum"
                 />
                 <input
@@ -4650,7 +4653,7 @@ useEffect(() => {
                     newStatuses[index].T_pump = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
                   placeholder="T_pump"
                 />
                 <input
@@ -4661,7 +4664,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -4678,7 +4681,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${clarifier3.machine_name}`}>{clarifier3.machine_name}</label>
                 <select
                   id={`status-${clarifier3.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
                   value={clarifier3.status}
                   onChange={(e) => {
                     const newStatuses = [...clarifier3Statuses];
@@ -4701,7 +4704,7 @@ useEffect(() => {
                     newStatuses[index].A_motor1 = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
                   placeholder="A_motor1"
                 />
                 <input
@@ -4712,7 +4715,7 @@ useEffect(() => {
                     newStatuses[index].A_motor2 = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
                   placeholder="A_motor2"
                 />
                 <input
@@ -4723,7 +4726,7 @@ useEffect(() => {
                     newStatuses[index].A_scum = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
                   placeholder="A_scum"
                 />
                 <input
@@ -4734,7 +4737,7 @@ useEffect(() => {
                     newStatuses[index].A_pump = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
                   placeholder="A_pump"
                 />
                 <input
@@ -4745,7 +4748,7 @@ useEffect(() => {
                     newStatuses[index].T_motor = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
                   placeholder="T_motor"
                 />
                 <input
@@ -4756,7 +4759,7 @@ useEffect(() => {
                     newStatuses[index].T_scum = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
                   placeholder="T_scum"
                 />
                 <input
@@ -4767,7 +4770,7 @@ useEffect(() => {
                     newStatuses[index].T_pump = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
                   placeholder="T_pump"
                 />
                 <input
@@ -4778,7 +4781,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -4794,7 +4797,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${clarifier4.machine_name}`}>{clarifier4.machine_name}</label>
                 <select
                   id={`status-${clarifier4.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
                   value={clarifier4.status}
                   onChange={(e) => {
                     const newStatuses = [...clarifier4Statuses];
@@ -4817,7 +4820,7 @@ useEffect(() => {
                     newStatuses[index].A_motor1 = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
                   placeholder="A_motor1"
                 />
                 <input
@@ -4828,7 +4831,7 @@ useEffect(() => {
                     newStatuses[index].A_motor2 = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
                   placeholder="A_motor2"
                 />
                 <input
@@ -4839,7 +4842,7 @@ useEffect(() => {
                     newStatuses[index].A_scum = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
                   placeholder="A_scum"
                 />
                 <input
@@ -4850,7 +4853,7 @@ useEffect(() => {
                     newStatuses[index].A_pump = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
                   placeholder="A_pump"
                 />
                 <input
@@ -4861,7 +4864,7 @@ useEffect(() => {
                     newStatuses[index].T_motor = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
                   placeholder="T_motor"
                 />
                 <input
@@ -4872,7 +4875,7 @@ useEffect(() => {
                     newStatuses[index].T_scum = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
                   placeholder="T_scum"
                 />
                 <input
@@ -4883,7 +4886,7 @@ useEffect(() => {
                     newStatuses[index].T_pump = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
                   placeholder="T_pump"
                 />
                 <input
@@ -4894,7 +4897,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -4910,7 +4913,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`status-${autoSampler_2.machine_name}`}>{autoSampler_2.machine_name}</label>
                 <select
                   id={`status-${autoSampler_2.machine_name}`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === autoSampler_2.machine_name ? styles.centered : ''}`}
                   value={autoSampler_2.status}
                   onChange={(e) => {
                     const newStatuses = [...autoSampler_2Statuses];
@@ -4933,7 +4936,7 @@ useEffect(() => {
                     newStatuses[index].T = e.target.value;
                     setAutoSampler_2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === autoSampler_2.machine_name ? styles.centered : ''}`}
                   placeholder="T (°C)"
                 />
                 <input
@@ -4944,7 +4947,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setAutoSampler_2Statuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === autoSampler_2.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -4974,7 +4977,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`fan5${index + 1}Status`}>{fan5.machine_name}</label>
                     <select
                         id={`fan5${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5.machine_name ? styles.centered : ''}`}
                         value={fan5.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5Statuses];
@@ -4997,7 +5000,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setFan5Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -5013,7 +5016,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`fan5_2${index + 1}Status`}>{fan5_2.machine_name}</label>
                     <select
                         id={`fan5_2${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_2.machine_name ? styles.centered : ''}`}
                         value={fan5_2.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_2Statuses];
@@ -5036,7 +5039,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setFan5_2Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_2.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -5051,7 +5054,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`fan5_3${index + 1}Status`}>{fan5_3.machine_name}</label>
                     <select
                         id={`fan5_3${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_3.machine_name ? styles.centered : ''}`}
                         value={fan5_3.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_3Statuses];
@@ -5074,7 +5077,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setFan5_3Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_3.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -5090,7 +5093,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`fan5_4${index + 1}Status`}>{fan5_4.machine_name}</label>
                     <select
                         id={`fan5_4${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
                         value={fan5_4.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_4Statuses];
@@ -5113,7 +5116,7 @@ useEffect(() => {
                             newStatuses[index].A1 = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
                         placeholder="A1"
                     />
                     <input
@@ -5124,7 +5127,7 @@ useEffect(() => {
                             newStatuses[index].A2 = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
                         placeholder="A2"
                     />
                     <input
@@ -5135,7 +5138,7 @@ useEffect(() => {
                             newStatuses[index].A3 = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
                         placeholder="A3"
                     />
                     <input
@@ -5146,7 +5149,7 @@ useEffect(() => {
                             newStatuses[index].T = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
                         placeholder="T"
                     />
                     <input
@@ -5157,7 +5160,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -5172,7 +5175,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`fan5_5${index + 1}Status`}>{fan5_5.machine_name}</label>
                     <select
                         id={`fan5_5${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
                         value={fan5_5.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_5Statuses];
@@ -5195,7 +5198,7 @@ useEffect(() => {
                             newStatuses[index].A1 = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
                         placeholder="A1"
                     />
                     <input
@@ -5206,7 +5209,7 @@ useEffect(() => {
                             newStatuses[index].A2 = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
                         placeholder="A2"
                     />
                     <input
@@ -5217,7 +5220,7 @@ useEffect(() => {
                             newStatuses[index].A3 = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
                         placeholder="A3"
                     />
                     <input
@@ -5228,7 +5231,7 @@ useEffect(() => {
                             newStatuses[index].T = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
                         placeholder="T"
                     />
                     <input
@@ -5239,7 +5242,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -5254,7 +5257,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`fan5_6${index + 1}Status`}>{fan5_6.machine_name}</label>
                     <select
                         id={`fan5_6${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
                         value={fan5_6.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_6Statuses];
@@ -5277,7 +5280,7 @@ useEffect(() => {
                             newStatuses[index].A1 = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
                         placeholder="A1"
                     />
                     <input
@@ -5288,7 +5291,7 @@ useEffect(() => {
                             newStatuses[index].A2 = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
                         placeholder="A2"
                     />
                     <input
@@ -5299,7 +5302,7 @@ useEffect(() => {
                             newStatuses[index].A3 = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
                         placeholder="A3"
                     />
                     <input
@@ -5310,7 +5313,7 @@ useEffect(() => {
                             newStatuses[index].T = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
                         placeholder="T"
                     />
                     <input
@@ -5321,7 +5324,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -5336,7 +5339,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`fan5_7${index + 1}Status`}>{fan5_7.machine_name}</label>
                     <select
                         id={`fan5_7${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
                         value={fan5_7.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_7Statuses];
@@ -5359,7 +5362,7 @@ useEffect(() => {
                             newStatuses[index].A1 = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
                         placeholder="A1"
                     />
                     <input
@@ -5370,7 +5373,7 @@ useEffect(() => {
                             newStatuses[index].A2 = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
                         placeholder="A2"
                     />
                     <input
@@ -5381,7 +5384,7 @@ useEffect(() => {
                             newStatuses[index].A3 = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
                         placeholder="A3"
                     />
                     <input
@@ -5392,7 +5395,7 @@ useEffect(() => {
                             newStatuses[index].T = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
                         placeholder="T"
                     />
                     <input
@@ -5403,7 +5406,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -5421,7 +5424,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`drainagePump2${index + 1}Status`}>Status</label>
                     <select
                         id={`drainagePump2${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
                         value={drainagePump2.status}
                         onChange={(e) => {
                             const newStatuses = [...drainagePump2Statuses];
@@ -5444,7 +5447,7 @@ useEffect(() => {
                             newStatuses[index].A1 = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
                         placeholder="A1"
                     />
                     <input
@@ -5455,7 +5458,7 @@ useEffect(() => {
                             newStatuses[index].A2 = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
                         placeholder="A2"
                     />
                     <input
@@ -5466,7 +5469,7 @@ useEffect(() => {
                             newStatuses[index].A3 = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
                         placeholder="A3"
                     />
                     <input
@@ -5477,7 +5480,7 @@ useEffect(() => {
                             newStatuses[index].T = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
                         placeholder="T"
                     />
                     <input
@@ -5488,7 +5491,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -5505,7 +5508,7 @@ useEffect(() => {
                     <label className={styles.label} htmlFor={`scumPump${index + 1}Status`}>Status</label>
                     <select
                         id={`scumPump${index + 1}Status`}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
                         value={scumPump.status}
                         onChange={(e) => {
                             const newStatuses = [...scumPumpStatuses];
@@ -5528,7 +5531,7 @@ useEffect(() => {
                             newStatuses[index].A1 = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
                         placeholder="A1"
                     />
                     <input
@@ -5539,7 +5542,7 @@ useEffect(() => {
                             newStatuses[index].A2 = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
                         placeholder="A2"
                     />
                     <input
@@ -5550,7 +5553,7 @@ useEffect(() => {
                             newStatuses[index].A3 = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
                         placeholder="A3"
                     />
                     <input
@@ -5561,7 +5564,7 @@ useEffect(() => {
                             newStatuses[index].T = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
                         placeholder="T"
                     />
                     <input
@@ -5572,7 +5575,7 @@ useEffect(() => {
                             newStatuses[index].note = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={styles.input}
+                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
                         placeholder="Note"
                     />
                 </div>
@@ -5607,7 +5610,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`hiLowWaterPump${index + 1}Status`}>Status</label>
                 <select
                   id={`hiLowWaterPump${index + 1}Status`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === hiLowWaterPump.machine_name ? styles.centered : ''}`}
                   value={hiLowWaterPump.status}
                   onChange={(e) => {
                     const newStatuses = [...hiLowWaterPumpStatuses];
@@ -5630,7 +5633,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setHiLowWaterPumpStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === hiLowWaterPump.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -5650,7 +5653,7 @@ useEffect(() => {
                 <label className={styles.label} htmlFor={`cWRWWaterPump${index + 1}Status`}>Status</label>
                 <select
                   id={`cWRWWaterPump${index + 1}Status`}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === cWRWWaterPump.machine_name ? styles.centered : ''}`}
                   value={cWRWWaterPump.status}
                   onChange={(e) => {
                     const newStatuses = [...cWRWWaterPumpStatuses];
@@ -5673,7 +5676,7 @@ useEffect(() => {
                     newStatuses[index].note = e.target.value;
                     setCWRWWaterPumpStatuses(newStatuses);
                   }}
-                  className={styles.input}
+                  className={`${styles.input} ${clickedButton === cWRWWaterPump.machine_name ? styles.centered : ''}`}
                   placeholder="Note"
                 />
               </div>
@@ -5691,7 +5694,7 @@ useEffect(() => {
               <label className={styles.label} htmlFor={`drainagePump1${index + 1}Status`}>Status</label>
               <select
                 id={`drainagePump1${index + 1}Status`}
-                className={styles.input}
+                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
                 value={drainagePump1.status}
                 onChange={(e) => {
                   const newStatuses = [...drainagePump1Statuses];
@@ -5714,7 +5717,7 @@ useEffect(() => {
                   newStatuses[index].A1 = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={styles.input}
+                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
                 placeholder="A1"
               />
               <input
@@ -5725,7 +5728,7 @@ useEffect(() => {
                   newStatuses[index].A2 = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={styles.input}
+                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
                 placeholder="A2"
               />
               <input
@@ -5736,7 +5739,7 @@ useEffect(() => {
                   newStatuses[index].A3 = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={styles.input}
+                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
                 placeholder="A3"
               />
               <input
@@ -5747,7 +5750,7 @@ useEffect(() => {
                   newStatuses[index].T = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={styles.input}
+                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
                 placeholder="T"
               />
               <input
@@ -5758,7 +5761,7 @@ useEffect(() => {
                   newStatuses[index].note = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={styles.input}
+                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
                 placeholder="Note"
               />
             </div>
@@ -5775,7 +5778,7 @@ useEffect(() => {
                   <label className={styles.label} htmlFor={`effluentPump${index + 1}Status`}>Status</label>
                   <select
                       id={`effluentPump${index + 1}Status`}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
                       value={effluentPump.status}
                       onChange={(e) => {
                           const newStatuses = [...effluentPumpStatuses];
@@ -5798,7 +5801,7 @@ useEffect(() => {
                           newStatuses[index].A1 = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
                       placeholder="A1"
                   />
                   <input
@@ -5809,7 +5812,7 @@ useEffect(() => {
                           newStatuses[index].A2 = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
                       placeholder="A2"
                   />
                   <input
@@ -5820,7 +5823,7 @@ useEffect(() => {
                           newStatuses[index].A3 = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
                       placeholder="A3"
                   />
                   <input
@@ -5831,7 +5834,7 @@ useEffect(() => {
                           newStatuses[index].T = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
                       placeholder="T"
                   />
                   <input
@@ -5842,7 +5845,7 @@ useEffect(() => {
                           newStatuses[index].note = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={styles.input}
+                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
                       placeholder="Note"
                   />
               </div>

@@ -166,6 +166,20 @@ const FormFormat: React.FC = () => {
       `https://jb-api-1.onrender.com/api/Ventilation_Fan_Room6?machine_name=EF-BF-03&record_date=${formattedDate}&record_time=${formattedTime}`,
       `https://jb-api-1.onrender.com/api/Scum_Pump_Fan_Room6?machine_name=P-SC-4201&record_date=${formattedDate}&record_time=${formattedTime}`,
       `https://jb-api-1.onrender.com/api/Scum_Pump_Fan_Room6?machine_name=P-SC-4202&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4101&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4102&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4103&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4104&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4105&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4106&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4107&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4108&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4109&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4110&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4111&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4112&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4113&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4114&record_date=${formattedDate}&record_time=${formattedTime}`,
     ];
     
     try {
@@ -216,7 +230,11 @@ const FormFormat: React.FC = () => {
       const fontBytes = await fetch(fontUrl).then(res => res.arrayBuffer());
       const customFont = await pdfDoc.embedFont(fontBytes);
   
-      const page = pdfDoc.getPages()[0];
+      // Get the first and second pages
+      const pages = pdfDoc.getPages();
+      const firstPage = pages[0];
+      const secondPage = pages[1];
+
   
       const yOffset = 739;
   
@@ -239,8 +257,8 @@ const FormFormat: React.FC = () => {
         const timeY = 780;
     
         // Overlay the date and time on the PDF
-        drawTextOnPage(page, `${formattedDate}`, customFont, dateX, dateY, 10); // Smaller font size
-        drawTextOnPage(page, `${time}`, customFont, timeX, timeY, 10); // Smaller font size
+        drawTextOnPage(firstPage, `${formattedDate}`, customFont, dateX, dateY, 10); // Smaller font size
+        drawTextOnPage(firstPage, `${time}`, customFont, timeX, timeY, 10); // Smaller font size
     
   
         if (record.machine_name === 'SG-PS-1301' || record.machine_name === 'SG-BY-1301') {
@@ -249,7 +267,7 @@ const FormFormat: React.FC = () => {
             .map(([key, value]) => `${value}`)
             .join('                 '); 
           xOffset += 0;
-          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SG-BY-1301' ? 4 : 1), 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SG-BY-1301' ? 4 : 1), 10);
         } else if (record.machine_name === 'SC-CS-1101' || record.machine_name === 'SC-CS-1102') {
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
@@ -262,7 +280,7 @@ const FormFormat: React.FC = () => {
             })
             .join('             '); // 5 spaces
           xOffset += 0;
-          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SC-CS-1101' ? -6 : 0), 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SC-CS-1101' ? -6 : 0), 10);
         } else if (record.machine_name.startsWith('P-PS-12')) {
           step = 15.5;
           text = Object.entries(record)
@@ -279,7 +297,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); 
-          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 30, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 30, 10);
         } else if (record.machine_name.startsWith('SC-FS-25')) {
           step = 15.5;
           text = Object.entries(record)
@@ -292,7 +310,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); 
-          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 43, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 43, 10);
         } else if (record.machine_name.startsWith('MX-BIO-31')) {
           step = 15.5;
           text = Object.entries(record)
@@ -309,7 +327,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 57, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 57, 10);
         } else if (record.machine_name.startsWith('P-EF-53')) {
           step = 15.5;
           text = Object.entries(record)
@@ -326,7 +344,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset, yOffset - step * index - 72, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 72, 10);
         } else if (record.machine_name.startsWith('EF-PS-')) {
           step = 15.5;
           text = Object.entries(record)
@@ -343,7 +361,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 620, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 620, 10);
         } else if (record.machine_name.startsWith('EF-BRR-01')) {
           step = 15.5;
           text = Object.entries(record)
@@ -360,7 +378,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 590, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 590, 10);
         } else if (record.machine_name === 'EF-VFD-01' || record.machine_name === 'EF-BRR-02') {
           step = 15.5;
           text = Object.entries(record)
@@ -377,7 +395,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 560, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 560, 10);
         } else if (record.machine_name === 'SF-BRR-01' || record.machine_name === 'SF-BRR-02' || record.machine_name === 'SF-STR-01' || record.machine_name === 'SMEF-STR-01') {
           step = 15.5;
           text = Object.entries(record)
@@ -394,7 +412,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 530, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 530, 10);
         } else if (record.machine_name === 'EF-ABR-01' || record.machine_name === 'EF-ABR-02' || record.machine_name === 'SF-CRP-01' || record.machine_name === 'SF-CRP-02') {
           step = 15.5;
           text = Object.entries(record)
@@ -411,7 +429,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 500, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 500, 10);
         } else if  //แยกเครื่องจักรกับตู้ไฟ!!!
           (
           record.machine_name === 'EF-BR-01 (เครื่องจักร)' || 
@@ -439,7 +457,7 @@ const FormFormat: React.FC = () => {
               } 
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset + 235, yOffset - step * index + 470, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 235, yOffset - step * index + 470, 10);
         } else if 
             (
             record.machine_name === 'EF-BR-01 (ตู้ไฟ)' || 
@@ -475,7 +493,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset + 255, yOffset - step * index + 687, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 255, yOffset - step * index + 687, 10);
         } else if (record.machine_name === 'EF-BF-01' || record.machine_name === 'EF-BF-02' || record.machine_name === 'EF-BF-03') {
           step = 15.5;
           text = Object.entries(record)
@@ -492,7 +510,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 657, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 657, 10);
         } else if (record.machine_name === 'P-SC-4201' || record.machine_name === 'P-SC-4202') {
           step = 15.5;
           text = Object.entries(record)
@@ -509,8 +527,120 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(page, text, customFont, xOffset + 240, yOffset - step * index + 643, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 643, 10);
+        } else if (
+          record.machine_name === 'SCP-CL-4101' ||
+          record.machine_name === 'SCP-CL-4102' ||
+          record.machine_name === 'SCP-CL-4103' ||
+          record.machine_name === 'SCP-CL-4104' ||
+          record.machine_name === 'SCP-CL-4105' ||
+          record.machine_name === 'SCP-CL-4106' ||
+          record.machine_name === 'SCP-CL-4107'
+        ) {
+          const step = 34.4;
+          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
+        
+          const text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}`;
+              } 
+            })
+            .join(''); // Join without spaces
+        
+          drawTextOnPage(secondPage, text, customFont, xOffset, yOffset - step * index + 2987 - yOffsetAdjustment, 10);
+        } else if (
+          record.machine_name === 'SCP-CL-4101' ||
+          record.machine_name === 'SCP-CL-4102' ||
+          record.machine_name === 'SCP-CL-4103' ||
+          record.machine_name === 'SCP-CL-4104' ||
+          record.machine_name === 'SCP-CL-4105' ||
+          record.machine_name === 'SCP-CL-4106' ||
+          record.machine_name === 'SCP-CL-4107'
+        ) {
+          const step = 34.4;
+          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
+        
+          const text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'A_motor1' || key === 'A_motor2') {
+                return `${value}  `;
+              } else if (key === 'A_scum') {
+                return `${value}  `;
+              } else if (key === 'A_pump') {
+                return `${value}  `;
+              } 
+            })
+            .join(''); // Join without spaces
+        
+          drawTextOnPage(secondPage, text, customFont, xOffset, yOffset - step * index - yOffsetAdjustment, 10);
+        } else if (
+          record.machine_name === 'SCP-CL-4101' ||
+          record.machine_name === 'SCP-CL-4102' ||
+          record.machine_name === 'SCP-CL-4103' ||
+          record.machine_name === 'SCP-CL-4104' ||
+          record.machine_name === 'SCP-CL-4105' ||
+          record.machine_name === 'SCP-CL-4106' ||
+          record.machine_name === 'SCP-CL-4107'
+        ) {
+          const step = 34.4;
+          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
+        
+          const text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'T_motor') {
+                return `${value}  `;
+              } else if (key === 'T_scum') {
+                return `${value}  `;
+              } else if (key === 'T_pump') {
+                return `${value}  `;
+              }
+            })
+            .join(''); // Join without spaces
+        
+          drawTextOnPage(secondPage, text, customFont, xOffset, yOffset - step * index - yOffsetAdjustment, 10);
         }
+
+        // else if 
+        // (
+        //   record.machine_name ===  'SCP-CL-4108' ||
+        //   record.machine_name ===  'SCP-CL-4109' ||
+        //   record.machine_name ===  'SCP-CL-4110' ||
+        //   record.machine_name ===  'SCP-CL-4111' ||
+        //   record.machine_name ===  'SCP-CL-4112' ||
+        //   record.machine_name ===  'SCP-CL-4113' ||
+        //   record.machine_name ===  'SCP-CL-4114'
+        // ) {
+        //   step = 34.3;
+        //   text = Object.entries(record)
+        //     .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+        //     .map(([key, value]) => {
+        //       if (key === 'status') {
+        //         return `${value}`; 
+        //       } else if (key === 'A_motor1') {
+        //         return `${value}`; 
+        //       } else if (key === 'A_motor2') {
+        //         return `${value}`; 
+        //       } else if (key === 'A_scum'){
+        //         return `${value}`; 
+        //       } else if (key === 'A_pump'){
+        //         return `${value}`; 
+        //       } else if (key === 'T_motor'){
+        //         return `${value}`; 
+        //       } else if (key === 'T_scum'){
+        //         return `${value}`; 
+        //       } else if (key === 'T_pump'){
+        //         return `${value}`; 
+        //       } else if (key === 'T_pump'){
+        //         return `${value}`; 
+        //       }
+        //     })
+        //     .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+        //   drawTextOnPage(secondPage, text, customFont, xOffset, yOffset - step * index + 2980, 10);
+        // }
       });
   
       const pdfBytes = await pdfDoc.save();
