@@ -180,6 +180,20 @@ const FormFormat: React.FC = () => {
       `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4112&record_date=${formattedDate}&record_time=${formattedTime}`,
       `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4113&record_date=${formattedDate}&record_time=${formattedTime}`,
       `https://jb-api-1.onrender.com/api/clarifier?machine_name=SCP-CL-4114&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/water_pump?machine_name=P-HPPW-A201 ถึง P-HPPW-A203&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/water_pump?machine_name=P-PW-A301 ถึง P-PW-A302&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/water_pump?machine_name=P-CW-A001 ถึง P-CW-A002&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/water_pump?machine_name=P-RW-A101 ถึง P-RW-A102&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/auto_sampler?machine_name=SP-G-2201&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/auto_sampler?machine_name=SP-EF-5201&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-AT-3801&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-AT-3802&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-AT-3803&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-AT-3804&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-RE-3901&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-RE-3902&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-RE-3903&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-RE-3904&record_date=${formattedDate}&record_time=${formattedTime}`,
     ];
     
     try {
@@ -214,9 +228,7 @@ const FormFormat: React.FC = () => {
     const day = dateParts[2];
     return `${day}/${month}/${year}`;
   };
-  
-  
-  
+
   const overlayDataOnPDF = async (data: Record[], date: string, time: string): Promise<void> => {
     try {
       const existingPdfBytes = await fetch('/DailyCheckSheet.pdf').then(res => res.arrayBuffer());
@@ -235,6 +247,25 @@ const FormFormat: React.FC = () => {
       const firstPage = pages[0];
       const secondPage = pages[1];
 
+      const machineNames = [
+        'SCP-CL-4101', 
+        'SCP-CL-4102', 
+        'SCP-CL-4103', 
+        'SCP-CL-4104', 
+        'SCP-CL-4105', 
+        'SCP-CL-4106', 
+        'SCP-CL-4107'
+      ];
+
+      const machineNames_2 = [
+        'SCP-CL-4108', 
+        'SCP-CL-4109', 
+        'SCP-CL-4110', 
+        'SCP-CL-4111', 
+        'SCP-CL-4112', 
+        'SCP-CL-4113', 
+        'SCP-CL-4114'
+      ];
   
       const yOffset = 739;
   
@@ -528,119 +559,144 @@ const FormFormat: React.FC = () => {
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
           drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 643, 10);
-        } else if (
-          record.machine_name === 'SCP-CL-4101' ||
-          record.machine_name === 'SCP-CL-4102' ||
-          record.machine_name === 'SCP-CL-4103' ||
-          record.machine_name === 'SCP-CL-4104' ||
-          record.machine_name === 'SCP-CL-4105' ||
-          record.machine_name === 'SCP-CL-4106' ||
-          record.machine_name === 'SCP-CL-4107'
-        ) {
+        } else if (machineNames.includes(record.machine_name)) {
           const step = 34.4;
           let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
         
-          const text = Object.entries(record)
+          // Define the coordinates for each key
+          const coordinates: { [key: string]: { x: number; y: number } } = {
+            status: { x: xOffset, y: yOffset - step * index + 2995 - yOffsetAdjustment },
+            A_motor1: { x: xOffset + 25, y: yOffset - step * index + 3000 - yOffsetAdjustment },
+            A_motor2: { x: xOffset + 50, y: yOffset - step * index + 3000 - yOffsetAdjustment },
+            A_scum: { x: xOffset + 90, y: yOffset - step * index + 3000 - yOffsetAdjustment },
+            A_pump: { x: xOffset + 137, y: yOffset - step * index + 3000 - yOffsetAdjustment },
+            T_motor: { x: xOffset + 35, y: yOffset - step * index + 2985 - yOffsetAdjustment },
+            T_scum: { x: xOffset + 90, y: yOffset - step * index + 2985 - yOffsetAdjustment},
+            T_pump: { x: xOffset + 137, y: yOffset - step * index + 2985 - yOffsetAdjustment},
+          };
+                // Draw each key if it exists in the record
+          Object.entries(coordinates).forEach(([key, { x, y }]) => {
+            if (record[key as keyof typeof record]) {
+              const text = record[key as keyof typeof record] as string;
+              drawTextOnPage(secondPage, text, customFont, x, y, 10);
+            }
+          });
+        } else if (machineNames_2.includes(record.machine_name)) {
+          const step = 34.38;
+          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
+        
+          // Define the coordinates for each key
+          const coordinates: { [key: string]: { x: number; y: number } } = {
+            status: { x: xOffset, y: yOffset - step * index + 2995 - yOffsetAdjustment },
+            A_motor1: { x: xOffset + 25, y: yOffset - step * index + 3000 - yOffsetAdjustment },
+            A_motor2: { x: xOffset + 50, y: yOffset - step * index + 3000 - yOffsetAdjustment },
+            A_scum: { x: xOffset + 90, y: yOffset - step * index + 3000 - yOffsetAdjustment },
+            A_pump: { x: xOffset + 137, y: yOffset - step * index + 3000 - yOffsetAdjustment },
+            T_motor: { x: xOffset + 35, y: yOffset - step * index + 2985 - yOffsetAdjustment },
+            T_scum: { x: xOffset + 90, y: yOffset - step * index + 2985 - yOffsetAdjustment},
+            T_pump: { x: xOffset + 137, y: yOffset - step * index + 2985 - yOffsetAdjustment},
+          };
+                // Draw each key if it exists in the record
+          Object.entries(coordinates).forEach(([key, { x, y }]) => {
+            if (record[key as keyof typeof record]) {
+              const text = record[key as keyof typeof record] as string;
+              drawTextOnPage(secondPage, text, customFont, x, y, 10);
+            }
+          });
+        } else if (record.machine_name === 'P-HPPW-A201 ถึง P-HPPW-A203') {
+          step = 15.5;
+          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
+          text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
               if (key === 'status') {
                 return `${value}`;
-              } 
-            })
-            .join(''); // Join without spaces
-        
-          drawTextOnPage(secondPage, text, customFont, xOffset, yOffset - step * index + 2987 - yOffsetAdjustment, 10);
-        } else if (
-          record.machine_name === 'SCP-CL-4101' ||
-          record.machine_name === 'SCP-CL-4102' ||
-          record.machine_name === 'SCP-CL-4103' ||
-          record.machine_name === 'SCP-CL-4104' ||
-          record.machine_name === 'SCP-CL-4105' ||
-          record.machine_name === 'SCP-CL-4106' ||
-          record.machine_name === 'SCP-CL-4107'
-        ) {
-          const step = 34.4;
-          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
-        
-          const text = Object.entries(record)
-            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
-            .map(([key, value]) => {
-              if (key === 'A_motor1' || key === 'A_motor2') {
-                return `${value}  `;
-              } else if (key === 'A_scum') {
-                return `${value}  `;
-              } else if (key === 'A_pump') {
-                return `${value}  `;
-              } 
-            })
-            .join(''); // Join without spaces
-        
-          drawTextOnPage(secondPage, text, customFont, xOffset, yOffset - step * index - yOffsetAdjustment, 10);
-        } else if (
-          record.machine_name === 'SCP-CL-4101' ||
-          record.machine_name === 'SCP-CL-4102' ||
-          record.machine_name === 'SCP-CL-4103' ||
-          record.machine_name === 'SCP-CL-4104' ||
-          record.machine_name === 'SCP-CL-4105' ||
-          record.machine_name === 'SCP-CL-4106' ||
-          record.machine_name === 'SCP-CL-4107'
-        ) {
-          const step = 34.4;
-          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
-        
-          const text = Object.entries(record)
-            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
-            .map(([key, value]) => {
-              if (key === 'T_motor') {
-                return `${value}  `;
-              } else if (key === 'T_scum') {
-                return `${value}  `;
-              } else if (key === 'T_pump') {
-                return `${value}  `;
               }
             })
-            .join(''); // Join without spaces
-        
-          drawTextOnPage(secondPage, text, customFont, xOffset, yOffset - step * index - yOffsetAdjustment, 10);
+            .join(''); 
+          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 243 , 10);
+        } else if (record.machine_name === 'P-PW-A301 ถึง P-PW-A302') {
+          step = 15.5;
+          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}`;
+              }
+            })
+            .join(''); 
+          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 225 , 10);
+        } else if (record.machine_name === 'P-CW-A001 ถึง P-CW-A002') {
+          step = 15.5;
+          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}`;
+              }
+            })
+            .join(''); 
+          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 207 , 10);
+        } else if (record.machine_name === 'P-RW-A101 ถึง P-RW-A102') {
+          step = 15.5;
+          let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}`;
+              }
+            })
+            .join(''); 
+          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 191 , 10);
+        } else if (record.machine_name === 'SP-G-2201') {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}`;
+              } else if (key === 'T'){
+                return `        ${value}   `; 
+              }
+            })
+            .join(''); 
+          drawTextOnPage(secondPage, text, customFont, xOffset + 105, 243 , 10); 
+        } else if (record.machine_name === 'SP-EF-5201') {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}`;
+              } else if (key === 'T'){
+                return `        ${value}   `; 
+              }
+            })
+            .join(''); 
+          drawTextOnPage(secondPage, text, customFont, xOffset + 105, 225 , 10); 
+        } else if (record.machine_name.startsWith('AB-')) {
+          step = 15.5;
+          text = Object.entries(record)
+            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+            .map(([key, value]) => {
+              if (key === 'status') {
+                return `${value}          `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${value}   `; 
+              } else if (key === 'A3') {
+                return `${value}`; 
+              } else if (key === 'T'){
+                return `              ${value}   `; 
+              }
+            })
+            .join(''); 
+          drawTextOnPage(secondPage, text, customFont, xOffset + 200, 5 , 10); 
         }
 
-        // else if 
-        // (
-        //   record.machine_name ===  'SCP-CL-4108' ||
-        //   record.machine_name ===  'SCP-CL-4109' ||
-        //   record.machine_name ===  'SCP-CL-4110' ||
-        //   record.machine_name ===  'SCP-CL-4111' ||
-        //   record.machine_name ===  'SCP-CL-4112' ||
-        //   record.machine_name ===  'SCP-CL-4113' ||
-        //   record.machine_name ===  'SCP-CL-4114'
-        // ) {
-        //   step = 34.3;
-        //   text = Object.entries(record)
-        //     .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
-        //     .map(([key, value]) => {
-        //       if (key === 'status') {
-        //         return `${value}`; 
-        //       } else if (key === 'A_motor1') {
-        //         return `${value}`; 
-        //       } else if (key === 'A_motor2') {
-        //         return `${value}`; 
-        //       } else if (key === 'A_scum'){
-        //         return `${value}`; 
-        //       } else if (key === 'A_pump'){
-        //         return `${value}`; 
-        //       } else if (key === 'T_motor'){
-        //         return `${value}`; 
-        //       } else if (key === 'T_scum'){
-        //         return `${value}`; 
-        //       } else if (key === 'T_pump'){
-        //         return `${value}`; 
-        //       } else if (key === 'T_pump'){
-        //         return `${value}`; 
-        //       }
-        //     })
-        //     .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-        //   drawTextOnPage(secondPage, text, customFont, xOffset, yOffset - step * index + 2980, 10);
-        // }
+        
       });
   
       const pdfBytes = await pdfDoc.save();

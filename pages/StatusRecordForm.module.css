@@ -5,6 +5,10 @@
   padding: 20px;
 }
 
+.fieldGroup{
+  display: block;
+}
+
 .title {
   text-align: center;
   margin-top: 10px;
@@ -179,9 +183,17 @@
 }
 
 .centered {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
+ 
+  transform: translate(0%, -50%);
+}
+
+.disabledButton {
+  background: radial-gradient( 100% 100% at 100% 0%, #c8c8c8 0%, #868686 100% );
+  box-shadow: 0px 0.01em 0.01em rgb(45 35 66 / 40%), 0px 0.3em 0.7em -0.01em rgb(45 35 66 / 30%), inset 0px -0.01em 0px rgb(58 65 111 / 50%);
+  cursor: not-allowed; 
+}
+
+.disabledButton:hover {
+  box-shadow: 0px 0.1em 0.2em rgb(45 35 66 / 40%), 0px 0.4em 0.7em -0.1em rgb(45 35 66 / 30%), inset 0px -0.1em 0px #636363;
+  transform: translateY(-0.1em);
 }

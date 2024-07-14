@@ -1,4 +1,4 @@
-import { useState, useEffect   } from 'react';
+import { useState, useEffect, useRef  } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AiOutlineCalendar } from 'react-icons/ai';
@@ -12,6 +12,7 @@ const StatusRecordForm = () => {
     const [showSections5, setShowSections5] = useState(false); 
     const [showSections6, setShowSections6] = useState(false);
     const [showSections7, setShowSections7] = useState(false);
+    const [openSection, setOpenSection] = useState<number | null>(null);
     const [validationError, setValidationError] = useState<string | null>(null);
     const [validationError_2, setValidationError_2] = useState<string | null>(null);
     const [validationError_3, setValidationError_3] = useState<string | null>(null);
@@ -2639,9 +2640,24 @@ useEffect(() => {
   console.log('inletPumpingStatuses:', inletPumpingStatuses);
 }, [inletPumpingStatuses]);
 
-const [clickedButton, setClickedButton] = useState<string | null>(null);
-const handleButtonClick = (machineName: string) => {
-  setClickedButton(machineName);
+const handleToggleSection = (sectionNumber: number) => {
+  if (openSection === sectionNumber) {
+    // If clicking on the currently open section, close it
+    setOpenSection(null);
+  } else {
+    // Otherwise, open the clicked section and close the currently open one
+    setOpenSection(sectionNumber);
+  }
+};
+
+const selectRef = useRef<HTMLSelectElement>(null);
+
+
+const handleFocusSelect = () => {
+  if (selectRef.current) {
+    // Scroll the element into view and center it
+    selectRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 };
 
   return (
@@ -2659,7 +2675,15 @@ const handleButtonClick = (machineName: string) => {
         <h2 className={styles.title}>แบบบันทึกการเดินระบบประจำวัน - ตรวจเช็คสภาพทั่วไปของเครื่องจักร (Daily Check Sheet)</h2>
         <h3 className={styles.subtitle}>FM-OP-01-06.REV 06</h3>
       </div>
-      
+
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center',color: 'red', padding: '20px' ,gap: '5px'  }}>
+        <h3>*** หมายเหตุ ***</h3>
+        <h4>กรอกแบบฟอร์มทีละ Section</h4>
+        <h4>R = ปกติและทํางาน</h4>
+        <h4>N = ปกติแต่ไม่ทํางาน</h4>
+        <h4>E = เครื่องจักรชํารุด </h4>
+        <h4>F = เครื่องจักร Fault/Alarm แต่เครื่องจักรสามารถทํางานได้</h4>
+      </div>
 
       <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.fieldGroup}>
@@ -2713,13 +2737,14 @@ const handleButtonClick = (machineName: string) => {
                   <label className={styles.label} htmlFor={`status-${ch.machine_name}`}>{ch.machine_name}</label>
                   <select
                       id={`status-${ch.machine_name}`}
-                      className={`${styles.input} ${clickedButton === ch.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       value={ch.status}
                       onChange={(e) => {
                           const newStatuses = [...chStatuses];
                           newStatuses[index] = { ...ch, status: e.target.value };
                           setChStatuses(newStatuses);
                       }}
+                      onClick={handleFocusSelect}
                       disabled={isChillerDataSent}
                   >
                       <option value="" disabled>Select Status</option>
@@ -2736,7 +2761,7 @@ const handleButtonClick = (machineName: string) => {
                           newStatuses[index].note = e.target.value;
                           setChStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === ch.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="Note"
                   />
               </div>
@@ -2753,13 +2778,14 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`chwp${index + 1}Status`}>Status</label>
                     <select
                         id={`chwp${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={chwp.status}
                         onChange={(e) => {
                             const newStatuses = [...chillerWaterPumpStatuses];
                             newStatuses[index] = { ...chwp, status: e.target.value };
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
+                        onClick={handleFocusSelect}
                         disabled={isChillerWaterPumpDataSent}
                     >
                         <option value="" disabled>Select Status</option>
@@ -2776,7 +2802,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A1 = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A1"
                     />
                     <input
@@ -2787,7 +2813,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A2 = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A2"
                     />
                     <input
@@ -2798,7 +2824,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A3 = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A3"
                     />
                     <input
@@ -2809,7 +2835,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].T = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="T"
                     />
                     <input
@@ -2820,7 +2846,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setChillerWaterPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === chwp.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -2838,7 +2864,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`fan${index + 1}Status`}>Status</label>
                     <select
                         id={`fan${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={fan.status}
                         onChange={(e) => {
                             const newStatuses = [...fan6Statuses];
@@ -2861,7 +2887,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A1 = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A1"
                     />
                     <input
@@ -2872,7 +2898,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A2 = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A2"
                     />
                     <input
@@ -2883,7 +2909,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A3 = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A3"
                     />
                     <input
@@ -2894,7 +2920,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].T = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="T"
                     />
                     <input
@@ -2905,7 +2931,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setFan6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -2923,7 +2949,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`biofilter${index + 1}Status`}>Status</label>
                     <select
                         id={`biofilter${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === biofilter.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={biofilter.status}
                         onChange={(e) => {
                             const newStatuses = [...biofilterStatuses];
@@ -2946,7 +2972,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setBiofilterStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === biofilter.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -2960,8 +2986,13 @@ const handleButtonClick = (machineName: string) => {
           )}
           
           
-              <button type="button" className={styles.Hidebutton} onClick={handleSaveSection1}>
-                    {showSections1 ? 'Hide Section 1' : 'Show Section 1'}
+              <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 1 ? styles.disabledButton : ''}`}
+               onClick={() => {
+                handleToggleSection(1); 
+                handleSaveSection1(); 
+              }}
+                disabled={openSection !== null && openSection !== 1}>
+                    {openSection === 1 ? 'Hide Section 1' : 'Show Section 1'}
               </button>
         </>
       )}         
@@ -2979,7 +3010,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`status-${ip.machine_name}`}>{ip.machine_name}</label>
                     <select
                       id={`status-${ip.machine_name}`}
-                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       value={ip.status}
                       onChange={(e) => {
                         const newStatuses = [...inletPumpingStatuses];
@@ -3002,7 +3033,7 @@ const handleButtonClick = (machineName: string) => {
                         newStatuses[index].A1 = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="A1"
                     />
                     <input
@@ -3013,7 +3044,7 @@ const handleButtonClick = (machineName: string) => {
                         newStatuses[index].A2 = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="A2"
                     />
                     <input
@@ -3024,7 +3055,7 @@ const handleButtonClick = (machineName: string) => {
                         newStatuses[index].A3 = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="A3"
                     />
                     <input
@@ -3035,7 +3066,7 @@ const handleButtonClick = (machineName: string) => {
                         newStatuses[index].T = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="T"
                     />
                     <input
@@ -3046,7 +3077,7 @@ const handleButtonClick = (machineName: string) => {
                         newStatuses[index].note = e.target.value;
                         setInletPumpingStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === ip.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="Note"
                     />
                   </div>
@@ -3062,7 +3093,7 @@ const handleButtonClick = (machineName: string) => {
                         <label className={styles.label} htmlFor={`status-${gp.machine_name}`}>{gp.machine_name}</label>
                         <select
                             id={`status-${gp.machine_name}`}
-                            className={`${styles.input} ${clickedButton === gp.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             value={gp.status}
                             onChange={(e) => {
                                 const newStatuses = [...gardenPumpStatuses];
@@ -3085,7 +3116,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].note = e.target.value;
                                 setGardenPumpStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === gp.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="Note"
                         />
                        
@@ -3102,7 +3133,7 @@ const handleButtonClick = (machineName: string) => {
                         <label className={styles.label} htmlFor={`status-${vip.machine_name}`}>{vip.machine_name}</label>
                         <select
                             id={`status-${vip.machine_name}`}
-                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             value={vip.status}
                             onChange={(e) => {
                                 const newStatuses = [...ventilationInletPumpingStatuses];
@@ -3125,7 +3156,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].A1 = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="A1"
                         />
                         <input
@@ -3136,7 +3167,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].A2 = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="A2"
                         />
                         <input
@@ -3147,7 +3178,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].A3 = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="A3"
                         />
                         <input
@@ -3158,7 +3189,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].T = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="T"
                         />
                         <input
@@ -3169,7 +3200,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].note = e.target.value;
                                 setVentilationInletPumpingStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === vip.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="Note"
                         />
                     </div>
@@ -3185,7 +3216,7 @@ const handleButtonClick = (machineName: string) => {
                         <label className={styles.label} htmlFor={`status-${ig.machine_name}`}>{ig.machine_name}</label>
                         <select
                             id={`status-${ig.machine_name}`}
-                            className={`${styles.input} ${clickedButton === ig.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             value={ig.status}
                             onChange={(e) => {
                                 const newStatuses = [...inletGateStatuses];
@@ -3208,7 +3239,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].gate_percentage = e.target.value;
                                 setInletGateStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === ig.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="Gate %"
                         />
                         <input
@@ -3219,7 +3250,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].note = e.target.value;
                                 setInletGateStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === ig.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="Note"
                           />
                     </div>
@@ -3235,7 +3266,7 @@ const handleButtonClick = (machineName: string) => {
                         <label className={styles.label} htmlFor={`status-${cs.machine_name}`}>{cs.machine_name}</label>
                         <select
                             id={`status-${cs.machine_name}`}
-                            className={`${styles.input} ${clickedButton === cs.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             value={cs.status}
                             onChange={(e) => {
                                 const newStatuses = [...coarseScreenStatuses];
@@ -3258,7 +3289,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].T1 = e.target.value;
                                 setCoarseScreenStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === cs.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="T1"
                         />
                         <input
@@ -3269,7 +3300,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].T2 = e.target.value;
                                 setCoarseScreenStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === cs.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="T2"
                         />
                         <input
@@ -3280,7 +3311,7 @@ const handleButtonClick = (machineName: string) => {
                                 newStatuses[index].note = e.target.value;
                                 setCoarseScreenStatuses(newStatuses);
                             }}
-                            className={`${styles.input} ${clickedButton === cs.machine_name ? styles.centered : ''}`}
+                            className={styles.input}
                             placeholder="Note"
                         />
                     </div>
@@ -3290,8 +3321,13 @@ const handleButtonClick = (machineName: string) => {
                 {validationError_9 && <div className={styles.validationError}>{validationError_9}</div>}
             </>
           )}  
-          <button type="button" className={styles.Hidebutton} onClick={handleSaveSection2}>
-                {showSections2 ? 'Hide Section 2' : 'Show Section 2'}
+          <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 2 ? styles.disabledButton : ''}`} 
+          onClick={() => {
+            handleToggleSection(2); 
+            handleSaveSection2(); 
+          }}
+        disabled={openSection !== null && openSection !== 2}>
+                {openSection === 2 ? 'Hide Section 2' : 'Show Section 2'}
           </button>
           </>
       )} 
@@ -3308,7 +3344,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${fan3.machine_name}`}>{fan3.machine_name}</label>
                 <select
                   id={`status-${fan3.machine_name}`}
-                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={fan3.status}
                   onChange={(e) => {
                     const newStatuses = [...fan3Statuses];
@@ -3331,7 +3367,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A1 = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A1"
                 />
                 <input
@@ -3342,7 +3378,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A2 = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A2"
                 />
                 <input
@@ -3353,7 +3389,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A3 = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A3"
                 />
                 <input
@@ -3364,7 +3400,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T"
                 />
                 <input
@@ -3375,7 +3411,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setFan3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -3391,7 +3427,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${fan2.machine_name}`}>{fan2.machine_name}</label>
                 <select
                   id={`status-${fan2.machine_name}`}
-                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={fan2.status}
                   onChange={(e) => {
                     const newStatuses = [...fan2Statuses];
@@ -3414,7 +3450,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A1 = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A1"
                 />
                 <input
@@ -3425,7 +3461,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A2 = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A2"
                 />
                 <input
@@ -3436,7 +3472,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A3 = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A3"
                 />
                 <input
@@ -3447,7 +3483,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T"
                 />
                 <input
@@ -3458,7 +3494,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setFan2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -3474,7 +3510,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${fan1.machine_name}`}>{fan1.machine_name}</label>
                 <select
                   id={`status-${fan1.machine_name}`}
-                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={fan1.status}
                   onChange={(e) => {
                     const newStatuses = [...fan1Statuses];
@@ -3497,7 +3533,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A1 = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A1"
                 />
                 <input
@@ -3508,7 +3544,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A2 = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A2"
                 />
                 <input
@@ -3519,7 +3555,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A3 = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A3"
                 />
                 <input
@@ -3530,7 +3566,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T"
                 />
                 <input
@@ -3541,7 +3577,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setFan1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -3557,7 +3593,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${autoSampler.machine_name}`}>{autoSampler.machine_name}</label>
                 <select
                   id={`status-${autoSampler.machine_name}`}
-                  className={`${styles.input} ${clickedButton === autoSampler.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={autoSampler.status}
                   onChange={(e) => {
                     const newStatuses = [...autoSamplerStatuses];
@@ -3580,7 +3616,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T = e.target.value;
                     setAutoSamplerStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === autoSampler.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T (°C)"
                 />
                 <input
@@ -3591,7 +3627,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setAutoSamplerStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === autoSampler.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -3607,7 +3643,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${vortexGrit.machine_name}`}>{vortexGrit.machine_name}</label>
                 <select
                   id={`status-${vortexGrit.machine_name}`}
-                  className={`${styles.input} ${clickedButton === vortexGrit.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={vortexGrit.status}
                   onChange={(e) => {
                     const newStatuses = [...vortexGritStatuses];
@@ -3630,7 +3666,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T = e.target.value;
                     setVortexGridStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === vortexGrit.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T"
                 />
                 <input
@@ -3641,7 +3677,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setVortexGridStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === vortexGrit.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -3658,7 +3694,7 @@ const handleButtonClick = (machineName: string) => {
                 <input
                   type="text"
                   id={`flow-${airFlow.machine_name}`}
-                  className={`${styles.input} ${clickedButton === airFlow.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={airFlow.Flow}
                   onChange={(e) => {
                     const newStatuses = [...airFlowStatuses];
@@ -3676,7 +3712,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].valve_percentage = e.target.value;
                     setAirFlowStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === airFlow.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Valve Percentage"
                   disabled={isAirFlowDataSent}
                 />
@@ -3688,7 +3724,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setAirFlowStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === airFlow.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                   disabled={isAirFlowDataSent}
                 />
@@ -3701,8 +3737,13 @@ const handleButtonClick = (machineName: string) => {
 
             </>
           )} 
-          <button type="button" className={styles.Hidebutton} onClick={handleSaveSection3}>
-                {showSections3 ? 'Hide Section 3' : 'Show Section 3'}
+          <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 3 ? styles.disabledButton : ''}`}
+          onClick={() => {
+            handleToggleSection(3); 
+            handleSaveSection3(); 
+          }}
+        disabled={openSection !== null && openSection !== 3}>
+                {openSection === 3 ? 'Hide Section 3' : 'Show Section 3'}
           </button>
 
           </>
@@ -3721,7 +3762,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${fineScreen.machine_name}`}>{fineScreen.machine_name}</label>
                 <select
                   id={`status-${fineScreen.machine_name}`}
-                  className={`${styles.input} ${clickedButton === fineScreen.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={fineScreen.status}
                   onChange={(e) => {
                     const newStatuses = [...fineScreenStatuses];
@@ -3744,7 +3785,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A1 = e.target.value;
                     setFineScreenStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fineScreen.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A1"
                 />
                 <input
@@ -3755,7 +3796,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setFineScreenStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fineScreen.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -3771,7 +3812,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${drainagePump3.machine_name}`}>{drainagePump3.machine_name}</label>
                 <select
                   id={`status-${drainagePump3.machine_name}`}
-                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={drainagePump3.status}
                   onChange={(e) => {
                     const newStatuses = [...drainagePump3Statuses];
@@ -3794,7 +3835,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A1 = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A1"
                 />
                 <input
@@ -3805,7 +3846,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A2 = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A2"
                 />
                 <input
@@ -3816,7 +3857,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A3 = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A3"
                 />
                 <input
@@ -3827,7 +3868,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T"
                 />
                 <input
@@ -3838,7 +3879,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setDrainagePump3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === drainagePump3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -3854,7 +3895,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${fan4.machine_name}`}>{fan4.machine_name}</label>
                 <select
                   id={`status-${fan4.machine_name}`}
-                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={fan4.status}
                   onChange={(e) => {
                     const newStatuses = [...fan4Statuses];
@@ -3877,7 +3918,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A1 = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A1"
                 />
                 <input
@@ -3888,7 +3929,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A2 = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A2"
                 />
                 <input
@@ -3899,7 +3940,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A3 = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A3"
                 />
                 <input
@@ -3910,7 +3951,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T"
                 />
                 <input
@@ -3921,7 +3962,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setFan4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === fan4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -3937,7 +3978,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${anoxicMixer1.machine_name}`}>{anoxicMixer1.machine_name}</label>
                 <select
                   id={`status-${anoxicMixer1.machine_name}`}
-                  className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={anoxicMixer1.status}
                   onChange={(e) => {
                     const newStatuses = [...anoxicMixer1Statuses];
@@ -3960,7 +4001,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A1 = e.target.value;
                     setAnoxicMixer1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A1"
                 />
                 <input
@@ -3971,7 +4012,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A2 = e.target.value;
                     setAnoxicMixer1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A2"    />
                   <input
                     type="text"
@@ -3981,7 +4022,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A3 = e.target.value;
                       setAnoxicMixer1Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A3"
                   />
                   <input
@@ -3992,7 +4033,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].T = e.target.value;
                       setAnoxicMixer1Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="T"
                   />
                   <input
@@ -4003,7 +4044,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].note = e.target.value;
                       setAnoxicMixer1Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer1.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="Note"
                   />
                 </div>
@@ -4019,7 +4060,7 @@ const handleButtonClick = (machineName: string) => {
                   <label className={styles.label} htmlFor={`status-${anoxicMixer2.machine_name}`}>{anoxicMixer2.machine_name}</label>
                   <select
                     id={`status-${anoxicMixer2.machine_name}`}
-                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     value={anoxicMixer2.status}
                     onChange={(e) => {
                       const newStatuses = [...anoxicMixer2Statuses];
@@ -4042,7 +4083,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A1 = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A1"
                   />
                   <input
@@ -4053,7 +4094,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A2 = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A2"
                   />
                   <input
@@ -4064,7 +4105,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A3 = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A3"
                   />
                   <input
@@ -4075,7 +4116,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].T = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="T"
                   />
                   <input
@@ -4086,7 +4127,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].note = e.target.value;
                       setAnoxicMixer2Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer2.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="Note"
                   />
                 </div>
@@ -4102,7 +4143,7 @@ const handleButtonClick = (machineName: string) => {
                   <label className={styles.label} htmlFor={`status-${anoxicMixer3.machine_name}`}>{anoxicMixer3.machine_name}</label>
                   <select
                     id={`status-${anoxicMixer3.machine_name}`}
-                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     value={anoxicMixer3.status}
                     onChange={(e) => {
                       const newStatuses = [...anoxicMixer3Statuses];
@@ -4125,7 +4166,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A1 = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A1"
                   />
                   <input
@@ -4136,7 +4177,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A2 = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A2"
                   />
                   <input
@@ -4147,7 +4188,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A3 = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A3"
                   />
                   <input
@@ -4158,7 +4199,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].T = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="T"
                   />
                   <input
@@ -4169,7 +4210,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].note = e.target.value;
                       setAnoxicMixer3Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer3.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="Note"
                   />
                 </div>
@@ -4185,7 +4226,7 @@ const handleButtonClick = (machineName: string) => {
                   <label className={styles.label} htmlFor={`status-${anoxicMixer4.machine_name}`}>{anoxicMixer4.machine_name}</label>
                   <select
                     id={`status-${anoxicMixer4.machine_name}`}
-                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     value={anoxicMixer4.status}
                     onChange={(e) => {
                       const newStatuses = [...anoxicMixer4Statuses];
@@ -4208,7 +4249,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A1 = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A1"
                   />
                   <input
@@ -4219,7 +4260,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A2 = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A2"
                   />
                   <input
@@ -4230,7 +4271,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A3 = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A3"
                   />
                   <input
@@ -4241,7 +4282,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].T = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="T"
                   />
                   <input
@@ -4252,7 +4293,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].note = e.target.value;
                       setAnoxicMixer4Statuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === anoxicMixer4.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="Note"
                   />
                 </div>
@@ -4268,7 +4309,7 @@ const handleButtonClick = (machineName: string) => {
                   <label className={styles.label} htmlFor={`status-${singleAirBlower.machine_name}`}>{singleAirBlower.machine_name}</label>
                   <select
                     id={`status-${singleAirBlower.machine_name}`}
-                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     value={singleAirBlower.status}
                     onChange={(e) => {
                       const newStatuses = [...singleAirBlowerStatuses];
@@ -4291,7 +4332,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A1 = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A1"
                   />
                   <input
@@ -4302,7 +4343,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A2 = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A2"
                   />
                   <input
@@ -4313,7 +4354,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A3 = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A3"
                   />
                   <input
@@ -4324,7 +4365,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].T = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="T"
                   />
                   <input
@@ -4335,7 +4376,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].note = e.target.value;
                       setSingleAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === singleAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="Note"
                   />
                 </div>
@@ -4351,7 +4392,7 @@ const handleButtonClick = (machineName: string) => {
                   <label className={styles.label} htmlFor={`status-${positiveAirBlower.machine_name}`}>{positiveAirBlower.machine_name}</label>
                   <select
                     id={`status-${positiveAirBlower.machine_name}`}
-                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     value={positiveAirBlower.status}
                     onChange={(e) => {
                       const newStatuses = [...positiveAirBlowerStatuses];
@@ -4374,7 +4415,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A1 = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A1"
                   />
                   <input
@@ -4385,7 +4426,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A2 = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A2"
                   />
                   <input      type="text"
@@ -4395,7 +4436,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].A3 = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="A3"
                   />
                   <input
@@ -4406,7 +4447,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].T = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="T"
                   />
                   <input
@@ -4417,7 +4458,7 @@ const handleButtonClick = (machineName: string) => {
                       newStatuses[index].note = e.target.value;
                       setPositiveAirBlowerStatuses(newStatuses);
                     }}
-                    className={`${styles.input} ${clickedButton === positiveAirBlower.machine_name ? styles.centered : ''}`}
+                    className={styles.input}
                     placeholder="Note"
                   />
                 </div>
@@ -4428,8 +4469,13 @@ const handleButtonClick = (machineName: string) => {
 
             </>
           )}
-          <button type="button" className={styles.Hidebutton} onClick={handleSaveSection4}>
-                {showSections4 ? 'Hide Section 4' : 'Show Section 4'}
+          <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 4 ? styles.disabledButton : ''}`}
+          onClick={() => {
+            handleToggleSection(4); 
+            handleSaveSection4(); 
+          }}
+        disabled={openSection !== null && openSection !== 4}>
+                {openSection === 4 ? 'Hide Section 4' : 'Show Section 4'}
           </button>
 
         </>
@@ -4448,7 +4494,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${clarifier1.machine_name}`}>{clarifier1.machine_name}</label>
                 <select
                   id={`status-${clarifier1.machine_name}`}
-                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={clarifier1.status}
                   onChange={(e) => {
                     const newStatuses = [...clarifier1Statuses];
@@ -4471,7 +4517,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_motor1 = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_motor1"
                 />
                 <input
@@ -4482,7 +4528,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_motor2 = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_motor2"
                 />
                 <input
@@ -4493,7 +4539,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_scum = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_scum"
                 />
                 <input
@@ -4504,7 +4550,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_pump = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_pump"
                 />
                 <input
@@ -4515,7 +4561,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_motor = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_motor"
                 />
                 <input
@@ -4526,7 +4572,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_scum = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_scum"
                 />
                 <input
@@ -4537,7 +4583,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_pump = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_pump"
                 />
                 <input
@@ -4548,7 +4594,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setClarifier1Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier1.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -4564,7 +4610,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${clarifier2.machine_name}`}>{clarifier2.machine_name}</label>
                 <select
                   id={`status-${clarifier2.machine_name}`}
-                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={clarifier2.status}
                   onChange={(e) => {
                     const newStatuses = [...clarifier2Statuses];
@@ -4587,7 +4633,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_motor1 = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_motor1"
                 />
                 <input
@@ -4598,7 +4644,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_motor2 = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_motor2"
                 />
                 <input
@@ -4609,7 +4655,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_scum = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_scum"
                 />
                 <input
@@ -4620,7 +4666,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_pump = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_pump"
                 />
                 <input
@@ -4631,7 +4677,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_motor = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_motor"
                 />
                 <input
@@ -4642,7 +4688,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_scum = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_scum"
                 />
                 <input
@@ -4653,7 +4699,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_pump = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_pump"
                 />
                 <input
@@ -4664,7 +4710,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setClarifier2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -4681,7 +4727,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${clarifier3.machine_name}`}>{clarifier3.machine_name}</label>
                 <select
                   id={`status-${clarifier3.machine_name}`}
-                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={clarifier3.status}
                   onChange={(e) => {
                     const newStatuses = [...clarifier3Statuses];
@@ -4704,7 +4750,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_motor1 = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_motor1"
                 />
                 <input
@@ -4715,7 +4761,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_motor2 = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_motor2"
                 />
                 <input
@@ -4726,7 +4772,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_scum = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_scum"
                 />
                 <input
@@ -4737,7 +4783,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_pump = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_pump"
                 />
                 <input
@@ -4748,7 +4794,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_motor = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_motor"
                 />
                 <input
@@ -4759,7 +4805,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_scum = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_scum"
                 />
                 <input
@@ -4770,7 +4816,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_pump = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_pump"
                 />
                 <input
@@ -4781,7 +4827,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setClarifier3Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier3.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -4797,7 +4843,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${clarifier4.machine_name}`}>{clarifier4.machine_name}</label>
                 <select
                   id={`status-${clarifier4.machine_name}`}
-                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={clarifier4.status}
                   onChange={(e) => {
                     const newStatuses = [...clarifier4Statuses];
@@ -4820,7 +4866,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_motor1 = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_motor1"
                 />
                 <input
@@ -4831,7 +4877,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_motor2 = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_motor2"
                 />
                 <input
@@ -4842,7 +4888,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_scum = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_scum"
                 />
                 <input
@@ -4853,7 +4899,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].A_pump = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="A_pump"
                 />
                 <input
@@ -4864,7 +4910,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_motor = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_motor"
                 />
                 <input
@@ -4875,7 +4921,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_scum = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_scum"
                 />
                 <input
@@ -4886,7 +4932,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T_pump = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T_pump"
                 />
                 <input
@@ -4897,7 +4943,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setClarifier4Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === clarifier4.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -4913,7 +4959,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`status-${autoSampler_2.machine_name}`}>{autoSampler_2.machine_name}</label>
                 <select
                   id={`status-${autoSampler_2.machine_name}`}
-                  className={`${styles.input} ${clickedButton === autoSampler_2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={autoSampler_2.status}
                   onChange={(e) => {
                     const newStatuses = [...autoSampler_2Statuses];
@@ -4936,7 +4982,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].T = e.target.value;
                     setAutoSampler_2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === autoSampler_2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="T (°C)"
                 />
                 <input
@@ -4947,7 +4993,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setAutoSampler_2Statuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === autoSampler_2.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -4959,8 +5005,13 @@ const handleButtonClick = (machineName: string) => {
             </>
         )}
 
-          <button type="button" className={styles.Hidebutton} onClick={handleSaveSection5}>
-                {showSections5 ? 'Hide Section 5' : 'Show Section 5'}
+        <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 5 ? styles.disabledButton : ''}`}
+        onClick={() => {
+          handleToggleSection(5); 
+          handleSaveSection5(); 
+        }}
+        disabled={openSection !== null && openSection !== 5}>
+                {openSection === 5 ? 'Hide Section 5' : 'Show Section 5'}
           </button>
 
         </>
@@ -4977,7 +5028,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`fan5${index + 1}Status`}>{fan5.machine_name}</label>
                     <select
                         id={`fan5${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === fan5.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={fan5.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5Statuses];
@@ -5000,7 +5051,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setFan5Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -5016,7 +5067,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`fan5_2${index + 1}Status`}>{fan5_2.machine_name}</label>
                     <select
                         id={`fan5_2${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === fan5_2.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={fan5_2.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_2Statuses];
@@ -5039,7 +5090,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setFan5_2Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_2.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -5054,7 +5105,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`fan5_3${index + 1}Status`}>{fan5_3.machine_name}</label>
                     <select
                         id={`fan5_3${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === fan5_3.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={fan5_3.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_3Statuses];
@@ -5077,7 +5128,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setFan5_3Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_3.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -5093,7 +5144,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`fan5_4${index + 1}Status`}>{fan5_4.machine_name}</label>
                     <select
                         id={`fan5_4${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={fan5_4.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_4Statuses];
@@ -5116,7 +5167,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A1 = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A1"
                     />
                     <input
@@ -5127,7 +5178,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A2 = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A2"
                     />
                     <input
@@ -5138,7 +5189,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A3 = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A3"
                     />
                     <input
@@ -5149,7 +5200,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].T = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="T"
                     />
                     <input
@@ -5160,7 +5211,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setFan5_4Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_4.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -5175,7 +5226,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`fan5_5${index + 1}Status`}>{fan5_5.machine_name}</label>
                     <select
                         id={`fan5_5${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={fan5_5.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_5Statuses];
@@ -5198,7 +5249,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A1 = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A1"
                     />
                     <input
@@ -5209,7 +5260,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A2 = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A2"
                     />
                     <input
@@ -5220,7 +5271,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A3 = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A3"
                     />
                     <input
@@ -5231,7 +5282,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].T = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="T"
                     />
                     <input
@@ -5242,7 +5293,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setFan5_5Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_5.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -5257,7 +5308,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`fan5_6${index + 1}Status`}>{fan5_6.machine_name}</label>
                     <select
                         id={`fan5_6${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={fan5_6.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_6Statuses];
@@ -5280,7 +5331,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A1 = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A1"
                     />
                     <input
@@ -5291,7 +5342,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A2 = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A2"
                     />
                     <input
@@ -5302,7 +5353,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A3 = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A3"
                     />
                     <input
@@ -5313,7 +5364,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].T = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="T"
                     />
                     <input
@@ -5324,7 +5375,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setFan5_6Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_6.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -5339,7 +5390,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`fan5_7${index + 1}Status`}>{fan5_7.machine_name}</label>
                     <select
                         id={`fan5_7${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={fan5_7.status}
                         onChange={(e) => {
                             const newStatuses = [...fan5_7Statuses];
@@ -5362,7 +5413,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A1 = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A1"
                     />
                     <input
@@ -5373,7 +5424,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A2 = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A2"
                     />
                     <input
@@ -5384,7 +5435,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A3 = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A3"
                     />
                     <input
@@ -5395,7 +5446,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].T = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="T"
                     />
                     <input
@@ -5406,7 +5457,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setFan5_7Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === fan5_7.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -5424,7 +5475,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`drainagePump2${index + 1}Status`}>Status</label>
                     <select
                         id={`drainagePump2${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={drainagePump2.status}
                         onChange={(e) => {
                             const newStatuses = [...drainagePump2Statuses];
@@ -5447,7 +5498,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A1 = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A1"
                     />
                     <input
@@ -5458,7 +5509,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A2 = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A2"
                     />
                     <input
@@ -5469,7 +5520,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A3 = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A3"
                     />
                     <input
@@ -5480,7 +5531,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].T = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="T"
                     />
                     <input
@@ -5491,7 +5542,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setDrainagePump2Statuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === drainagePump2.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -5508,7 +5559,7 @@ const handleButtonClick = (machineName: string) => {
                     <label className={styles.label} htmlFor={`scumPump${index + 1}Status`}>Status</label>
                     <select
                         id={`scumPump${index + 1}Status`}
-                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         value={scumPump.status}
                         onChange={(e) => {
                             const newStatuses = [...scumPumpStatuses];
@@ -5531,7 +5582,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A1 = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A1"
                     />
                     <input
@@ -5542,7 +5593,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A2 = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A2"
                     />
                     <input
@@ -5553,7 +5604,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].A3 = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="A3"
                     />
                     <input
@@ -5564,7 +5615,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].T = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="T"
                     />
                     <input
@@ -5575,7 +5626,7 @@ const handleButtonClick = (machineName: string) => {
                             newStatuses[index].note = e.target.value;
                             setScumPumpStatuses(newStatuses);
                         }}
-                        className={`${styles.input} ${clickedButton === scumPump.machine_name ? styles.centered : ''}`}
+                        className={styles.input}
                         placeholder="Note"
                     />
                 </div>
@@ -5587,9 +5638,14 @@ const handleButtonClick = (machineName: string) => {
             </>
         )}
 
-        <button type="button" className={styles.Hidebutton} onClick={handleSaveSection6}>
-              {showSections6 ? 'Hide Section 6' : 'Show Section 6'}
-        </button>
+        <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 6 ? styles.disabledButton : ''}`}
+        onClick={() => {
+          handleToggleSection(6); 
+          handleSaveSection6(); 
+        }}
+        disabled={openSection !== null && openSection !== 6}>
+                {openSection === 6 ? 'Hide Section 6' : 'Show Section 6'}
+          </button>
 
         </>
       )}  
@@ -5610,7 +5666,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`hiLowWaterPump${index + 1}Status`}>Status</label>
                 <select
                   id={`hiLowWaterPump${index + 1}Status`}
-                  className={`${styles.input} ${clickedButton === hiLowWaterPump.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={hiLowWaterPump.status}
                   onChange={(e) => {
                     const newStatuses = [...hiLowWaterPumpStatuses];
@@ -5633,7 +5689,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setHiLowWaterPumpStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === hiLowWaterPump.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -5653,7 +5709,7 @@ const handleButtonClick = (machineName: string) => {
                 <label className={styles.label} htmlFor={`cWRWWaterPump${index + 1}Status`}>Status</label>
                 <select
                   id={`cWRWWaterPump${index + 1}Status`}
-                  className={`${styles.input} ${clickedButton === cWRWWaterPump.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   value={cWRWWaterPump.status}
                   onChange={(e) => {
                     const newStatuses = [...cWRWWaterPumpStatuses];
@@ -5676,7 +5732,7 @@ const handleButtonClick = (machineName: string) => {
                     newStatuses[index].note = e.target.value;
                     setCWRWWaterPumpStatuses(newStatuses);
                   }}
-                  className={`${styles.input} ${clickedButton === cWRWWaterPump.machine_name ? styles.centered : ''}`}
+                  className={styles.input}
                   placeholder="Note"
                 />
               </div>
@@ -5694,7 +5750,7 @@ const handleButtonClick = (machineName: string) => {
               <label className={styles.label} htmlFor={`drainagePump1${index + 1}Status`}>Status</label>
               <select
                 id={`drainagePump1${index + 1}Status`}
-                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
+                className={styles.input}
                 value={drainagePump1.status}
                 onChange={(e) => {
                   const newStatuses = [...drainagePump1Statuses];
@@ -5717,7 +5773,7 @@ const handleButtonClick = (machineName: string) => {
                   newStatuses[index].A1 = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
+                className={styles.input}
                 placeholder="A1"
               />
               <input
@@ -5728,7 +5784,7 @@ const handleButtonClick = (machineName: string) => {
                   newStatuses[index].A2 = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
+                className={styles.input}
                 placeholder="A2"
               />
               <input
@@ -5739,7 +5795,7 @@ const handleButtonClick = (machineName: string) => {
                   newStatuses[index].A3 = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
+                className={styles.input}
                 placeholder="A3"
               />
               <input
@@ -5750,7 +5806,7 @@ const handleButtonClick = (machineName: string) => {
                   newStatuses[index].T = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
+                className={styles.input}
                 placeholder="T"
               />
               <input
@@ -5761,7 +5817,7 @@ const handleButtonClick = (machineName: string) => {
                   newStatuses[index].note = e.target.value;
                   setDrainagePump1Statuses(newStatuses);
                 }}
-                className={`${styles.input} ${clickedButton === drainagePump1.machine_name ? styles.centered : ''}`}
+                className={styles.input}
                 placeholder="Note"
               />
             </div>
@@ -5778,7 +5834,7 @@ const handleButtonClick = (machineName: string) => {
                   <label className={styles.label} htmlFor={`effluentPump${index + 1}Status`}>Status</label>
                   <select
                       id={`effluentPump${index + 1}Status`}
-                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       value={effluentPump.status}
                       onChange={(e) => {
                           const newStatuses = [...effluentPumpStatuses];
@@ -5801,7 +5857,7 @@ const handleButtonClick = (machineName: string) => {
                           newStatuses[index].A1 = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="A1"
                   />
                   <input
@@ -5812,7 +5868,7 @@ const handleButtonClick = (machineName: string) => {
                           newStatuses[index].A2 = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="A2"
                   />
                   <input
@@ -5823,7 +5879,7 @@ const handleButtonClick = (machineName: string) => {
                           newStatuses[index].A3 = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="A3"
                   />
                   <input
@@ -5834,7 +5890,7 @@ const handleButtonClick = (machineName: string) => {
                           newStatuses[index].T = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="T"
                   />
                   <input
@@ -5845,7 +5901,7 @@ const handleButtonClick = (machineName: string) => {
                           newStatuses[index].note = e.target.value;
                           setEffluentPumpStatuses(newStatuses);
                       }}
-                      className={`${styles.input} ${clickedButton === effluentPump.machine_name ? styles.centered : ''}`}
+                      className={styles.input}
                       placeholder="Note"
                   />
               </div>
@@ -5856,9 +5912,14 @@ const handleButtonClick = (machineName: string) => {
 
           </>
         )}
-        <button type="button" className={styles.Hidebutton} onClick={handleSaveSection7}>
-              {showSections7 ? 'Hide Section 7' : 'Show Section 7'}
-        </button>
+        <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 7 ? styles.disabledButton : ''}`}
+        onClick={() => {
+          handleToggleSection(7); 
+          handleSaveSection7(); 
+        }}
+        disabled={openSection !== null && openSection !== 7}>
+                {openSection === 7 ? 'Hide Section 7' : 'Show Section 7'}
+          </button>
 
         </>
       )}  
