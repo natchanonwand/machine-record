@@ -2460,7 +2460,7 @@ const handleComplete = () => {
   setInletGateStatuses(inletGateStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', gate_percentage: '', note: '' })));
   setIsInletGateDataSent(false);
 
-  setCoarseScreenStatuses(coarseScreenStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', T_1: '', T_2: '', note: '' })));
+  setCoarseScreenStatuses(coarseScreenStatuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', T1: '', T2: '', note: '' })));
   setIsCoarseScreenDataSent(false);
 
   setFan3Statuses(fan3Statuses.map(status => ({ ...status, record_date: '', record_time: '', status: '', A1: '', A2: '', A3: '', T: '', note: '' })));
@@ -2582,6 +2582,7 @@ const handleComplete = () => {
   setShowSections5(false);
   setShowSections6(false);
   setShowSections7(false);
+  setOpenSection(null);
 
   console.log('All forms cleared and localStorage reset');
 };
