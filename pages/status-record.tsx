@@ -2726,7 +2726,7 @@ const handleFocusSelect = () => {
           {isDataSent && <div className={styles.alert}>Recorder data sent successfully</div>}
 
 {/* Show/Hide Section 1 Button */}
-{!allSection_1Sent() && (
+{/* {!allSection_1Sent() && ( */}
   <>  
           {showSections1 && (
           <>
@@ -2995,10 +2995,10 @@ const handleFocusSelect = () => {
                     {openSection === 1 ? 'Hide Section 1' : 'Show Section 1'}
               </button>
         </>
-      )}         
+      {/* )}          */}
           
 {/* Show/Hide Section 2 Button */}
-{!allSection_2Sent() && (
+{/* {!allSection_2Sent() && ( */}
   <>
           {showSections2 && (
             <>
@@ -3330,9 +3330,9 @@ const handleFocusSelect = () => {
                 {openSection === 2 ? 'Hide Section 2' : 'Show Section 2'}
           </button>
           </>
-      )} 
+      {/* )}  */}
 {/* Show/Hide Section 3 Button */}
-{!allSection_3Sent() && (
+{/* {!allSection_3Sent() && ( */}
   <> 
 
           {showSections3 && (
@@ -3747,10 +3747,10 @@ const handleFocusSelect = () => {
           </button>
 
           </>
-      )}  
+      {/* )}   */}
 
 {/* Show/Hide Section 4 Button */}
-{!allSection_4Sent() && (
+{/* {!allSection_4Sent() && ( */}
   <>
 
           {showSections4 && (
@@ -4479,9 +4479,9 @@ const handleFocusSelect = () => {
           </button>
 
         </>
-      )}  
+      {/* )}   */}
 {/* Show/Hide Section 5 Button */}
-{!allSection_5Sent() && (
+{/* {!allSection_5Sent() && ( */}
   <>
 
           {showSections5 && (
@@ -5015,9 +5015,9 @@ const handleFocusSelect = () => {
           </button>
 
         </>
-      )}  
+      {/* )}   */}
 {/* Show/Hide Section 6 Button */}
-{!allSection_6Sent() && (
+{/* {!allSection_6Sent() && ( */}
   <>
           {showSections6 && (
             <>
@@ -5648,10 +5648,10 @@ const handleFocusSelect = () => {
           </button>
 
         </>
-      )}  
+      {/* )}   */}
       
 {/* Show/Hide Section 7 Button */}
-{!allSection_7Sent() && (
+{/* {!allSection_7Sent() && ( */}
   <>
 
         {showSections7 && (
@@ -5922,7 +5922,7 @@ const handleFocusSelect = () => {
           </button>
 
         </>
-      )}  
+      {/* )}   */}
 
         <button type="button" className={styles.button} onClick={handleComplete}>Complete</button>
       </form>
