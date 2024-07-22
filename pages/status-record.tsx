@@ -2661,6 +2661,14 @@ const handleFocusSelect = () => {
   }
 };
 
+console.log('section1', allSection_1Sent());
+console.log('section2', allSection_2Sent());
+console.log('section3', allSection_3Sent());
+console.log('section4', allSection_4Sent());
+console.log('section5', allSection_5Sent());
+console.log('section6', allSection_6Sent());
+console.log('section7', allSection_7Sent());
+
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
       
@@ -2987,14 +2995,19 @@ const handleFocusSelect = () => {
           )}
           
           
-              <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 1 ? styles.disabledButton : ''}`}
-               onClick={() => {
-                handleToggleSection(1); 
-                handleSaveSection1(); 
-              }}
-                disabled={openSection !== null && openSection !== 1}>
-                    {openSection === 1 ? 'Hide Section 1' : 'Show Section 1'}
-              </button>
+          <button
+            type="button"
+            className={`${styles.Hidebutton} ${openSection !== null && openSection !== 1 ? styles.disabledButton : ''}`}
+            onClick={() => {
+              handleToggleSection(1); 
+              handleSaveSection1(); 
+            }}
+            disabled={openSection !== null && openSection !== 1}
+          >
+            {allSection_1Sent() 
+              ? 'Section 1 Completed' 
+              : (openSection === 1 ? 'Hide Section 1' : 'Show Section 1')}
+          </button>
         </>
       {/* )}          */}
           
@@ -3322,13 +3335,18 @@ const handleFocusSelect = () => {
                 {validationError_9 && <div className={styles.validationError}>{validationError_9}</div>}
             </>
           )}  
-          <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 2 ? styles.disabledButton : ''}`} 
-          onClick={() => {
-            handleToggleSection(2); 
-            handleSaveSection2(); 
-          }}
-        disabled={openSection !== null && openSection !== 2}>
-                {openSection === 2 ? 'Hide Section 2' : 'Show Section 2'}
+          <button
+            type="button"
+            className={`${styles.Hidebutton} ${openSection !== null && openSection !== 2 ? styles.disabledButton : ''}`}
+            onClick={() => {
+              handleToggleSection(2); 
+              handleSaveSection2(); 
+            }}
+            disabled={openSection !== null && openSection !== 2}
+          >
+            {allSection_2Sent() 
+              ? 'Section 2 Completed' 
+              : (openSection === 1 ? 'Hide Section 2' : 'Show Section 2')}
           </button>
           </>
       {/* )}  */}
@@ -3738,13 +3756,18 @@ const handleFocusSelect = () => {
 
             </>
           )} 
-          <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 3 ? styles.disabledButton : ''}`}
-          onClick={() => {
-            handleToggleSection(3); 
-            handleSaveSection3(); 
-          }}
-        disabled={openSection !== null && openSection !== 3}>
-                {openSection === 3 ? 'Hide Section 3' : 'Show Section 3'}
+          <button
+            type="button"
+            className={`${styles.Hidebutton} ${openSection !== null && openSection !== 3 ? styles.disabledButton : ''}`}
+            onClick={() => {
+              handleToggleSection(3); 
+              handleSaveSection3(); 
+            }}
+            disabled={openSection !== null && openSection !== 3}
+          >
+            {allSection_3Sent() 
+              ? 'Section 3 Completed' 
+              : (openSection === 3 ? 'Hide Section 3' : 'Show Section 3')}
           </button>
 
           </>
@@ -4470,13 +4493,18 @@ const handleFocusSelect = () => {
 
             </>
           )}
-          <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 4 ? styles.disabledButton : ''}`}
-          onClick={() => {
-            handleToggleSection(4); 
-            handleSaveSection4(); 
-          }}
-        disabled={openSection !== null && openSection !== 4}>
-                {openSection === 4 ? 'Hide Section 4' : 'Show Section 4'}
+          <button
+            type="button"
+            className={`${styles.Hidebutton} ${openSection !== null && openSection !== 4 ? styles.disabledButton : ''}`}
+            onClick={() => {
+              handleToggleSection(4); 
+              handleSaveSection4(); 
+            }}
+            disabled={openSection !== null && openSection !== 4}
+          >
+            {allSection_4Sent() 
+              ? 'Section 4 Completed' 
+              : (openSection === 4 ? 'Hide Section 4' : 'Show Section 4')}
           </button>
 
         </>
@@ -5006,13 +5034,18 @@ const handleFocusSelect = () => {
             </>
         )}
 
-        <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 5 ? styles.disabledButton : ''}`}
-        onClick={() => {
-          handleToggleSection(5); 
-          handleSaveSection5(); 
-        }}
-        disabled={openSection !== null && openSection !== 5}>
-                {openSection === 5 ? 'Hide Section 5' : 'Show Section 5'}
+          <button
+            type="button"
+            className={`${styles.Hidebutton} ${openSection !== null && openSection !== 5 ? styles.disabledButton : ''}`}
+            onClick={() => {
+              handleToggleSection(5); 
+              handleSaveSection5(); 
+            }}
+            disabled={openSection !== null && openSection !== 5}
+          >
+            {allSection_5Sent() 
+              ? 'Section 5 Completed' 
+              : (openSection === 5 ? 'Hide Section 5' : 'Show Section 5')}
           </button>
 
         </>
@@ -5639,13 +5672,18 @@ const handleFocusSelect = () => {
             </>
         )}
 
-        <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 6 ? styles.disabledButton : ''}`}
-        onClick={() => {
-          handleToggleSection(6); 
-          handleSaveSection6(); 
-        }}
-        disabled={openSection !== null && openSection !== 6}>
-                {openSection === 6 ? 'Hide Section 6' : 'Show Section 6'}
+          <button
+            type="button"
+            className={`${styles.Hidebutton} ${openSection !== null && openSection !== 6 ? styles.disabledButton : ''}`}
+            onClick={() => {
+              handleToggleSection(6); 
+              handleSaveSection6(); 
+            }}
+            disabled={openSection !== null && openSection !== 6}
+          >
+            {allSection_6Sent() 
+              ? 'Section 6 Completed' 
+              : (openSection === 6 ? 'Hide Section 6' : 'Show Section 6')}
           </button>
 
         </>
@@ -5913,13 +5951,18 @@ const handleFocusSelect = () => {
 
           </>
         )}
-        <button type="button" className={`${styles.Hidebutton} ${openSection !== null && openSection !== 7 ? styles.disabledButton : ''}`}
-        onClick={() => {
-          handleToggleSection(7); 
-          handleSaveSection7(); 
-        }}
-        disabled={openSection !== null && openSection !== 7}>
-                {openSection === 7 ? 'Hide Section 7' : 'Show Section 7'}
+        <button
+            type="button"
+            className={`${styles.Hidebutton} ${openSection !== null && openSection !== 7 ? styles.disabledButton : ''}`}
+            onClick={() => {
+              handleToggleSection(7); 
+              handleSaveSection7(); 
+            }}
+            disabled={openSection !== null && openSection !== 7}
+          >
+            {allSection_7Sent() 
+              ? 'Section 7 Completed' 
+              : (openSection === 7 ? 'Hide Section 7' : 'Show Section 7')}
           </button>
 
         </>
