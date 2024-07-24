@@ -19,6 +19,7 @@ interface Record {
   A3?: number;
   T?: number;
   note?: string;
+  recorder_name?: string;
 }
 
 const FormFormat: React.FC = () => {
@@ -30,6 +31,14 @@ const FormFormat: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+const formatNumber = (value: number | undefined): string => {
+    if (value === undefined) return '';
+    
+    // Convert number to string and ensure it has two decimal places
+    return value % 1 === 0 ? `${value.toFixed(2)}` : `${value}`;
+  };
+  
 
   const fetchData = async () => {
     try {
@@ -226,7 +235,7 @@ const FormFormat: React.FC = () => {
       `https://jb-api-1.onrender.com/api/chiller?machine_name=CH-02&record_date=${formattedDate}&record_time=${formattedTime}`,
       `https://jb-api-1.onrender.com/api/chiller?machine_name=CH-03&record_date=${formattedDate}&record_time=${formattedTime}`,
       `https://jb-api-1.onrender.com/api/chiller?machine_name=CH-04&record_date=${formattedDate}&record_time=${formattedTime}`,
-      `https://jb-api-1.onrender.com/api/chiller?machine_name=CH-04&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/recorder?record_date=${formattedDate}&record_time=${formattedTime}`,
     ];
     
     try {
@@ -319,11 +328,19 @@ const FormFormat: React.FC = () => {
         const dateY = 780;
         const timeX = 400;
         const timeY = 780;
+        const nameX = 420;
+        const nameY = 142;
     
         // Overlay the date and time on the PDF
-        drawTextOnPage(firstPage, `${formattedDate}`, customFont, dateX, dateY, 10); // Smaller font size
-        drawTextOnPage(firstPage, `${time}`, customFont, timeX, timeY, 10); // Smaller font size
-    
+        drawTextOnPage(firstPage, `${formattedDate}`, customFont, dateX, dateY, 10);
+        drawTextOnPage(firstPage, `${time}`, customFont, timeX, timeY, 10);
+        
+        const recordName = record.recorder_name ? record.recorder_name : '';
+
+        // Overlay the date and time on the PDF
+        drawTextOnPage(secondPage, `${recordName}`, customFont, nameX, nameY, 10);
+
+      
   
         if (record.machine_name === 'SG-PS-1301' || record.machine_name === 'SG-BY-1301') {
           text = Object.entries(record)
@@ -363,40 +380,70 @@ const FormFormat: React.FC = () => {
             .join('             '); // 5 spaces
           xOffset += 0;
           drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SC-CS-1101' ? -6 : 0), 7);
-        } else if (record.machine_name.startsWith('P-PS-12')) {
+        } else if (
+          record.machine_name === 'P-PS-1201(VFD)' ||
+          record.machine_name === 'P-PS-1202(VFD)' ||
+          record.machine_name === 'P-PS-1203' ||
+          record.machine_name === 'P-PS-1204' ||
+          record.machine_name === 'P-PS-1205' ||
+          record.machine_name === 'P-PS-1206(VFD)' ||
+          record.machine_name === 'P-PS-1207(VFD)' ||
+          record.machine_name === 'P-PS-1208' ||
+          record.machine_name === 'P-PS-1209' ||
+          record.machine_name === 'P-PS-1210'
+        ) {
           step = 15.5;
+        
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
               let formattedValue = '';
-
-            if (value !== null && value !== undefined) {
-                if (typeof value === 'number') {
-                    // Format the number to two decimal places
-                    formattedValue = value.toFixed(2);
-                    // Ensure the number fits within 6 characters
-                    if (formattedValue.length > 6) {
-                        // Trim or adjust if longer than 6 characters
-                        formattedValue = formattedValue.slice(0, 6);
-                    }
+        
+              if (value !== null && value !== undefined) {
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
+                  } else {
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
+                  }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
                 } else {
-                    // Trim other values to 6 characters
-                    formattedValue = value.toString().slice(0, 6);
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
                 }
-            }
-            if (key === 'status') {
-              return `${formattedValue}         `; 
-            } else if (key === 'A1' || key === 'A2') {
-              return `${formattedValue}       `; 
-            } else if (key === 'A3') {
-              return `${formattedValue}`; 
-            } else if (key === 'T'){
-              return `                     ${formattedValue}   `; 
-            }
+              }
+        
+              if (key === 'status') {
+                return `${formattedValue}         `; // Adjust spaces as needed
+              } else if (key === 'A1' || key === 'A2') {
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
+              } else if (key === 'A3') {
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
+              }
             })
             .join(''); 
+        
           drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 30, 7);
-        } else if (record.machine_name.startsWith('SC-FS-25')) {
+          
+        }
+         else if 
+        (
+          record.machine_name === 'SC-FS-2501' ||
+          record.machine_name === 'SC-FS-2502' ||
+          record.machine_name === 'SC-FS-2503' ||
+          record.machine_name === 'SC-FS-2504' ||
+          record.machine_name === 'SC-FS-2505' 
+          ) {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
@@ -425,7 +472,25 @@ const FormFormat: React.FC = () => {
             })
             .join(''); 
           drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 43, 7);
-        } else if (record.machine_name.startsWith('MX-BIO-31')) {
+        } else if 
+        (
+          record.machine_name === 'MX-BIO-3101A' ||
+          record.machine_name === 'MX-BIO-3101B' ||
+          record.machine_name === 'MX-BIO-3101C' ||
+          record.machine_name === 'MX-BIO-3101D' ||
+          record.machine_name === 'MX-BIO-3102A' ||
+          record.machine_name === 'MX-BIO-3102B' ||
+          record.machine_name === 'MX-BIO-3102C' ||
+          record.machine_name === 'MX-BIO-3102D' ||
+          record.machine_name === 'MX-BIO-3103A' ||
+          record.machine_name === 'MX-BIO-3103B' ||
+          record.machine_name === 'MX-BIO-3103C' ||
+          record.machine_name === 'MX-BIO-3103D' ||
+          record.machine_name === 'MX-BIO-3104A' ||
+          record.machine_name === 'MX-BIO-3104B' ||
+          record.machine_name === 'MX-BIO-3104C' ||
+          record.machine_name === 'MX-BIO-3104D' 
+        ) {
           step = 15.5;
           text = Object.entries(record)
               .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
@@ -433,35 +498,50 @@ const FormFormat: React.FC = () => {
                   let formattedValue = '';
       
                   if (value !== null && value !== undefined) {
-                      if (typeof value === 'number') {
-                          // Format the number to two decimal places
-                          formattedValue = value.toFixed(2);
-                          // Ensure the number fits within 6 characters
-                          if (formattedValue.length > 6) {
-                              // Trim or adjust if longer than 6 characters
-                              formattedValue = formattedValue.slice(0, 6);
-                          }
+                    if (typeof value === 'string') {
+                      // If the value is a string but should be a number, convert it
+                      let numericValue = parseFloat(value);
+                      if (!isNaN(numericValue)) {
+                        // Format the number to 2 decimal places
+                        formattedValue = numericValue.toFixed(2);
                       } else {
-                          // Trim other values to 6 characters
-                          formattedValue = value.toString().slice(0, 6);
+                        // If it is not a number, use the first 6 characters
+                        formattedValue = value.slice(0, 6);
                       }
+                    } else if (typeof value === 'number') {
+                      // Format numbers to 2 decimal places
+                      formattedValue = value.toFixed(2);
+                    } else {
+                      // For other types, convert to string and slice if needed
+                      formattedValue = value.toString().slice(0, 6);
+                    }
                   }
-      
+            
                   if (key === 'status') {
-                      return `${formattedValue}         `; // 9 spaces
+                    return `${formattedValue}         `; // Adjust spaces as needed
                   } else if (key === 'A1' || key === 'A2') {
-                      return `${formattedValue}       `; // 7 spaces
+                    console.log(formattedValue)
+                    console.log(typeof(formattedValue));
+                    return `${formattedValue}  `; // Adjust spaces as needed
                   } else if (key === 'A3') {
-                      return `${formattedValue}`; // No additional spaces
+                    return `${formattedValue}`; // Adjust spaces as needed
                   } else if (key === 'T') {
-                      return `                     ${formattedValue}   `; // 21 spaces before and 3 spaces after
+                    return `                ${formattedValue}   `; // Adjust spaces as needed
                   }
-              })
+                })
               .join(''); // No spaces between 'status', 'A1', 'A2', 'A3', and 'T'
       
           drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 57, 7);
       }
-       else if (record.machine_name.startsWith('P-EF-53')) {
+       else if 
+       (
+        record.machine_name === 'P-EF-5301(VFD)' ||
+        record.machine_name === 'P-EF-5302(VFD)' ||
+        record.machine_name === 'P-EF-5303' ||
+        record.machine_name === 'P-EF-5304' ||
+        record.machine_name === 'P-EF-5305' ||
+        record.machine_name === 'P-EF-5306' 
+        ) {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
@@ -470,37 +550,44 @@ const FormFormat: React.FC = () => {
               let formattedValue = '';
 
               if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Format the number to two decimal places
-                      formattedValue = value.toFixed(2);
-                      // Ensure the number fits within 6 characters
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                      // Ensure that whole numbers have two decimal places (i.e., .00)
-                      if (!formattedValue.includes('.')) {
-                        formattedValue += '.00';
-                      }
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
                   } else {
-                      // Trim other values to 6 characters
-                      formattedValue = value.toString().slice(0, 6);
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
                   }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
+                } else {
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
+                }
               }
-
+        
               if (key === 'status') {
-                return `${formattedValue}         `; 
+                return `${formattedValue}         `; // Adjust spaces as needed
               } else if (key === 'A1' || key === 'A2') {
-                return `${formattedValue}       `; 
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
               } else if (key === 'A3') {
-                return `${formattedValue}`; 
-              } else if (key === 'T'){
-                return `                     ${formattedValue}   `; 
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
           drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 72, 7);
-        } else if (record.machine_name.startsWith('EF-PS-')) {
+        } else if 
+        (
+          record.machine_name === 'EF-PS-01' ||
+          record.machine_name === 'EF-PS-02' 
+          ) {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
@@ -509,37 +596,40 @@ const FormFormat: React.FC = () => {
               let formattedValue = '';
 
               if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Format the number to two decimal places
-                      formattedValue = value.toFixed(2);
-                      // Ensure the number fits within 6 characters
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                      // Ensure that whole numbers have two decimal places (i.e., .00)
-                      if (!formattedValue.includes('.')) {
-                        formattedValue += '.00';
-                      }
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
                   } else {
-                      // Trim other values to 6 characters
-                      formattedValue = value.toString().slice(0, 6);
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
                   }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
+                } else {
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
+                }
               }
-
+        
               if (key === 'status') {
-                return `${formattedValue}             `; 
+                return `${formattedValue}             `; // Adjust spaces as needed
               } else if (key === 'A1' || key === 'A2') {
-                return `${formattedValue}   `; 
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
               } else if (key === 'A3') {
-                return `${formattedValue}`; 
-              } else if (key === 'T'){
-                return `              ${formattedValue}   `; 
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
           drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 620, 7);
-        } else if (record.machine_name.startsWith('EF-BRR-01')) {
+        } else if (record.machine_name === 'EF-BRR-01') {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
@@ -548,26 +638,35 @@ const FormFormat: React.FC = () => {
               let formattedValue = '';
   
               if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
                   }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
+                } else {
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
+                }
               }
-
+        
               if (key === 'status') {
-                return `${formattedValue}             `; 
+                return `${formattedValue}             `; // Adjust spaces as needed
               } else if (key === 'A1' || key === 'A2') {
-                return `${formattedValue}   `; 
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
               } else if (key === 'A3') {
-                return `${formattedValue}`; 
-              } else if (key === 'T'){
-                return `              ${formattedValue}   `; 
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
@@ -581,32 +680,35 @@ const FormFormat: React.FC = () => {
               let formattedValue = '';
 
               if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Format the number to two decimal places
-                      formattedValue = value.toFixed(2);
-                      // Ensure the number fits within 6 characters
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                      // Ensure that whole numbers have two decimal places (i.e., .00)
-                      if (!formattedValue.includes('.')) {
-                        formattedValue += '.00';
-                      }
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
                   } else {
-                      // Trim other values to 6 characters
-                      formattedValue = value.toString().slice(0, 6);
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
                   }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
+                } else {
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
+                }
               }
-
+        
               if (key === 'status') {
-                return `${formattedValue}             `; 
+                return `${formattedValue}             `; // Adjust spaces as needed
               } else if (key === 'A1' || key === 'A2') {
-                return `${formattedValue}   `; 
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
               } else if (key === 'A3') {
-                return `${formattedValue}`; 
-              } else if (key === 'T'){
-                return `              ${formattedValue}   `; 
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
@@ -620,32 +722,35 @@ const FormFormat: React.FC = () => {
               let formattedValue = '';
 
               if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Format the number to two decimal places
-                      formattedValue = value.toFixed(2);
-                      // Ensure the number fits within 6 characters
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                      // Ensure that whole numbers have two decimal places (i.e., .00)
-                      if (!formattedValue.includes('.')) {
-                        formattedValue += '.00';
-                      }
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
                   } else {
-                      // Trim other values to 6 characters
-                      formattedValue = value.toString().slice(0, 6);
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
                   }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
+                } else {
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
+                }
               }
-
+        
               if (key === 'status') {
-                return `${formattedValue}             `; 
+                return `${formattedValue}             `; // Adjust spaces as needed
               } else if (key === 'A1' || key === 'A2') {
-                return `${formattedValue}   `; 
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
               } else if (key === 'A3') {
-                return `${formattedValue}`; 
-              } else if (key === 'T'){
-                return `              ${formattedValue}   `; 
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
@@ -659,32 +764,35 @@ const FormFormat: React.FC = () => {
               let formattedValue = '';
 
               if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Format the number to two decimal places
-                      formattedValue = value.toFixed(2);
-                      // Ensure the number fits within 6 characters
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                      // Ensure that whole numbers have two decimal places (i.e., .00)
-                      if (!formattedValue.includes('.')) {
-                        formattedValue += '.00';
-                      }
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
                   } else {
-                      // Trim other values to 6 characters
-                      formattedValue = value.toString().slice(0, 6);
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
                   }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
+                } else {
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
+                }
               }
-
+        
               if (key === 'status') {
-                return `${formattedValue}             `; 
+                return `${formattedValue}             `; // Adjust spaces as needed
               } else if (key === 'A1' || key === 'A2') {
-                return `${formattedValue}   `; 
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
               } else if (key === 'A3') {
-                return `${formattedValue}`; 
-              } else if (key === 'T'){
-                return `              ${formattedValue}   `; 
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
@@ -715,27 +823,36 @@ const FormFormat: React.FC = () => {
               let formattedValue = '';
 
               if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Format the number to two decimal places
-                      formattedValue = value.toFixed(2);
-                      // Ensure the number fits within 6 characters
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                      // Ensure that whole numbers have two decimal places (i.e., .00)
-                      if (!formattedValue.includes('.')) {
-                        formattedValue += '.00';
-                      }
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
                   } else {
-                      // Trim other values to 6 characters
-                      formattedValue = value.toString().slice(0, 6);
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
                   }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
+                } else {
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
+                }
               }
-
+        
               if (key === 'status') {
-                return `${formattedValue}             `; 
-              } 
+                return `${formattedValue}         `; // Adjust spaces as needed
+              } else if (key === 'A1' || key === 'A2') {
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
+              } else if (key === 'A3') {
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
+              }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
           drawTextOnPage(firstPage, text, customFont, xOffset + 235, yOffset - step * index + 470, 7);
@@ -765,32 +882,35 @@ const FormFormat: React.FC = () => {
               let formattedValue = '';
 
               if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Format the number to two decimal places
-                      formattedValue = value.toFixed(2);
-                      // Ensure the number fits within 6 characters
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                      // Ensure that whole numbers have two decimal places (i.e., .00)
-                      if (!formattedValue.includes('.')) {
-                        formattedValue += '.00';
-                      }
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
                   } else {
-                      // Trim other values to 6 characters
-                      formattedValue = value.toString().slice(0, 6);
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
                   }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
+                } else {
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
+                }
               }
-
+        
               if (key === 'status') {
-                return `${formattedValue}     `; 
+                return `${formattedValue}     `; // Adjust spaces as needed
               } else if (key === 'A1' || key === 'A2') {
-                return `${formattedValue}   `; 
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
               } else if (key === 'A3') {
-                return `${formattedValue}`; 
-              } else if (key === 'T'){
-                return `              ${formattedValue}   `; 
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
@@ -804,30 +924,37 @@ const FormFormat: React.FC = () => {
                   let formattedValue = '';
       
                   if (value !== null && value !== undefined) {
-                      if (typeof value === 'number') {
-                          // Format the number to two decimal places
-                          formattedValue = value.toFixed(2);
-                          // Ensure the number fits within 6 characters
-                          if (formattedValue.length > 6) {
-                              // Trim or adjust if longer than 6 characters
-                              formattedValue = formattedValue.slice(0, 6);
-                          }
+                    if (typeof value === 'string') {
+                      // If the value is a string but should be a number, convert it
+                      let numericValue = parseFloat(value);
+                      if (!isNaN(numericValue)) {
+                        // Format the number to 2 decimal places
+                        formattedValue = numericValue.toFixed(2);
                       } else {
-                          // Trim other values to 6 characters
-                          formattedValue = value.toString().slice(0, 6);
+                        // If it is not a number, use the first 6 characters
+                        formattedValue = value.slice(0, 6);
                       }
+                    } else if (typeof value === 'number') {
+                      // Format numbers to 2 decimal places
+                      formattedValue = value.toFixed(2);
+                    } else {
+                      // For other types, convert to string and slice if needed
+                      formattedValue = value.toString().slice(0, 6);
+                    }
                   }
-      
+            
                   if (key === 'status') {
-                      return `${formattedValue}             `; 
+                    return `${formattedValue}             `; // Adjust spaces as needed
                   } else if (key === 'A1' || key === 'A2') {
-                      return `${formattedValue}   `; 
+                    console.log(formattedValue)
+                    console.log(typeof(formattedValue));
+                    return `${formattedValue}  `; // Adjust spaces as needed
                   } else if (key === 'A3') {
-                      return `${formattedValue}`; 
+                    return `${formattedValue}`; // Adjust spaces as needed
                   } else if (key === 'T') {
-                      return `              ${formattedValue}   `; 
+                    return `                ${formattedValue}   `; // Adjust spaces as needed
                   }
-              })
+                })
               .join(''); // 0 spaces between 'status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
           drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 657, 7);
       }  else if (record.machine_name === 'P-SC-4201' || record.machine_name === 'P-SC-4202') {
@@ -839,32 +966,35 @@ const FormFormat: React.FC = () => {
               let formattedValue = '';
 
               if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Format the number to two decimal places
-                      formattedValue = value.toFixed(2);
-                      // Ensure the number fits within 6 characters
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                      // Ensure that whole numbers have two decimal places (i.e., .00)
-                      if (!formattedValue.includes('.')) {
-                        formattedValue += '.00';
-                      }
+                if (typeof value === 'string') {
+                  // If the value is a string but should be a number, convert it
+                  let numericValue = parseFloat(value);
+                  if (!isNaN(numericValue)) {
+                    // Format the number to 2 decimal places
+                    formattedValue = numericValue.toFixed(2);
                   } else {
-                      // Trim other values to 6 characters
-                      formattedValue = value.toString().slice(0, 6);
+                    // If it is not a number, use the first 6 characters
+                    formattedValue = value.slice(0, 6);
                   }
+                } else if (typeof value === 'number') {
+                  // Format numbers to 2 decimal places
+                  formattedValue = value.toFixed(2);
+                } else {
+                  // For other types, convert to string and slice if needed
+                  formattedValue = value.toString().slice(0, 6);
+                }
               }
-
+        
               if (key === 'status') {
-                return `${formattedValue}             `; 
+                return `${formattedValue}             `; // Adjust spaces as needed
               } else if (key === 'A1' || key === 'A2') {
-                return `${formattedValue}   `; 
+                console.log(formattedValue)
+                console.log(typeof(formattedValue));
+                return `${formattedValue}  `; // Adjust spaces as needed
               } else if (key === 'A3') {
-                return `${formattedValue}`; 
-              } else if (key === 'T'){
-                return `              ${formattedValue}   `; 
+                return `${formattedValue}`; // Adjust spaces as needed
+              } else if (key === 'T') {
+                return `                ${formattedValue}   `; // Adjust spaces as needed
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
@@ -987,7 +1117,17 @@ const FormFormat: React.FC = () => {
             })
             .join(''); 
           drawTextOnPage(secondPage, text, customFont, xOffset + 105, 225 , 7); 
-        } else if (record.machine_name.startsWith('AB-')) {
+        } else if 
+        (
+          record.machine_name === 'AB-AT-3801' ||
+          record.machine_name === 'AB-AT-3802' ||
+          record.machine_name === 'AB-AT-3803' ||
+          record.machine_name === 'AB-AT-3804' ||
+          record.machine_name === 'AB-RE-3901' ||
+          record.machine_name === 'AB-RE-3902' ||
+          record.machine_name === 'AB-RE-3903' ||
+          record.machine_name === 'AB-RE-3904' 
+        ) {
           step = 16.5; // Set the step for spacing
           const baseYOffset = 225; // Set base Y offset to 225
           const baseXOffset = 375; // Set base X offset to 370
@@ -1028,8 +1168,16 @@ const FormFormat: React.FC = () => {
           console.log(`Record ${index + 1}: yOffset = ${yOffset}`);
       
           // Draw the text on the second page with spacing between each record
-          drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1335, 7);
-      } else if (record.machine_name.startsWith('P-D-55')) {
+          drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1352, 7);
+      } else if 
+      (
+        record.machine_name === 'P-D-5501' ||
+        record.machine_name === 'P-D-5502' ||
+        record.machine_name === 'P-D-5503' ||
+        record.machine_name === 'P-D-5504' ||
+        record.machine_name === 'P-D-5505' ||
+        record.machine_name === 'P-D-5506' 
+        ) {
         step = 16.5; // Set the step for spacing
         const baseYOffset = 125; // Set base Y offset to 225
         const baseXOffset = 375; // Set base X offset to 370
@@ -1070,8 +1218,14 @@ const FormFormat: React.FC = () => {
         console.log(`Record ${index + 1}: yOffset = ${yOffset}`);
     
         // Draw the text on the second page with spacing between each record
-        drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1490, 7);
-    } else if (record.machine_name.startsWith('PCHP-')) {
+        drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1505, 7);
+    } else if 
+    (
+      record.machine_name === 'PCHP-01' ||
+      record.machine_name === 'PCHP-02' ||
+      record.machine_name === 'PCHP-03' ||
+      record.machine_name === 'PCHP-04' 
+      ) {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Set base Y offset to 225
       const baseXOffset = 375; // Set base X offset to 370
@@ -1112,8 +1266,14 @@ const FormFormat: React.FC = () => {
       console.log(`Record ${index + 1}: yOffset = ${yOffset}`);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1670, 7);
-    } else if (record.machine_name.startsWith('FIT-3')) {
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1688, 7);
+    } else if 
+    (
+      record.machine_name === 'FIT-3611' ||
+      record.machine_name === 'FIT-3612' ||
+      record.machine_name === 'FIT-3613' ||
+      record.machine_name === 'FIT-3614' 
+      ) {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Set base Y offset to 225
       const baseXOffset = 375; // Set base X offset to 370
@@ -1147,8 +1307,14 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1823, 7);
-    } else if (record.machine_name.startsWith('PM-0')) {
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1840, 7);
+    } else if 
+    (
+      record.machine_name === 'PM-01A' ||
+      record.machine_name === 'PM-01B' ||
+      record.machine_name === 'PM-02A' ||
+      record.machine_name === 'PM-02B' 
+      ) {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Set base Y offset to 225
       const baseXOffset = 533; // Set base X offset to 370
@@ -1180,7 +1346,7 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1889, 7);
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1906, 7);
     } else if (record.machine_name === 'MX-G-2101') {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
@@ -1215,7 +1381,7 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1990, 7);
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2005, 7);
     } else if (record.machine_name === 'P-G-2101') {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
@@ -1250,7 +1416,7 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2025, 7);
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2040, 7);
     } else if (record.machine_name === 'MX-G-2102') {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
@@ -1285,7 +1451,7 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2057, 7);
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2072, 7);
     }  else if (record.machine_name === 'P-G-2102') {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
@@ -1320,7 +1486,7 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2089, 7);
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2104, 7);
     }  else if (record.machine_name === 'MX-G-2103') {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
@@ -1355,7 +1521,7 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2123, 7);
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2138, 7);
     }  else if (record.machine_name === 'P-G-2103') {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
@@ -1390,7 +1556,7 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2158, 7);
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2173, 7);
     }   else if (record.machine_name === 'MX-G-2104') {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
@@ -1425,7 +1591,7 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2192, 7);
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2207, 7);
     }   else if (record.machine_name === 'P-G-2104') {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
@@ -1460,8 +1626,11 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2223, 7);
-    }    else if (record.machine_name.startsWith('P-RP-A')) {
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2240, 7);
+    }    else if 
+    (
+      record.machine_name === 'P-RP-A101' 
+      ) {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
       const baseXOffset = 520; // Adjust base X offset as needed
@@ -1494,7 +1663,10 @@ const FormFormat: React.FC = () => {
   
       // Draw the text on the second page with spacing between each record
       drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2138, 7);
-    }     else if (record.machine_name.startsWith('CH-')) {
+    }    else if 
+    (
+      record.machine_name === 'P-RP-A102' 
+      ) {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
       const baseXOffset = 520; // Adjust base X offset as needed
@@ -1526,8 +1698,47 @@ const FormFormat: React.FC = () => {
       const yOffset = baseYOffset + (index * step);
   
       // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2255, 7);
-    } 
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2170, 7);
+    }   else if 
+    (
+      record.machine_name === 'CH-01' ||
+      record.machine_name === 'CH-02' ||
+      record.machine_name === 'CH-03' ||
+      record.machine_name === 'CH-04' 
+      ) {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 520; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2272, 7);
+    }  
   
     
 
@@ -1625,7 +1836,8 @@ const FormFormat: React.FC = () => {
                   backgroundColor: 'rgba(255, 255, 255, 0.14)',
                   cursor: 'pointer',
                 }}
-                onClick={() => handleRecordClick(record)}
+                onClick={() => 
+                  handleRecordClick(record)}
               >
                 {record}
               </li>
