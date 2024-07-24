@@ -194,6 +194,39 @@ const FormFormat: React.FC = () => {
       `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-RE-3902&record_date=${formattedDate}&record_time=${formattedTime}`,
       `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-RE-3903&record_date=${formattedDate}&record_time=${formattedTime}`,
       `https://jb-api-1.onrender.com/api/air-blower?machine_name=AB-RE-3904&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Drainage_Pump?machine_name=P-D-5501&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Drainage_Pump?machine_name=P-D-5502&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Drainage_Pump?machine_name=P-D-5503&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Drainage_Pump?machine_name=P-D-5504&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Drainage_Pump?machine_name=P-D-5505&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Drainage_Pump?machine_name=P-D-5506&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Chiller_Water_Pump?machine_name=PCHP-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Chiller_Water_Pump?machine_name=PCHP-02&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Chiller_Water_Pump?machine_name=PCHP-03&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/Chiller_Water_Pump?machine_name=PCHP-04&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air_flow?machine_name=FIT-3611&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air_flow?machine_name=FIT-3612&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air_flow?machine_name=FIT-3613&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/air_flow?machine_name=FIT-3614&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/biofilter?machine_name=PM-01A&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/biofilter?machine_name=PM-01B&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/biofilter?machine_name=PM-02A&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/biofilter?machine_name=PM-02B&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/vortex_grit?machine_name=MX-G-2101&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/vortex_grit?machine_name=P-G-2101&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/vortex_grit?machine_name=MX-G-2102&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/vortex_grit?machine_name=P-G-2102&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/vortex_grit?machine_name=MX-G-2103&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/vortex_grit?machine_name=P-G-2103&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/vortex_grit?machine_name=MX-G-2104&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/vortex_grit?machine_name=P-G-2104&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/garden_pump?machine_name=P-RP-A101&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/garden_pump?machine_name=P-RP-A102&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/chiller?machine_name=CH-01&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/chiller?machine_name=CH-02&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/chiller?machine_name=CH-03&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/chiller?machine_name=CH-04&record_date=${formattedDate}&record_time=${formattedTime}`,
+      `https://jb-api-1.onrender.com/api/chiller?machine_name=CH-04&record_date=${formattedDate}&record_time=${formattedTime}`,
     ];
     
     try {
@@ -295,172 +328,367 @@ const FormFormat: React.FC = () => {
         if (record.machine_name === 'SG-PS-1301' || record.machine_name === 'SG-BY-1301') {
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
-            .map(([key, value]) => `${value}`)
-            .join('                 '); 
+            .map(([key, value]) => `${value}    `)
+            .join('                        '); 
           xOffset += 0;
-          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SG-BY-1301' ? 4 : 1), 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SG-BY-1301' ? 4 : 1), 7);
         } else if (record.machine_name === 'SC-CS-1101' || record.machine_name === 'SC-CS-1102') {
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+              let formattedValue = '';
+
+            if (value !== null && value !== undefined) {
+                if (typeof value === 'number') {
+                    // Format the number to two decimal places
+                    formattedValue = value.toFixed(2);
+                    // Ensure the number fits within 6 characters
+                    if (formattedValue.length > 6) {
+                        // Trim or adjust if longer than 6 characters
+                        formattedValue = formattedValue.slice(0, 6);
+                    }
+                } else {
+                    // Trim other values to 6 characters
+                    formattedValue = value.toString().slice(0, 6);
+                }
+            }
+
+
               if (key === 'status') {
-                return `${value}    `;
+                return `${formattedValue}        `;
               } else if (key === 'T1' || key === 'T2') {
-                return `${value}     `;
+                return `${formattedValue}             `;
               }
             })
             .join('             '); // 5 spaces
           xOffset += 0;
-          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SC-CS-1101' ? -6 : 0), 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index + (record.machine_name === 'SC-CS-1101' ? -6 : 0), 7);
         } else if (record.machine_name.startsWith('P-PS-12')) {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
-              if (key === 'status') {
-                return `${value}       `; 
-              } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
-              } else if (key === 'A3') {
-                return `${value}`; 
-              } else if (key === 'T'){
-                return `              ${value}   `; 
-              }
+              let formattedValue = '';
+
+            if (value !== null && value !== undefined) {
+                if (typeof value === 'number') {
+                    // Format the number to two decimal places
+                    formattedValue = value.toFixed(2);
+                    // Ensure the number fits within 6 characters
+                    if (formattedValue.length > 6) {
+                        // Trim or adjust if longer than 6 characters
+                        formattedValue = formattedValue.slice(0, 6);
+                    }
+                } else {
+                    // Trim other values to 6 characters
+                    formattedValue = value.toString().slice(0, 6);
+                }
+            }
+            if (key === 'status') {
+              return `${formattedValue}         `; 
+            } else if (key === 'A1' || key === 'A2') {
+              return `${formattedValue}       `; 
+            } else if (key === 'A3') {
+              return `${formattedValue}`; 
+            } else if (key === 'T'){
+              return `                     ${formattedValue}   `; 
+            }
             })
             .join(''); 
-          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 30, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 30, 7);
         } else if (record.machine_name.startsWith('SC-FS-25')) {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+              let formattedValue = '';
+
+            if (value !== null && value !== undefined) {
+                if (typeof value === 'number') {
+                    // Format the number to two decimal places
+                    formattedValue = value.toFixed(2);
+                    // Ensure the number fits within 6 characters
+                    if (formattedValue.length > 6) {
+                        // Trim or adjust if longer than 6 characters
+                        formattedValue = formattedValue.slice(0, 6);
+                    }
+                } else {
+                    // Trim other values to 6 characters
+                    formattedValue = value.toString().slice(0, 6);
+                }
+            }
               if (key === 'status') {
-                return `${value}  `; 
+                return `${formattedValue}       `; 
               } else if (key === 'A1') {
-                return `             ${value}`;
+                return `             ${formattedValue}`;
               }
             })
             .join(''); 
-          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 43, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 43, 7);
         } else if (record.machine_name.startsWith('MX-BIO-31')) {
           step = 15.5;
           text = Object.entries(record)
-            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
-            .map(([key, value]) => {
-              if (key === 'status') {
-                return `${value}       `; 
-              } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
-              } else if (key === 'A3') {
-                return `${value}`; 
-              } else if (key === 'T'){
-                return `              ${value}   `; 
-              }
-            })
-            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 57, 10);
-        } else if (record.machine_name.startsWith('P-EF-53')) {
+              .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+              .map(([key, value]) => {
+                  let formattedValue = '';
+      
+                  if (value !== null && value !== undefined) {
+                      if (typeof value === 'number') {
+                          // Format the number to two decimal places
+                          formattedValue = value.toFixed(2);
+                          // Ensure the number fits within 6 characters
+                          if (formattedValue.length > 6) {
+                              // Trim or adjust if longer than 6 characters
+                              formattedValue = formattedValue.slice(0, 6);
+                          }
+                      } else {
+                          // Trim other values to 6 characters
+                          formattedValue = value.toString().slice(0, 6);
+                      }
+                  }
+      
+                  if (key === 'status') {
+                      return `${formattedValue}         `; // 9 spaces
+                  } else if (key === 'A1' || key === 'A2') {
+                      return `${formattedValue}       `; // 7 spaces
+                  } else if (key === 'A3') {
+                      return `${formattedValue}`; // No additional spaces
+                  } else if (key === 'T') {
+                      return `                     ${formattedValue}   `; // 21 spaces before and 3 spaces after
+                  }
+              })
+              .join(''); // No spaces between 'status', 'A1', 'A2', 'A3', and 'T'
+      
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 57, 7);
+      }
+       else if (record.machine_name.startsWith('P-EF-53')) {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+
+              let formattedValue = '';
+
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Format the number to two decimal places
+                      formattedValue = value.toFixed(2);
+                      // Ensure the number fits within 6 characters
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                      // Ensure that whole numbers have two decimal places (i.e., .00)
+                      if (!formattedValue.includes('.')) {
+                        formattedValue += '.00';
+                      }
+                  } else {
+                      // Trim other values to 6 characters
+                      formattedValue = value.toString().slice(0, 6);
+                  }
+              }
+
               if (key === 'status') {
-                return `${value}       `; 
+                return `${formattedValue}         `; 
               } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
+                return `${formattedValue}       `; 
               } else if (key === 'A3') {
-                return `${value}`; 
+                return `${formattedValue}`; 
               } else if (key === 'T'){
-                return `              ${value}   `; 
+                return `                     ${formattedValue}   `; 
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 72, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset, yOffset - step * index - 72, 7);
         } else if (record.machine_name.startsWith('EF-PS-')) {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+
+              let formattedValue = '';
+
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Format the number to two decimal places
+                      formattedValue = value.toFixed(2);
+                      // Ensure the number fits within 6 characters
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                      // Ensure that whole numbers have two decimal places (i.e., .00)
+                      if (!formattedValue.includes('.')) {
+                        formattedValue += '.00';
+                      }
+                  } else {
+                      // Trim other values to 6 characters
+                      formattedValue = value.toString().slice(0, 6);
+                  }
+              }
+
               if (key === 'status') {
-                return `${value}          `; 
+                return `${formattedValue}             `; 
               } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
+                return `${formattedValue}   `; 
               } else if (key === 'A3') {
-                return `${value}`; 
+                return `${formattedValue}`; 
               } else if (key === 'T'){
-                return `              ${value}   `; 
+                return `              ${formattedValue}   `; 
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 620, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 620, 7);
         } else if (record.machine_name.startsWith('EF-BRR-01')) {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+
               if (key === 'status') {
-                return `${value}          `; 
+                return `${formattedValue}             `; 
               } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
+                return `${formattedValue}   `; 
               } else if (key === 'A3') {
-                return `${value}`; 
+                return `${formattedValue}`; 
               } else if (key === 'T'){
-                return `              ${value}   `; 
+                return `              ${formattedValue}   `; 
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 590, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 590, 7);
         } else if (record.machine_name === 'EF-VFD-01' || record.machine_name === 'EF-BRR-02') {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+
+              let formattedValue = '';
+
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Format the number to two decimal places
+                      formattedValue = value.toFixed(2);
+                      // Ensure the number fits within 6 characters
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                      // Ensure that whole numbers have two decimal places (i.e., .00)
+                      if (!formattedValue.includes('.')) {
+                        formattedValue += '.00';
+                      }
+                  } else {
+                      // Trim other values to 6 characters
+                      formattedValue = value.toString().slice(0, 6);
+                  }
+              }
+
               if (key === 'status') {
-                return `${value}          `; 
+                return `${formattedValue}             `; 
               } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
+                return `${formattedValue}   `; 
               } else if (key === 'A3') {
-                return `${value}`; 
+                return `${formattedValue}`; 
               } else if (key === 'T'){
-                return `              ${value}   `; 
+                return `              ${formattedValue}   `; 
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 560, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 560, 7);
         } else if (record.machine_name === 'SF-BRR-01' || record.machine_name === 'SF-BRR-02' || record.machine_name === 'SF-STR-01' || record.machine_name === 'SMEF-STR-01') {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+
+              let formattedValue = '';
+
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Format the number to two decimal places
+                      formattedValue = value.toFixed(2);
+                      // Ensure the number fits within 6 characters
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                      // Ensure that whole numbers have two decimal places (i.e., .00)
+                      if (!formattedValue.includes('.')) {
+                        formattedValue += '.00';
+                      }
+                  } else {
+                      // Trim other values to 6 characters
+                      formattedValue = value.toString().slice(0, 6);
+                  }
+              }
+
               if (key === 'status') {
-                return `${value}          `; 
+                return `${formattedValue}             `; 
               } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
+                return `${formattedValue}   `; 
               } else if (key === 'A3') {
-                return `${value}`; 
+                return `${formattedValue}`; 
               } else if (key === 'T'){
-                return `              ${value}   `; 
+                return `              ${formattedValue}   `; 
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 530, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 530, 7);
         } else if (record.machine_name === 'EF-ABR-01' || record.machine_name === 'EF-ABR-02' || record.machine_name === 'SF-CRP-01' || record.machine_name === 'SF-CRP-02') {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+              
+              let formattedValue = '';
+
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Format the number to two decimal places
+                      formattedValue = value.toFixed(2);
+                      // Ensure the number fits within 6 characters
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                      // Ensure that whole numbers have two decimal places (i.e., .00)
+                      if (!formattedValue.includes('.')) {
+                        formattedValue += '.00';
+                      }
+                  } else {
+                      // Trim other values to 6 characters
+                      formattedValue = value.toString().slice(0, 6);
+                  }
+              }
+
               if (key === 'status') {
-                return `${value}          `; 
+                return `${formattedValue}             `; 
               } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
+                return `${formattedValue}   `; 
               } else if (key === 'A3') {
-                return `${value}`; 
+                return `${formattedValue}`; 
               } else if (key === 'T'){
-                return `              ${value}   `; 
+                return `              ${formattedValue}   `; 
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 500, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 500, 7);
         } else if  //แยกเครื่องจักรกับตู้ไฟ!!!
           (
           record.machine_name === 'EF-BR-01 (เครื่องจักร)' || 
@@ -483,12 +711,34 @@ const FormFormat: React.FC = () => {
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'A1', 'A2', 'A3', 'T', 'note'].includes(key))
             .map(([key, value]) => {
+              
+              let formattedValue = '';
+
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Format the number to two decimal places
+                      formattedValue = value.toFixed(2);
+                      // Ensure the number fits within 6 characters
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                      // Ensure that whole numbers have two decimal places (i.e., .00)
+                      if (!formattedValue.includes('.')) {
+                        formattedValue += '.00';
+                      }
+                  } else {
+                      // Trim other values to 6 characters
+                      formattedValue = value.toString().slice(0, 6);
+                  }
+              }
+
               if (key === 'status') {
-                return `${value}`; 
+                return `${formattedValue}             `; 
               } 
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset + 235, yOffset - step * index + 470, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 235, yOffset - step * index + 470, 7);
         } else if 
             (
             record.machine_name === 'EF-BR-01 (ตู้ไฟ)' || 
@@ -511,54 +761,114 @@ const FormFormat: React.FC = () => {
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+              
+              let formattedValue = '';
+
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Format the number to two decimal places
+                      formattedValue = value.toFixed(2);
+                      // Ensure the number fits within 6 characters
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                      // Ensure that whole numbers have two decimal places (i.e., .00)
+                      if (!formattedValue.includes('.')) {
+                        formattedValue += '.00';
+                      }
+                  } else {
+                      // Trim other values to 6 characters
+                      formattedValue = value.toString().slice(0, 6);
+                  }
+              }
+
               if (key === 'status') {
-                return `${value}    `; 
-              } else if (key === 'A1') {
-                return `${value}  `; 
-              } else if (key === 'A2') {
-                return `${value}  `; 
+                return `${formattedValue}     `; 
+              } else if (key === 'A1' || key === 'A2') {
+                return `${formattedValue}   `; 
               } else if (key === 'A3') {
-                return `  ${value}`; 
+                return `${formattedValue}`; 
               } else if (key === 'T'){
-                return `            ${value}   `; 
+                return `              ${formattedValue}   `; 
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset + 255, yOffset - step * index + 687, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 255, yOffset - step * index + 687, 7);
         } else if (record.machine_name === 'EF-BF-01' || record.machine_name === 'EF-BF-02' || record.machine_name === 'EF-BF-03') {
           step = 15.5;
           text = Object.entries(record)
-            .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
-            .map(([key, value]) => {
-              if (key === 'status') {
-                return `${value}          `; 
-              } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
-              } else if (key === 'A3') {
-                return `${value}`; 
-              } else if (key === 'T'){
-                return `              ${value}   `; 
-              }
-            })
-            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 657, 10);
-        } else if (record.machine_name === 'P-SC-4201' || record.machine_name === 'P-SC-4202') {
+              .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+              .map(([key, value]) => {
+      
+                  let formattedValue = '';
+      
+                  if (value !== null && value !== undefined) {
+                      if (typeof value === 'number') {
+                          // Format the number to two decimal places
+                          formattedValue = value.toFixed(2);
+                          // Ensure the number fits within 6 characters
+                          if (formattedValue.length > 6) {
+                              // Trim or adjust if longer than 6 characters
+                              formattedValue = formattedValue.slice(0, 6);
+                          }
+                      } else {
+                          // Trim other values to 6 characters
+                          formattedValue = value.toString().slice(0, 6);
+                      }
+                  }
+      
+                  if (key === 'status') {
+                      return `${formattedValue}             `; 
+                  } else if (key === 'A1' || key === 'A2') {
+                      return `${formattedValue}   `; 
+                  } else if (key === 'A3') {
+                      return `${formattedValue}`; 
+                  } else if (key === 'T') {
+                      return `              ${formattedValue}   `; 
+                  }
+              })
+              .join(''); // 0 spaces between 'status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 657, 7);
+      }  else if (record.machine_name === 'P-SC-4201' || record.machine_name === 'P-SC-4202') {
           step = 15.5;
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
+              
+              let formattedValue = '';
+
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Format the number to two decimal places
+                      formattedValue = value.toFixed(2);
+                      // Ensure the number fits within 6 characters
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                      // Ensure that whole numbers have two decimal places (i.e., .00)
+                      if (!formattedValue.includes('.')) {
+                        formattedValue += '.00';
+                      }
+                  } else {
+                      // Trim other values to 6 characters
+                      formattedValue = value.toString().slice(0, 6);
+                  }
+              }
+
               if (key === 'status') {
-                return `${value}          `; 
+                return `${formattedValue}             `; 
               } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
+                return `${formattedValue}   `; 
               } else if (key === 'A3') {
-                return `${value}`; 
+                return `${formattedValue}`; 
               } else if (key === 'T'){
-                return `              ${value}   `; 
+                return `              ${formattedValue}   `; 
               }
             })
             .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 643, 10);
+          drawTextOnPage(firstPage, text, customFont, xOffset + 240, yOffset - step * index + 643, 7);
         } else if (machineNames.includes(record.machine_name)) {
           const step = 34.4;
           let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
@@ -578,7 +888,7 @@ const FormFormat: React.FC = () => {
           Object.entries(coordinates).forEach(([key, { x, y }]) => {
             if (record[key as keyof typeof record]) {
               const text = record[key as keyof typeof record] as string;
-              drawTextOnPage(secondPage, text, customFont, x, y, 10);
+              drawTextOnPage(secondPage, text, customFont, x, y, 7);
             }
           });
         } else if (machineNames_2.includes(record.machine_name)) {
@@ -600,7 +910,7 @@ const FormFormat: React.FC = () => {
           Object.entries(coordinates).forEach(([key, { x, y }]) => {
             if (record[key as keyof typeof record]) {
               const text = record[key as keyof typeof record] as string;
-              drawTextOnPage(secondPage, text, customFont, x, y, 10);
+              drawTextOnPage(secondPage, text, customFont, x, y, 7);
             }
           });
         } else if (record.machine_name === 'P-HPPW-A201 ถึง P-HPPW-A203') {
@@ -614,7 +924,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); 
-          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 243 , 10);
+          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 243 , 7);
         } else if (record.machine_name === 'P-PW-A301 ถึง P-PW-A302') {
           step = 15.5;
           let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
@@ -626,7 +936,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); 
-          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 225 , 10);
+          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 225 , 7);
         } else if (record.machine_name === 'P-CW-A001 ถึง P-CW-A002') {
           step = 15.5;
           let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
@@ -638,7 +948,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); 
-          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 207 , 10);
+          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 207 , 7);
         } else if (record.machine_name === 'P-RW-A101 ถึง P-RW-A102') {
           step = 15.5;
           let yOffsetAdjustment = 10; // Variable to adjust yOffset dynamically
@@ -650,7 +960,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); 
-          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 191 , 10);
+          drawTextOnPage(secondPage, text, customFont, xOffset + 15, 191 , 7);
         } else if (record.machine_name === 'SP-G-2201') {
           step = 15.5;
           text = Object.entries(record)
@@ -663,7 +973,7 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); 
-          drawTextOnPage(secondPage, text, customFont, xOffset + 105, 243 , 10); 
+          drawTextOnPage(secondPage, text, customFont, xOffset + 105, 243 , 7); 
         } else if (record.machine_name === 'SP-EF-5201') {
           step = 15.5;
           text = Object.entries(record)
@@ -676,25 +986,550 @@ const FormFormat: React.FC = () => {
               }
             })
             .join(''); 
-          drawTextOnPage(secondPage, text, customFont, xOffset + 105, 225 , 10); 
+          drawTextOnPage(secondPage, text, customFont, xOffset + 105, 225 , 7); 
         } else if (record.machine_name.startsWith('AB-')) {
-          step = 15.5;
+          step = 16.5; // Set the step for spacing
+          const baseYOffset = 225; // Set base Y offset to 225
+          const baseXOffset = 375; // Set base X offset to 370
+      
           text = Object.entries(record)
+              .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+              .map(([key, value]) => {
+                  let formattedValue = '';
+      
+                  if (value !== null && value !== undefined) {
+                      if (typeof value === 'number') {
+                          // Ensure the number fits within 6 characters
+                          formattedValue = value.toFixed(2); // Two decimal places
+                          if (formattedValue.length > 6) {
+                              // Trim or adjust if longer than 6 characters
+                              formattedValue = formattedValue.slice(0, 6);
+                          }
+                      } else {
+                          formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      }
+                  }
+      
+                  if (key === 'status') {
+                      return `${formattedValue}           `; 
+                  } else if (key === 'A1' || key === 'A2') {
+                      return `${formattedValue}  `; 
+                  } else if (key === 'A3') {
+                      return `${formattedValue}`; 
+                  } else if (key === 'T') {
+                      return `          ${formattedValue}   `; 
+                  }
+              })
+              .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+      
+          const yOffset = baseYOffset + (index * step);
+      
+          // Log the value to the console
+          console.log(`Record ${index + 1}: yOffset = ${yOffset}`);
+      
+          // Draw the text on the second page with spacing between each record
+          drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1335, 7);
+      } else if (record.machine_name.startsWith('P-D-55')) {
+        step = 16.5; // Set the step for spacing
+        const baseYOffset = 125; // Set base Y offset to 225
+        const baseXOffset = 375; // Set base X offset to 370
+    
+        text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
-              if (key === 'status') {
-                return `${value}          `; 
-              } else if (key === 'A1' || key === 'A2') {
-                return `${value}   `; 
-              } else if (key === 'A3') {
-                return `${value}`; 
-              } else if (key === 'T'){
-                return `              ${value}   `; 
-              }
+                let formattedValue = '';
+    
+                if (value !== null && value !== undefined) {
+                    if (typeof value === 'number') {
+                        // Ensure the number fits within 6 characters
+                        formattedValue = value.toFixed(2); // Two decimal places
+                        if (formattedValue.length > 6) {
+                            // Trim or adjust if longer than 6 characters
+                            formattedValue = formattedValue.slice(0, 6);
+                        }
+                    } else {
+                        formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                    }
+                }
+    
+                if (key === 'status') {
+                    return `${formattedValue}            `; 
+                } else if (key === 'A1' || key === 'A2') {
+                    return `${formattedValue}  `; 
+                } else if (key === 'A3') {
+                    return `${formattedValue}`; 
+                } else if (key === 'T') {
+                    return `          ${formattedValue}   `; 
+                }
             })
-            .join(''); 
-          drawTextOnPage(secondPage, text, customFont, xOffset + 200, 5 , 10); 
-        }
+            .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+    
+        const yOffset = baseYOffset + (index * step);
+    
+        // Log the value to the console
+        console.log(`Record ${index + 1}: yOffset = ${yOffset}`);
+    
+        // Draw the text on the second page with spacing between each record
+        drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1490, 7);
+    } else if (record.machine_name.startsWith('PCHP-')) {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Set base Y offset to 225
+      const baseXOffset = 375; // Set base X offset to 370
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } else if (key === 'A1' || key === 'A2') {
+                  return `${formattedValue}  `; 
+              } else if (key === 'A3') {
+                  return `${formattedValue}`; 
+              } else if (key === 'T') {
+                  return `          ${formattedValue}   `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Log the value to the console
+      console.log(`Record ${index + 1}: yOffset = ${yOffset}`);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1670, 7);
+    } else if (record.machine_name.startsWith('FIT-3')) {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Set base Y offset to 225
+      const baseXOffset = 375; // Set base X offset to 370
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'Flow') {
+                  return `${formattedValue}            `; 
+              } else if (key === 'valve_percentage') {
+                  return `          ${formattedValue}  `; 
+              } 
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1823, 7);
+    } else if (record.machine_name.startsWith('PM-0')) {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Set base Y offset to 225
+      const baseXOffset = 533; // Set base X offset to 370
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } 
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1889, 7);
+    } else if (record.machine_name === 'MX-G-2101') {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 375; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } else if(key === 'T') {
+                  return `     ${formattedValue} `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1990, 7);
+    } else if (record.machine_name === 'P-G-2101') {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 375; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } else if(key === 'T') {
+                  return `     ${formattedValue} `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2025, 7);
+    } else if (record.machine_name === 'MX-G-2102') {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 375; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } else if(key === 'T') {
+                  return `     ${formattedValue} `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2057, 7);
+    }  else if (record.machine_name === 'P-G-2102') {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 375; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } else if(key === 'T') {
+                  return `     ${formattedValue} `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2089, 7);
+    }  else if (record.machine_name === 'MX-G-2103') {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 375; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } else if(key === 'T') {
+                  return `     ${formattedValue} `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2123, 7);
+    }  else if (record.machine_name === 'P-G-2103') {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 375; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } else if(key === 'T') {
+                  return `     ${formattedValue} `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2158, 7);
+    }   else if (record.machine_name === 'MX-G-2104') {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 375; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } else if(key === 'T') {
+                  return `     ${formattedValue} `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2192, 7);
+    }   else if (record.machine_name === 'P-G-2104') {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 375; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              } else if(key === 'T') {
+                  return `     ${formattedValue} `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2223, 7);
+    }    else if (record.machine_name.startsWith('P-RP-A')) {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 520; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2138, 7);
+    }     else if (record.machine_name.startsWith('CH-')) {
+      step = 16.5; // Set the step for spacing
+      const baseYOffset = 125; // Adjust base Y offset as needed
+      const baseXOffset = 520; // Adjust base X offset as needed
+  
+      text = Object.entries(record)
+          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+          .map(([key, value]) => {
+              let formattedValue = '';
+  
+              if (value !== null && value !== undefined) {
+                  if (typeof value === 'number') {
+                      // Ensure the number fits within 6 characters
+                      formattedValue = value.toFixed(2); // Two decimal places
+                      if (formattedValue.length > 6) {
+                          // Trim or adjust if longer than 6 characters
+                          formattedValue = formattedValue.slice(0, 6);
+                      }
+                  } else {
+                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                  }
+              }
+  
+              if (key === 'status') {
+                  return `${formattedValue}            `; 
+              }
+          })
+          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+  
+      const yOffset = baseYOffset + (index * step);
+  
+      // Draw the text on the second page with spacing between each record
+      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 2255, 7);
+    } 
+  
+    
 
         
       });

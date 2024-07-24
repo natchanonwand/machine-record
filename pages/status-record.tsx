@@ -155,13 +155,19 @@ const StatusRecordForm = () => {
     { machine_name: 'FIT-3613', record_date: '', record_time: '', Flow: '', valve_percentage: '', note: '' },
     { machine_name: 'FIT-3612', record_date: '', record_time: '', Flow: '', valve_percentage: '', note: '' },
     { machine_name: 'FIT-3611', record_date: '', record_time: '', Flow: '', valve_percentage: '', note: '' },
-  ]);
+  ])
   const [isAirFlowDataSent, setIsAirFlowDataSent] = useState(false);
   
+  console.log("Initial airFlowStatuses:", airFlowStatuses);
+
   const sortedAirFlowStatuses = [...airFlowStatuses].sort((a, b) => {
     const order = ['FIT-3614', 'FIT-3613', 'FIT-3612', 'FIT-3611'];
     return order.indexOf(a.machine_name) - order.indexOf(b.machine_name);
   });
+
+  console.log("Sorted airFlowStatuses:", sortedAirFlowStatuses);
+
+  
 
   const [fineScreenStatuses, setFineScreenStatuses] = useState([
     { machine_name: 'SC-FS-2505',record_date: '', record_time: '', status: '', A1:'', note: '' },
@@ -3707,7 +3713,7 @@ console.log('section7', allSection_7Sent());
 
             {/* Air flow field */}
             <h3>Air Flow</h3>
-            {sortedAirFlowStatuses.map((airFlow, index) => (
+            {airFlowStatuses.map((airFlow, index) => (
               <div key={index} className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor={`flow-${airFlow.machine_name}`}>{airFlow.machine_name}</label>
                 <input
