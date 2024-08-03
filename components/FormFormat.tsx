@@ -1308,46 +1308,57 @@ const formatNumber = (value: number | undefined): string => {
   
       // Draw the text on the second page with spacing between each record
       drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1840, 7);
-    } else if 
-    (
+    } else if (
       record.machine_name === 'PM-01A' ||
       record.machine_name === 'PM-01B' ||
       record.machine_name === 'PM-02A' ||
       record.machine_name === 'PM-02B' 
-      ) {
+    ) {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Set base Y offset to 225
       const baseXOffset = 533; // Set base X offset to 370
-  
-      text = Object.entries(record)
-          .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
-          .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                  } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
-                  }
+    
+      // Define the desired order
+      const order = ['PM-01A', 'PM-01B', 'PM-02A', 'PM-02B'];
+    
+      // Sort records based on the predefined order
+      const sortedRecords = Object.entries(record)
+        .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
+        .sort(([keyA], [keyB]) => {
+          const indexA = order.indexOf(record.machine_name);
+          const indexB = order.indexOf(record.machine_name);
+          return indexA - indexB;
+        });
+    
+      // Map the sorted records to the desired text format
+      text = sortedRecords
+        .map(([key, value]) => {
+          let formattedValue = '';
+    
+          if (value !== null && value !== undefined) {
+            if (typeof value === 'number') {
+              // Ensure the number fits within 6 characters
+              formattedValue = value.toFixed(2); // Two decimal places
+              if (formattedValue.length > 6) {
+                // Trim or adjust if longer than 6 characters
+                formattedValue = formattedValue.slice(0, 6);
               }
-  
-              if (key === 'status') {
-                  return `${formattedValue}            `; 
-              } 
-          })
-          .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
-  
+            } else {
+              formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+            }
+          }
+    
+          if (key === 'status') {
+            return `${formattedValue}            `; 
+          }
+        })
+        .join(''); // 0 spaces between 'Status', 'A1', 'A2', 'A3', and 6 spaces after 'T'
+    
       const yOffset = baseYOffset + (index * step);
-  
-      // Draw the text on the second page with spacing between each record
-      drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1906, 7);
-    } else if (record.machine_name === 'MX-G-2101') {
+       // Draw the text on the second page with spacing between each record
+       drawTextOnPage(secondPage, text, customFont, baseXOffset, yOffset - 1906, 7);
+    }
+     else if (record.machine_name === 'MX-G-2101') {
       step = 16.5; // Set the step for spacing
       const baseYOffset = 125; // Adjust base Y offset as needed
       const baseXOffset = 375; // Adjust base X offset as needed

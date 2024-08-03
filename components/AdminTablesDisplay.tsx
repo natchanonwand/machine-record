@@ -1,7 +1,7 @@
-// components/AdminTablesDisplay.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ExcelExport from './ExcelExport';
+import EditModal from './EditModal';
 
 interface Record {
   [key: string]: any;
@@ -22,6 +22,7 @@ interface AdminTablesDisplayProps {
 const AdminTablesDisplay: React.FC<AdminTablesDisplayProps> = ({ tableName, machineName, goBack }) => {
   const [records, setRecords] = useState<Record[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [editingRecord, setEditingRecord] = useState<Record | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +40,19 @@ const AdminTablesDisplay: React.FC<AdminTablesDisplayProps> = ({ tableName, mach
   }, [tableName, machineName]);
 
   const handleEditClick = (record: Record) => {
-    console.log('Edit record:', record);
+    setEditingRecord(record);
+  };
+
+  const handleSave = async (updatedRecord: Record) => {
+    try {
+      await axios.put(`https://jb-api-1.onrender.com/api/${tableName}/${updatedRecord.record_id}`, updatedRecord);
+      setRecords((prevRecords) =>
+        prevRecords.map((rec) => (rec.record_id === updatedRecord.record_id ? updatedRecord : rec))
+      );
+      setEditingRecord(null);
+    } catch (error) {
+      console.error(`Error updating record:`, error);
+    }
   };
 
   const headerMapping: { [key: string]: string } = {
@@ -103,6 +116,13 @@ const AdminTablesDisplay: React.FC<AdminTablesDisplayProps> = ({ tableName, mach
             </tbody>
           </table>
         </div>
+      )}
+      {editingRecord && (
+        <EditModal
+          record={editingRecord}
+          onSave={handleSave}
+          onClose={() => setEditingRecord(null)}
+        />
       )}
       <button
         style={{
