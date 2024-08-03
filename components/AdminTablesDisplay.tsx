@@ -1,3 +1,4 @@
+// components/AdminTablesDisplay.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ExcelExport from './ExcelExport';
@@ -12,13 +13,13 @@ interface Record {
   note: string;
 }
 
-interface TablesDisplayProps {
+interface AdminTablesDisplayProps {
   tableName: string;
   machineName: string;
   goBack: () => void;
 }
 
-const TablesDisplay: React.FC<TablesDisplayProps> = ({ tableName, machineName, goBack }) => {
+const AdminTablesDisplay: React.FC<AdminTablesDisplayProps> = ({ tableName, machineName, goBack }) => {
   const [records, setRecords] = useState<Record[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -36,6 +37,10 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tableName, machineName, g
 
     fetchData();
   }, [tableName, machineName]);
+
+  const handleEditClick = (record: Record) => {
+    console.log('Edit record:', record);
+  };
 
   const headerMapping: { [key: string]: string } = {
     record_date: 'Date',
@@ -69,17 +74,18 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tableName, machineName, g
               <tr>
                 {records.length > 0 &&
                   Object.keys(records[0])
-                    .filter((key) => key !== 'record_id' && key !== 'machine_name') // Exclude 'machine_name' here
+                    .filter((key) => key !== 'record_id' && key !== 'machine_name')
                     .map((key, index) => (
                       <th key={index}>{headerMapping[key] || key}</th>
                     ))}
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {records.map((record, rowIndex) => (
                 <tr key={rowIndex}>
                   {Object.entries(record)
-                    .filter(([key]) => key !== 'record_id' && key !== 'machine_name') // Exclude 'machine_name' here
+                    .filter(([key]) => key !== 'record_id' && key !== 'machine_name')
                     .map(([key, value], cellIndex) => (
                       <td key={cellIndex} style={{ textAlign: 'center', padding: '5px' }}>
                         {value === ''
@@ -89,6 +95,9 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tableName, machineName, g
                           : String(value)}
                       </td>
                     ))}
+                  <td>
+                    <button onClick={() => handleEditClick(record)}>Edit</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -114,4 +123,4 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tableName, machineName, g
   );
 };
 
-export default TablesDisplay;
+export default AdminTablesDisplay;

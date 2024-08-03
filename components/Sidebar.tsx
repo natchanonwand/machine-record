@@ -1,3 +1,4 @@
+// components/Sidebar.tsx
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -5,6 +6,7 @@ import styles from './Sidebar.module.css';
 
 interface SidebarProps {
   logout: () => void;
+  isAdmin: boolean;
 }
 
 const CustomLink = ({ href, children, isActive }: { href: string; children: React.ReactNode; isActive: boolean }) => (
@@ -15,7 +17,7 @@ const CustomLink = ({ href, children, isActive }: { href: string; children: Reac
   </Link>
 );
 
-const Sidebar = ({ logout }: SidebarProps) => {
+const Sidebar = ({ logout, isAdmin }: SidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activePage, setActivePage] = useState('');
   const [sidebarWidth, setSidebarWidth] = useState('45%'); // Default value for mobile
@@ -35,12 +37,21 @@ const Sidebar = ({ logout }: SidebarProps) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    const storedIsOpen = localStorage.getItem('sidebarIsOpen');
+    if (storedIsOpen) {
+      setIsOpen(storedIsOpen === 'true');
+    }
+  }, []);
+
   const openNav = () => {
     setIsOpen(true);
+    localStorage.setItem('sidebarIsOpen', 'true');
   };
 
   const closeNav = () => {
     setIsOpen(false);
+    localStorage.setItem('sidebarIsOpen', 'false');
   };
 
   const handleSetActivePage = (page: string) => {
@@ -83,6 +94,18 @@ const Sidebar = ({ logout }: SidebarProps) => {
           >
             <CustomLink href="/history" isActive={activePage === '/history'}>History</CustomLink>
           </li>
+          {isAdmin && (
+            <li
+              className={styles.listItem}
+              style={{ width: '100%', cursor: 'pointer' }}
+              onClick={() => {
+                router.push('/admin');
+                handleSetActivePage('/admin');
+              }}
+            >
+              <CustomLink href="/admin" isActive={activePage === '/admin'}>Admin</CustomLink>
+            </li>
+          )}
         </ul>
         <div style={{ position: 'absolute', bottom: '20px', width: '100%' }}>
           <button onClick={handleLogout} className={styles.button}>Logout</button>

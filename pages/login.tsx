@@ -3,20 +3,23 @@ import { useState } from 'react';
 import styles from './Login.module.css'; // Import CSS module for styling
 
 interface LoginProps {
-  setLogin: () => void;
+  setLogin: (email: string) => void;
 }
 
 const Login = ({ setLogin }: LoginProps) => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
       alert("Both email and password are required.");
       return;
     }
-  
+
+    setLoading(true);
+
     try {
       const response = await fetch('https://jb-api-1.onrender.com/api/login', {
         method: 'POST',
@@ -25,10 +28,10 @@ const Login = ({ setLogin }: LoginProps) => {
         },
         body: JSON.stringify({ email, password }),
       });
-      
+
       if (response.ok) {
         const data = await response.json(); // Parse JSON only if the response was successful
-        setLogin(); // This will set isAuthenticated to true
+        setLogin(email); // Pass email to setLogin
         router.push('/'); // Redirect to the home page
       } else {
         // If the response status code is not ok, handle potential parsing separately
@@ -43,9 +46,11 @@ const Login = ({ setLogin }: LoginProps) => {
     } catch (error) {
       // Handle errors related to the fetch operation itself (network errors, etc.)
       alert(`Login request failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setLoading(false);
     }
   };
-  
+
   return (
     <div className={styles.container}>
       <h1>Login</h1>
@@ -61,7 +66,9 @@ const Login = ({ setLogin }: LoginProps) => {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
-      <button onClick={handleLogin}>Log In</button>
+      <button onClick={handleLogin} disabled={loading}>
+        {loading ? 'Logging in...' : 'Log In'}
+      </button>
     </div>
   );
 };

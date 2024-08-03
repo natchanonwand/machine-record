@@ -3352,7 +3352,7 @@ console.log('section7', allSection_7Sent());
           >
             {allSection_2Sent() 
               ? 'Section 2 Completed' 
-              : (openSection === 1 ? 'Hide Section 2' : 'Show Section 2')}
+              : (openSection === 2 ? 'Hide Section 2' : 'Show Section 2')}
           </button>
           </>
       {/* )}  */}

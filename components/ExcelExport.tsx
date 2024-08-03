@@ -9,12 +9,12 @@ const ExcelExport: React.FC<ExcelExportProps> = ({ records }) => {
   const downloadCSV = () => {
     // Modify records: Remove 'record_id' field and time part from 'record_date'
     const modifiedRecords = records.map(record => {
-      const { record_id, record_date, record_time, machine_name, ...modifiedRecord } = record;
+      const {machine_name, record_id, record_date, record_time,  ...modifiedRecord } = record;
       return {
-        ...modifiedRecord,
+        machine_name,
         record_date: record_date.split('T')[0], // Remove time part from record_date
         record_time,
-        machine_name
+        ...modifiedRecord,
       };
     });
 
