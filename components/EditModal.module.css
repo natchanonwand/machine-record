@@ -21,6 +21,8 @@
     width: 80%;
     max-width: 500px;
     border-radius: 10px;
+    max-height: 80vh; /* Limit height */
+    overflow-y: auto; /* Enable vertical scrolling */
   }
   
   .close {
@@ -35,5 +37,45 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formGroup {
+    margin-bottom: 15px;
+  }
+  
+  .formLabel {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .formInput, .formTextarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    box-shadow: inset 4px 4px 9px #c4c4c4, inset -4px -4px 9px #ffffff;
+  }
+  
+  .formTextarea {
+    resize: vertical;
+  }
+  
+  .saveButton {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .saveButton:hover {
+    background-color: #0056b3;
   }
   

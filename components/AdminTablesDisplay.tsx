@@ -108,8 +108,18 @@ const AdminTablesDisplay: React.FC<AdminTablesDisplayProps> = ({ tableName, mach
                           : String(value)}
                       </td>
                     ))}
-                  <td>
-                    <button onClick={() => handleEditClick(record)}>Edit</button>
+                  <td style={{ textAlign: 'center', padding: '5px' }}>
+                    <button onClick={() => handleEditClick(record)} style={{ 
+                        margin: 'auto', 
+                        display: 'block', 
+                        color: 'white',
+                        background: '#31b1e0',
+                        boxShadow: '4px 4px 9px #c4c4c4, -4px -4px 9px #ffffff',
+                        padding: '5px',
+                        border: 'none',
+                        borderRadius: '5px',}}>
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -124,21 +134,22 @@ const AdminTablesDisplay: React.FC<AdminTablesDisplayProps> = ({ tableName, mach
           onClose={() => setEditingRecord(null)}
         />
       )}
-      <button
-        style={{
-          border: 'none',
-          borderRadius: '10px',
-          height: '25px',
-          background: '#e6e6e6',
-          boxShadow: '4px 4px 9px #c4c4c4, -4px -4px 9px #ffffff',
-          padding: '5px',
-          marginTop: '10px',
-          marginBottom: '10px',
-        }}
-        onClick={goBack}
-      >
-        Go Back
-      </button>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px', marginBottom: '10px' }}>
+        <button
+          style={{
+            border: 'none',
+            borderRadius: '10px',
+            height: '40px',
+            width: '100%',
+            background: '#e6e6e6',
+            boxShadow: '4px 4px 9px #c4c4c4, -4px -4px 9px #ffffff',
+            padding: '5px',
+          }}
+          onClick={goBack}
+        >
+          Go Back
+        </button>
+      </div>
     </div>
   );
 };
