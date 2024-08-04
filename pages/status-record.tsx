@@ -659,7 +659,7 @@ useEffect(() => {
       // If validation passes, proceed with the submission
       try {
           for (const ch of chStatuses) {
-              const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+              const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
               const response = await fetch('https://jb-api-1.onrender.com/api/chiller', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
@@ -709,7 +709,7 @@ useEffect(() => {
     // If validation passes, proceed with the submission
     try {
         for (const chwp of chillerWaterPumpStatuses) {
-            const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+            const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
             const response = await fetch('https://jb-api-1.onrender.com/api/Chiller_Water_Pump', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -762,7 +762,7 @@ const handleSubmitFan6Data = async () => {
   // If validation passes, proceed with the submission
   try {
       for (const fan of fan6Statuses) {
-          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
           const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room6', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -815,7 +815,7 @@ const handleSubmitBiofilterData = async () => {
   // If validation passes, proceed with the submission
   try {
       for (const biofilter of biofilterStatuses) {
-          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
           const response = await fetch('https://jb-api-1.onrender.com/api/biofilter', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -864,7 +864,7 @@ const handleSubmitGardenPump = async () => {
   // If validation passes, proceed with the submission
   try {
       for (const gardenPump of gardenPumpStatuses) {
-          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
           const response = await fetch('https://jb-api-1.onrender.com/api/garden_pump', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -914,7 +914,7 @@ const handleSubmitInletPumping = async () => {
   // If validation passes, proceed with the submission
   try {
       for (const inletPumping of inletPumpingStatuses) {
-          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
           const response = await fetch('https://jb-api-1.onrender.com/api/Inlet_Pumping', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -968,7 +968,7 @@ const handleSubmitVentilationInletPumping = async () => {
   // If validation passes, proceed with the submission
   try {
       for (const ventilationInletPumping of ventilationInletPumpingStatuses) {
-          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
           const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Inlet_Pumping_Station', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -1021,7 +1021,7 @@ const handleSubmitInletGate = async () => {
   // If validation passes, proceed with the submission
   try {
       for (const inletGate of inletGateStatuses) {
-          const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+          const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
           const response = await fetch('https://jb-api-1.onrender.com/api/inlet_gate', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -1061,7 +1061,7 @@ const handleSubmitCoarseScreen = async () => {
           }
       }
 
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
       for (const coarseScreen of coarseScreenStatuses) {
           const response = await fetch('https://jb-api-1.onrender.com/api/coarse_screen', {
               method: 'POST',
@@ -1099,7 +1099,7 @@ const handleSubmitFan3 = async () => {
           }
       }
 
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
       for (const fan3 of fan3Statuses) {
           const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room3', {
               method: 'POST',
@@ -1139,7 +1139,7 @@ const handleSubmitFan2 = async () => {
           }
       }
 
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
       for (const fan2 of fan2Statuses) {
           const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room2', {
               method: 'POST',
@@ -1179,7 +1179,7 @@ const handleSubmitFan1 = async () => {
           }
       }
 
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
       for (const fan1 of fan1Statuses) {
           const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room1', {
               method: 'POST',
@@ -1219,7 +1219,7 @@ const handleSubmitAutoSampler = async () => {
           }
       }
 
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
       for (const autoSampler of autoSamplerStatuses) {
           const response = await fetch('https://jb-api-1.onrender.com/api/auto_sampler', {
               method: 'POST',
@@ -1256,7 +1256,7 @@ const handleSubmitVortexGrit = async () => {
           }
       }
 
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
       for (const vortexGrit of vortexGritStatuses) {
           const response = await fetch('https://jb-api-1.onrender.com/api/vortex_grit', {
               method: 'POST',
@@ -1288,7 +1288,7 @@ const handleSubmitAirFlow = async () => {
   try {
     for (const airFlow of airFlowStatuses) {
       // Formatting date and time
-      const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+      const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
       const response = await fetch('https://jb-api-1.onrender.com/api/air_flow', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1323,7 +1323,7 @@ const handleSubmitFineScreen = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const fineScreen of fineScreenStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/fine_screen', {
         method: 'POST',
@@ -1360,7 +1360,7 @@ const handleSubmitDrainagePump3 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const drainagePump3 of drainagePump3Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Drainage_Pump', {
         method: 'POST',
@@ -1400,7 +1400,7 @@ const handleSubmitFan4 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const fan4 of fan4Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room4', {
         method: 'POST',
@@ -1440,7 +1440,7 @@ const handleSubmitAnoxicMixer1 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const anoxicMixer1 of anoxicMixer1Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
@@ -1480,7 +1480,7 @@ const handleSubmitAnoxicMixer2 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const anoxicMixer2 of anoxicMixer2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
@@ -1522,7 +1522,7 @@ const handleSubmitAnoxicMixer3 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const anoxicMixer3 of anoxicMixer3Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
@@ -1565,7 +1565,7 @@ const handleSubmitAnoxicMixer4 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const anoxicMixer4 of anoxicMixer4Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Anoxic_Mixer', {
         method: 'POST',
@@ -1607,7 +1607,7 @@ const handleSubmitSingleAirBlower = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const singleAirBlower of singleAirBlowerStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/air-blower', {
         method: 'POST',
@@ -1648,7 +1648,7 @@ const handleSubmitPositiveAirBlower = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const positiveAirBlower of positiveAirBlowerStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/air-blower', {
         method: 'POST',
@@ -1690,7 +1690,7 @@ const handleSubmitClarifier = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const clarifier of clarifier1Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
@@ -1735,7 +1735,7 @@ const handleSubmitClarifier2 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const clarifier2 of clarifier2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
@@ -1780,7 +1780,7 @@ const handleSubmitClarifier3 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const clarifier3 of clarifier3Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
@@ -1825,7 +1825,7 @@ const handleSubmitClarifier4 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const clarifier4 of clarifier4Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/clarifier', {
         method: 'POST',
@@ -1870,7 +1870,7 @@ const handleSubmitAutoSampler_2 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const autoSampler_2 of autoSampler_2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/auto_sampler', {
         method: 'POST',
@@ -1909,7 +1909,7 @@ const handleSubmitFan5 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const fan5 of fan5Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
@@ -1950,7 +1950,7 @@ const handleSubmitFan5_2 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const fan5_2 of fan5_2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
@@ -1992,7 +1992,7 @@ const handleSubmitFan5_3 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const fan5_3 of fan5_3Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
@@ -2034,7 +2034,7 @@ const handleSubmitFan5_4 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const fan5_4 of fan5_4Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
@@ -2076,7 +2076,7 @@ const handleSubmitFan5_5 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const fan5_5 of fan5_5Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
@@ -2118,7 +2118,7 @@ const handleSubmitFan5_6 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const fan5_6 of fan5_6Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
@@ -2159,7 +2159,7 @@ const handleSubmitFan5_7 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const fan5_7 of fan5_7Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Ventilation_Fan_Room5', {
         method: 'POST',
@@ -2201,7 +2201,7 @@ const handleSubmitDrainagePump2 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const drainagePump2 of drainagePump2Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Drainage_Pump', {
         method: 'POST',
@@ -2243,7 +2243,7 @@ const handleSubmitScumPump = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const scumPump of scumPumpStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Scum_Pump_Fan_Room6', {
         method: 'POST',
@@ -2284,7 +2284,7 @@ const handleSubmitHiLowWaterPump = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const hiLowWaterPump of hiLowWaterPumpStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/water_pump', {
         method: 'POST',
@@ -2322,7 +2322,7 @@ const handleSubmitCWRWWaterPump = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const cWRWWaterPump of cWRWWaterPumpStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/water_pump', {
         method: 'POST',
@@ -2359,7 +2359,7 @@ const handleSubmitDrainagePump1 = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const drainagePump1 of drainagePump1Statuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Drainage_Pump', {
         method: 'POST',
@@ -2400,7 +2400,7 @@ const handleSubmitEffluentPump = async () => {
       }
     }
 
-    const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
+    const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
     for (const effluentPump of effluentPumpStatuses) {
       const response = await fetch('https://jb-api-1.onrender.com/api/Effluent_Pump', {
         method: 'POST',
