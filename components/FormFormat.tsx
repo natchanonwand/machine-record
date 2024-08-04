@@ -1873,7 +1873,9 @@ const formatNumber = (value: number | undefined): string => {
 
   return (
     <div>
-      <h1 className={styles.responsiveH1} style={{color: 'blue', marginBottom: '10px'}}>Daily Check Sheet Format</h1>
+      <h1 className={styles.responsiveH1} style={{ color: '#003049', marginBottom: '10px', textAlign: 'center' }}>
+        Daily Check Sheet Format
+      </h1>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
           <input
@@ -1908,8 +1910,8 @@ const formatNumber = (value: number | undefined): string => {
             style={{
               border: 'none',
               borderRadius: '50%',
-              width: '5vh',
-              height: '5vh',
+              width: '30px',
+              height: '30px',
               background: '#00fa60',
               padding: '4px',
               display: 'flex',
@@ -1921,7 +1923,7 @@ const formatNumber = (value: number | undefined): string => {
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </div>
-
+  
         <div style={{ padding: '20px', borderRadius: '10px', boxShadow: 'inset 20px 20px 60px #bebebe,inset -20px -20px 60px #ffffff' }}>
           <ul style={{ listStyleType: 'none', padding: 0 }}>
             {records.map((record, index) => (
@@ -1941,8 +1943,7 @@ const formatNumber = (value: number | undefined): string => {
                   backgroundColor: 'rgba(255, 255, 255, 0.14)',
                   cursor: 'pointer',
                 }}
-                onClick={() => 
-                  handleRecordClick(record)}
+                onClick={() => handleRecordClick(record)}
               >
                 {record}
               </li>
@@ -1952,6 +1953,7 @@ const formatNumber = (value: number | undefined): string => {
       </div>
     </div>
   );
-};
-
-export default FormFormat;
+  };
+  
+  export default FormFormat;
+  

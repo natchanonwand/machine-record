@@ -1,31 +1,58 @@
-.container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .container h1 {
-    margin-bottom: 10px;
-  }
-  
+/* styles/Login.module.css */
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgba(178, 178, 178, 0.8);
+}
 
-  .container input,
-  .container button {
-    display: block;
-    width: 100%;
-    margin-bottom: 15px;
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  .container button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .container button:hover {
-    background-color: #0056b3;
-  }
-  
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.container h1 {
+  margin-bottom: 20px;
+  color: rgb(181, 2, 32);
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.container input,
+.container button {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+}
+
+.container input {
+  background-color: #ffffff;
+  color: #333;
+  border: 2px solid rgba(178, 178, 178, 0.8);
+}
+
+.container button {
+  background-color: rgb(181, 2, 32);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.container button:hover {
+  background-color: #a3021e;
+}
+
+.container button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

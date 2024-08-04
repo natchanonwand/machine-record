@@ -99,7 +99,8 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tableName, machineName, g
         style={{
           border: 'none',
           borderRadius: '10px',
-          height: '25px',
+          height: '40px',
+          width: '100%',
           background: '#e6e6e6',
           boxShadow: '4px 4px 9px #c4c4c4, -4px -4px 9px #ffffff',
           padding: '5px',

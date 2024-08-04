@@ -1,8 +1,10 @@
 /* Font.module.css */
 .responsiveH1 {
-    font-size: 3vw; /* Base size for larger screens */
-    color: blue;
-  }
+  font-size: 3vw;
+  text-align: center;
+  color: #003049;
+  margin-bottom: 10px;
+}
   
   @media (max-width: 768px) {
     .responsiveH1 {

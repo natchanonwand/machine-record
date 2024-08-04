@@ -1,0 +1,61 @@
+/* styles/MachineHistoryFormat.module.css */
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(178, 178, 178, 0.8);
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .responsiveH1 {
+    font-size: 2.5em;
+    color: rgb(181, 2, 32);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .responsiveH1 {
+      font-size: 1.5em;
+    }
+  }
+  
+  .buttonList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .button {
+    padding: 10px;
+    background-color: rgb(181, 2, 32);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #a3021e;
+  }
+  
+  .button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .backButton {
+    margin-top: 10px;
+    background-color: green;
+  }
+  

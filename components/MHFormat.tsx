@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import TablesDisplay from './TablesDisplay';
-import styles from './Font.module.css';
+import styles from './MachineHistoryFormat.module.css';
 
 interface Record {
   machine_name: string;

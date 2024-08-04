@@ -2716,24 +2716,24 @@ console.log('section7', allSection_7Sent());
               <label className={styles.label} htmlFor="recordDate">วัน/เดือน/ปี</label>
               <div className={styles.datePickerWrapper}>
                 <DatePicker
-                      selected={recordDate}
-                      onChange={(date: Date) => setRecordDate(date)}
-                      dateFormat="dd/MM/yyyy"
-                      className={styles.datePicker}
-                      popperPlacement="bottom" // Set popperPlacement to "right"
-                  />
-                  <AiOutlineCalendar className={styles.calendarIcon} />
+                  selected={recordDate}
+                  onChange={(date: Date) => setRecordDate(date)}
+                  dateFormat="dd/MM/yyyy"
+                  className={styles.datePicker}
+                  popperPlacement="bottom"
+                />
+                <AiOutlineCalendar className={styles.calendarIcon} />
               </div>
           </div>
 
           <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="recordTime">เวลา</label>
               <input
-                  type="text"
-                  id="recordTime"
-                  value={recordTime}
-                  onChange={(e) => setRecordTime(e.target.value)}
-                  className={styles.input}
+                type="text"
+                id="recordTime"
+                value={recordTime}
+                onChange={(e) => setRecordTime(e.target.value)}
+                className={styles.input}
               />
           </div>
 

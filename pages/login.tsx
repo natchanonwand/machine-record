@@ -52,23 +52,25 @@ const Login = ({ setLogin }: LoginProps) => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>Login</h1>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <button onClick={handleLogin} disabled={loading}>
-        {loading ? 'Logging in...' : 'Log In'}
-      </button>
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <h1>Login</h1>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+        <button onClick={handleLogin} disabled={loading}>
+          {loading ? 'Logging in...' : 'Log In'}
+        </button>
+      </div>
     </div>
   );
 };
