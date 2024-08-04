@@ -88,7 +88,7 @@ const Admin = ({ isAuthenticated, username }: AdminProps) => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.responsiveH1} style={{ color: 'blue', marginBottom: '10px' }}>Machine History Format</h1>
+      <h1 className={styles.responsiveH1} style={{ color: '#003049', marginBottom: '10px' }}>Select to edit</h1>
       {loading ? (
         <div>Loading...</div>
       ) : selectedTable ? (

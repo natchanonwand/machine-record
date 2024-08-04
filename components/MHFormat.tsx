@@ -73,7 +73,7 @@ const MachineHistoryFormat = () => {
 
   return (
     <div>
-      <h1 className={styles.responsiveH1} style={{ color: 'blue', marginBottom: '10px' }}>Machine History Format</h1>
+      <h1 className={styles.responsiveH1} style={{ color: '#003049', marginBottom: '10px', textAlign: 'center' }}>Machine History Format</h1>
       {loading ? ( // Conditionally render loading message
         <div>Loading...</div>
       ) : (
@@ -106,14 +106,14 @@ const MachineHistoryFormat = () => {
         }
         button {
           padding: 10px;
-          background-color: #007bff;
+          background-color: #669BBC;
           color: white;
           border: none;
           border-radius: 5px;
           cursor: pointer;
         }
         button:hover {
-          background-color: #0056b3;
+          background-color: #003049;
         }
       `}</style>
     </div>

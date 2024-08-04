@@ -620,25 +620,25 @@ useEffect(() => {
     }, [recorderName, recordDate, recordTime]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            const formattedDate = recordDate ? recordDate.toISOString().split('T')[0] : null;
-            const response = await fetch('https://jb-api-1.onrender.com/api/recorder', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ recorder_name: recorderName, record_date: formattedDate, record_time: recordTime }),
-            });
-
-            if (response.ok) {
-                console.log('Record added successfully');
-                setIsDataSent(true);
-            } else {
-                console.error('Failed to add record');
-            }
-        } catch (error) {
-            console.error('Error adding record:', error);
-        }
-    };
+      e.preventDefault();
+      try {
+          const formattedDate = recordDate ? `${recordDate.getFullYear()}-${(recordDate.getMonth() + 1).toString().padStart(2, '0')}-${recordDate.getDate().toString().padStart(2, '0')}` : null;
+          const response = await fetch('https://jb-api-1.onrender.com/api/recorder', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ recorder_name: recorderName, record_date: formattedDate, record_time: recordTime }),
+          });
+  
+          if (response.ok) {
+              console.log('Record added successfully');
+              setIsDataSent(true);
+          } else {
+              console.error('Failed to add record');
+          }
+      } catch (error) {
+          console.error('Error adding record:', error);
+      }
+  };
 
     const handleSubmitChillerData = async () => {
       console.log('Submitting chiller data...'); // Debugging
@@ -2734,6 +2734,7 @@ console.log('section7', allSection_7Sent());
                 value={recordTime}
                 onChange={(e) => setRecordTime(e.target.value)}
                 className={styles.input}
+                placeholder="hh:mm:ss"
               />
           </div>
 
