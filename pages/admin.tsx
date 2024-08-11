@@ -43,7 +43,7 @@ const Admin = ({ isAuthenticated, username }: AdminProps) => {
     'Fine Screen': 'fine_screen',
     'Garden Pump': 'garden_pump',
     'Inlet Pumping': 'Inlet_Pumping',
-    'Scum Pump Fan Room6': 'Scum_Pump_Fan_Room6',
+    'Scum Pump': 'Scum_Pump_Fan_Room6',
     'Ventilation Fan Room1': 'Ventilation_Fan_Room1',
     'Ventilation Fan Room2': 'Ventilation_Fan_Room2',
     'Ventilation Fan Room3': 'Ventilation_Fan_Room3',

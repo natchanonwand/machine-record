@@ -2667,6 +2667,22 @@ const handleFocusSelect = () => {
   }
 };
 
+const handleTimeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  let input = e.target.value;
+
+  // Check if the input matches the XX.XX pattern
+  const timePattern = /^\d{2}\.\d{2}$/;
+
+  if (timePattern.test(input)) {
+      // Replace . with : and add :00 for seconds
+      input = input.replace('.', ':') + ':00';
+  }
+
+  // Set the formatted time
+  setRecordTime(input);
+};
+
+
 console.log('section1', allSection_1Sent());
 console.log('section2', allSection_2Sent());
 console.log('section3', allSection_3Sent());
@@ -2729,14 +2745,15 @@ console.log('section7', allSection_7Sent());
           <div className={styles.fieldGroup}>
               <label className={styles.label} htmlFor="recordTime">เวลา</label>
               <input
-                type="text"
-                id="recordTime"
-                value={recordTime}
-                onChange={(e) => setRecordTime(e.target.value)}
-                className={styles.input}
-                placeholder="hh:mm:ss"
+                  type="text"
+                  id="recordTime"
+                  value={recordTime}
+                  onChange={(e) => handleTimeInputChange(e)}
+                  className={styles.input}
+                  placeholder="hh.mm"
               />
           </div>
+
 
           <button type="submit" className={styles.button} disabled={isDataSent}>Submit</button>
           {isDataSent && <div className={styles.alert}>Recorder data sent successfully</div>}
