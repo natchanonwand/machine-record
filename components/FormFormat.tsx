@@ -333,7 +333,9 @@ const formatNumber = (value: number | undefined): string => {
     
         // Overlay the date and time on the PDF
         drawTextOnPage(firstPage, `${formattedDate}`, customFont, dateX, dateY, 10);
-        drawTextOnPage(firstPage, `${time}`, customFont, timeX, timeY, 10);
+
+        const formattedTime = time.replace(':', '.').slice(0, 5);
+        drawTextOnPage(firstPage, `${formattedTime}`, customFont, timeX, timeY, 10);
         
         const recordName = record.recorder_name ? record.recorder_name : '';
 
@@ -354,20 +356,45 @@ const formatNumber = (value: number | undefined): string => {
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
               let formattedValue = '';
-
-            if (value !== null && value !== undefined) {
-                if (typeof value === 'number') {
-                    // Format the number to two decimal places
-                    formattedValue = value.toFixed(2);
-                    // Ensure the number fits within 6 characters
-                    if (formattedValue.length > 6) {
-                        // Trim or adjust if longer than 6 characters
-                        formattedValue = formattedValue.slice(0, 6);
-                    }
-                } else {
-                    // Trim other values to 6 characters
-                    formattedValue = value.toString().slice(0, 6);
-                }
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
+                  formattedValue = value.toFixed(2);
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                 // If it's numeric and already includes a ".", handle different cases
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
+              }
             }
 
 
@@ -399,25 +426,45 @@ const formatNumber = (value: number | undefined): string => {
             .map(([key, value]) => {
               let formattedValue = '';
         
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}         `; // Adjust spaces as needed
@@ -449,21 +496,47 @@ const formatNumber = (value: number | undefined): string => {
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
               let formattedValue = '';
-
-            if (value !== null && value !== undefined) {
-                if (typeof value === 'number') {
-                    // Format the number to two decimal places
-                    formattedValue = value.toFixed(2);
-                    // Ensure the number fits within 6 characters
-                    if (formattedValue.length > 6) {
-                        // Trim or adjust if longer than 6 characters
-                        formattedValue = formattedValue.slice(0, 6);
-                    }
-                } else {
-                    // Trim other values to 6 characters
-                    formattedValue = value.toString().slice(0, 6);
-                }
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
+                  formattedValue = value.toFixed(2);
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
+              }
             }
+              
               if (key === 'status') {
                 return `${formattedValue}       `; 
               } else if (key === 'A1') {
@@ -495,27 +568,47 @@ const formatNumber = (value: number | undefined): string => {
           text = Object.entries(record)
               .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
               .map(([key, value]) => {
-                  let formattedValue = '';
-      
-                  if (value !== null && value !== undefined) {
-                    if (typeof value === 'string') {
-                      // If the value is a string but should be a number, convert it
-                      let numericValue = parseFloat(value);
-                      if (!isNaN(numericValue)) {
-                        // Format the number to 2 decimal places
-                        formattedValue = numericValue.toFixed(2);
-                      } else {
-                        // If it is not a number, use the first 6 characters
-                        formattedValue = value.slice(0, 6);
-                      }
-                    } else if (typeof value === 'number') {
-                      // Format numbers to 2 decimal places
-                      formattedValue = value.toFixed(2);
-                    } else {
-                      // For other types, convert to string and slice if needed
-                      formattedValue = value.toString().slice(0, 6);
+                let formattedValue = '';
+        
+                if (value === null || value === undefined || value === "" ) {
+                    // Assign 5 spaces if the value is null or undefined
+                    formattedValue = '          '; // 10 space characters
+                } else if (typeof value === 'number') {
+                    // Format the number to two decimal places
+                    formattedValue = value.toFixed(2);
+                    // Ensure the number fits within 6 characters
+                    if (formattedValue.length > 6) {
+                        // Trim or adjust if longer than 6 characters
+                        formattedValue = formattedValue.slice(0, 6);
                     }
-                  }
+                } else {
+                  // Trim other values to 6 characters
+                  formattedValue = value.toString().slice(0, 6);
+                  
+                  // Check if the value is numeric
+                  const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                  
+                  // Add ".0000" if it's numeric and doesn't contain a "."
+                  if (isNumeric && !formattedValue.includes('.')) {
+                      formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                  } 
+                  // If it's numeric and already includes a ".", make it 3 decimal positions
+                  else if (isNumeric && formattedValue.includes('.')) {
+                    const [integerPart, decimalPart] = formattedValue.split('.');
+                    
+                    if (integerPart.length === 1) {
+                        // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                        const paddedIntegerPart = `0${integerPart}`;
+                        formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else if (integerPart.length === 2) {
+                        // Ensure 3 decimal places for two-digit integer parts
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else {
+                        // For integer parts with three or more digits, ensure 2 decimal places
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                    }
+                }
+              }
             
                   if (key === 'status') {
                     return `${formattedValue}         `; // Adjust spaces as needed
@@ -548,26 +641,46 @@ const formatNumber = (value: number | undefined): string => {
             .map(([key, value]) => {
 
               let formattedValue = '';
-
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}         `; // Adjust spaces as needed
@@ -594,26 +707,46 @@ const formatNumber = (value: number | undefined): string => {
             .map(([key, value]) => {
 
               let formattedValue = '';
-
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}             `; // Adjust spaces as needed
@@ -636,26 +769,46 @@ const formatNumber = (value: number | undefined): string => {
             .map(([key, value]) => {
 
               let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}             `; // Adjust spaces as needed
@@ -678,26 +831,46 @@ const formatNumber = (value: number | undefined): string => {
             .map(([key, value]) => {
 
               let formattedValue = '';
-
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}             `; // Adjust spaces as needed
@@ -720,26 +893,46 @@ const formatNumber = (value: number | undefined): string => {
             .map(([key, value]) => {
 
               let formattedValue = '';
-
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}             `; // Adjust spaces as needed
@@ -762,26 +955,46 @@ const formatNumber = (value: number | undefined): string => {
             .map(([key, value]) => {
               
               let formattedValue = '';
-
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}             `; // Adjust spaces as needed
@@ -819,28 +1032,48 @@ const formatNumber = (value: number | undefined): string => {
           text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'A1', 'A2', 'A3', 'T', 'note'].includes(key))
             .map(([key, value]) => {
-              
-              let formattedValue = '';
 
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+              let formattedValue = '';
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}         `; // Adjust spaces as needed
@@ -880,26 +1113,46 @@ const formatNumber = (value: number | undefined): string => {
             .map(([key, value]) => {
               
               let formattedValue = '';
-
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}     `; // Adjust spaces as needed
@@ -921,27 +1174,47 @@ const formatNumber = (value: number | undefined): string => {
               .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
               .map(([key, value]) => {
       
-                  let formattedValue = '';
-      
-                  if (value !== null && value !== undefined) {
-                    if (typeof value === 'string') {
-                      // If the value is a string but should be a number, convert it
-                      let numericValue = parseFloat(value);
-                      if (!isNaN(numericValue)) {
-                        // Format the number to 2 decimal places
-                        formattedValue = numericValue.toFixed(2);
-                      } else {
-                        // If it is not a number, use the first 6 characters
-                        formattedValue = value.slice(0, 6);
-                      }
-                    } else if (typeof value === 'number') {
-                      // Format numbers to 2 decimal places
-                      formattedValue = value.toFixed(2);
-                    } else {
-                      // For other types, convert to string and slice if needed
-                      formattedValue = value.toString().slice(0, 6);
+                let formattedValue = '';
+        
+                if (value === null || value === undefined || value === "" ) {
+                    // Assign 5 spaces if the value is null or undefined
+                    formattedValue = '          '; // 10 space characters
+                } else if (typeof value === 'number') {
+                    // Format the number to two decimal places
+                    formattedValue = value.toFixed(2);
+                    // Ensure the number fits within 6 characters
+                    if (formattedValue.length > 6) {
+                        // Trim or adjust if longer than 6 characters
+                        formattedValue = formattedValue.slice(0, 6);
                     }
-                  }
+                } else {
+                  // Trim other values to 6 characters
+                  formattedValue = value.toString().slice(0, 6);
+                  
+                  // Check if the value is numeric
+                  const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                  
+                  // Add ".0000" if it's numeric and doesn't contain a "."
+                  if (isNumeric && !formattedValue.includes('.')) {
+                      formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                  } 
+                  // If it's numeric and already includes a ".", make it 3 decimal positions
+                  else if (isNumeric && formattedValue.includes('.')) {
+                    const [integerPart, decimalPart] = formattedValue.split('.');
+                    
+                    if (integerPart.length === 1) {
+                        // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                        const paddedIntegerPart = `0${integerPart}`;
+                        formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else if (integerPart.length === 2) {
+                        // Ensure 3 decimal places for two-digit integer parts
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else {
+                        // For integer parts with three or more digits, ensure 2 decimal places
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                    }
+                }
+              }
             
                   if (key === 'status') {
                     return `${formattedValue}             `; // Adjust spaces as needed
@@ -964,26 +1237,46 @@ const formatNumber = (value: number | undefined): string => {
             .map(([key, value]) => {
               
               let formattedValue = '';
-
-              if (value !== null && value !== undefined) {
-                if (typeof value === 'string') {
-                  // If the value is a string but should be a number, convert it
-                  let numericValue = parseFloat(value);
-                  if (!isNaN(numericValue)) {
-                    // Format the number to 2 decimal places
-                    formattedValue = numericValue.toFixed(2);
-                  } else {
-                    // If it is not a number, use the first 6 characters
-                    formattedValue = value.slice(0, 6);
-                  }
-                } else if (typeof value === 'number') {
-                  // Format numbers to 2 decimal places
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
                   formattedValue = value.toFixed(2);
-                } else {
-                  // For other types, convert to string and slice if needed
-                  formattedValue = value.toString().slice(0, 6);
-                }
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
               }
+            }
         
               if (key === 'status') {
                 return `${formattedValue}             `; // Adjust spaces as needed
@@ -1135,20 +1428,47 @@ const formatNumber = (value: number | undefined): string => {
           text = Object.entries(record)
               .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
               .map(([key, value]) => {
-                  let formattedValue = '';
-      
-                  if (value !== null && value !== undefined) {
-                      if (typeof value === 'number') {
-                          // Ensure the number fits within 6 characters
-                          formattedValue = value.toFixed(2); // Two decimal places
-                          if (formattedValue.length > 6) {
-                              // Trim or adjust if longer than 6 characters
-                              formattedValue = formattedValue.slice(0, 6);
-                          }
-                      } else {
-                          formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
-                      }
-                  }
+                let formattedValue = '';
+        
+                if (value === null || value === undefined || value === "" ) {
+                    // Assign 5 spaces if the value is null or undefined
+                    formattedValue = '          '; // 10 space characters
+                } else if (typeof value === 'number') {
+                    // Format the number to two decimal places
+                    formattedValue = value.toFixed(2);
+                    // Ensure the number fits within 6 characters
+                    if (formattedValue.length > 6) {
+                        // Trim or adjust if longer than 6 characters
+                        formattedValue = formattedValue.slice(0, 6);
+                    }
+                } else {
+                  // Trim other values to 6 characters
+                  formattedValue = value.toString().slice(0, 6);
+                  
+                  // Check if the value is numeric
+                  const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                  
+                  // Add ".0000" if it's numeric and doesn't contain a "."
+                  if (isNumeric && !formattedValue.includes('.')) {
+                      formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                  } 
+                  // If it's numeric and already includes a ".", make it 3 decimal positions
+                  else if (isNumeric && formattedValue.includes('.')) {
+                    const [integerPart, decimalPart] = formattedValue.split('.');
+                    
+                    if (integerPart.length === 1) {
+                        // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                        const paddedIntegerPart = `0${integerPart}`;
+                        formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else if (integerPart.length === 2) {
+                        // Ensure 3 decimal places for two-digit integer parts
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else {
+                        // For integer parts with three or more digits, ensure 2 decimal places
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                    }
+                }
+              }
       
                   if (key === 'status') {
                       return `${formattedValue}           `; 
@@ -1185,20 +1505,47 @@ const formatNumber = (value: number | undefined): string => {
         text = Object.entries(record)
             .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
             .map(([key, value]) => {
-                let formattedValue = '';
-    
-                if (value !== null && value !== undefined) {
-                    if (typeof value === 'number') {
-                        // Ensure the number fits within 6 characters
-                        formattedValue = value.toFixed(2); // Two decimal places
-                        if (formattedValue.length > 6) {
-                            // Trim or adjust if longer than 6 characters
-                            formattedValue = formattedValue.slice(0, 6);
-                        }
-                    } else {
-                        formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
-                    }
-                }
+              let formattedValue = '';
+        
+              if (value === null || value === undefined || value === "" ) {
+                  // Assign 5 spaces if the value is null or undefined
+                  formattedValue = '          '; // 10 space characters
+              } else if (typeof value === 'number') {
+                  // Format the number to two decimal places
+                  formattedValue = value.toFixed(2);
+                  // Ensure the number fits within 6 characters
+                  if (formattedValue.length > 6) {
+                      // Trim or adjust if longer than 6 characters
+                      formattedValue = formattedValue.slice(0, 6);
+                  }
+              } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else {
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                  }
+              }
+            }
     
                 if (key === 'status') {
                     return `${formattedValue}            `; 
@@ -1233,20 +1580,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                  } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
-                  }
-              }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+              // Trim other values to 6 characters
+              formattedValue = value.toString().slice(0, 6);
+              
+              // Check if the value is numeric
+              const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+              
+              // Add ".0000" if it's numeric and doesn't contain a "."
+              if (isNumeric && !formattedValue.includes('.')) {
+                  formattedValue = `${formattedValue}.0000`.slice(0, 7);
+              } 
+              // If it's numeric and already includes a ".", make it 3 decimal positions
+              else if (isNumeric && formattedValue.includes('.')) {
+                const [integerPart, decimalPart] = formattedValue.split('.');
+                
+                if (integerPart.length === 1) {
+                    // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                    const paddedIntegerPart = `0${integerPart}`;
+                    formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                } else if (integerPart.length === 2) {
+                    // Ensure 3 decimal places for two-digit integer parts
+                    formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                } else {
+                    // For integer parts with three or more digits, ensure 2 decimal places
+                    formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                }
+            }
+          }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1281,20 +1655,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'Flow') {
                   return `${formattedValue}            `; 
@@ -1319,20 +1720,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1355,20 +1783,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1391,20 +1846,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1427,19 +1909,46 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                  } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
-                  }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                  // Trim other values to 6 characters
+                  formattedValue = value.toString().slice(0, 6);
+                  
+                  // Check if the value is numeric
+                  const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                  
+                  // Add ".0000" if it's numeric and doesn't contain a "."
+                  if (isNumeric && !formattedValue.includes('.')) {
+                      formattedValue = `${formattedValue}.0000`.slice(0, 7);
+                  } 
+                  // If it's numeric and already includes a ".", make it 3 decimal positions
+                  else if (isNumeric && formattedValue.includes('.')) {
+                    const [integerPart, decimalPart] = formattedValue.split('.');
+                    
+                    if (integerPart.length === 1) {
+                        // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                        const paddedIntegerPart = `0${integerPart}`;
+                        formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else if (integerPart.length === 2) {
+                        // Ensure 3 decimal places for two-digit integer parts
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else {
+                        // For integer parts with three or more digits, ensure 2 decimal places
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                    }
+                }
               }
   
               if (key === 'status') {
@@ -1460,20 +1969,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1495,20 +2031,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1530,20 +2093,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1565,20 +2155,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1600,20 +2217,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1635,19 +2279,46 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                  } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
-                  }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                  // Trim other values to 6 characters
+                  formattedValue = value.toString().slice(0, 6);
+                  
+                  // Check if the value is numeric
+                  const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                  
+                  // Add ".0000" if it's numeric and doesn't contain a "."
+                  if (isNumeric && !formattedValue.includes('.')) {
+                      formattedValue = `${formattedValue}.000`.slice(0, 7);
+                  } 
+                  // If it's numeric and already includes a ".", make it 3 decimal positions
+                  else if (isNumeric && formattedValue.includes('.')) {
+                    const [integerPart, decimalPart] = formattedValue.split('.');
+                    
+                    if (integerPart.length === 1) {
+                        // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                        const paddedIntegerPart = `0${integerPart}`;
+                        formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else if (integerPart.length === 2) {
+                        // Ensure 3 decimal places for two-digit integer parts
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                    } else {
+                        // For integer parts with three or more digits, ensure 2 decimal places
+                        formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                    }
+                }
               }
   
               if (key === 'status') {
@@ -1670,20 +2341,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1705,20 +2403,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1743,20 +2468,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1779,20 +2531,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
-                  } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
-                  }
-              }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+              // Trim other values to 6 characters
+              formattedValue = value.toString().slice(0, 6);
+              
+              // Check if the value is numeric
+              const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+              
+              // Add ".0000" if it's numeric and doesn't contain a "."
+              if (isNumeric && !formattedValue.includes('.')) {
+                  formattedValue = `${formattedValue}.000`.slice(0, 7);
+              } 
+              // If it's numeric and already includes a ".", make it 3 decimal positions
+              else if (isNumeric && formattedValue.includes('.')) {
+                const [integerPart, decimalPart] = formattedValue.split('.');
+                
+                if (integerPart.length === 1) {
+                    // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                    const paddedIntegerPart = `0${integerPart}`;
+                    formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                } else if (integerPart.length === 2) {
+                    // Ensure 3 decimal places for two-digit integer parts
+                    formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                } else {
+                    // For integer parts with three or more digits, ensure 2 decimal places
+                    formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
+                }
+            }
+          }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
@@ -1818,20 +2597,47 @@ const formatNumber = (value: number | undefined): string => {
       text = Object.entries(record)
           .filter(([key]) => !['record_id', 'machine_name', 'record_date', 'record_time', 'note'].includes(key))
           .map(([key, value]) => {
-              let formattedValue = '';
-  
-              if (value !== null && value !== undefined) {
-                  if (typeof value === 'number') {
-                      // Ensure the number fits within 6 characters
-                      formattedValue = value.toFixed(2); // Two decimal places
-                      if (formattedValue.length > 6) {
-                          // Trim or adjust if longer than 6 characters
-                          formattedValue = formattedValue.slice(0, 6);
-                      }
+            let formattedValue = '';
+        
+            if (value === null || value === undefined || value === "" ) {
+                // Assign 5 spaces if the value is null or undefined
+                formattedValue = '          '; // 10 space characters
+            } else if (typeof value === 'number') {
+                // Format the number to two decimal places
+                formattedValue = value.toFixed(2);
+                // Ensure the number fits within 6 characters
+                if (formattedValue.length > 6) {
+                    // Trim or adjust if longer than 6 characters
+                    formattedValue = formattedValue.slice(0, 6);
+                }
+            } else {
+                // Trim other values to 6 characters
+                formattedValue = value.toString().slice(0, 6);
+                
+                // Check if the value is numeric
+                const isNumeric = /^\d+(\.\d+)?$/.test(formattedValue);
+                
+                // Add ".0000" if it's numeric and doesn't contain a "."
+                if (isNumeric && !formattedValue.includes('.')) {
+                    formattedValue = `${formattedValue}.000`.slice(0, 7);
+                } 
+                // If it's numeric and already includes a ".", make it 3 decimal positions
+                else if (isNumeric && formattedValue.includes('.')) {
+                  const [integerPart, decimalPart] = formattedValue.split('.');
+                  
+                  if (integerPart.length === 1) {
+                      // Add a leading zero if the integer part is a single digit and ensure 3 decimal places
+                      const paddedIntegerPart = `0${integerPart}`;
+                      formattedValue = `${paddedIntegerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
+                  } else if (integerPart.length === 2) {
+                      // Ensure 3 decimal places for two-digit integer parts
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(3, '0')}`.slice(0, 7);
                   } else {
-                      formattedValue = value.toString().slice(0, 6); // Trim to 6 characters
+                      // For integer parts with three or more digits, ensure 2 decimal places
+                      formattedValue = `${integerPart}.${decimalPart.padEnd(2, '0')}`.slice(0, 7);
                   }
               }
+            }
   
               if (key === 'status') {
                   return `${formattedValue}            `; 
